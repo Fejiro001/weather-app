@@ -1,0 +1,168 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Bricolage Grotesque";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("./assets/fonts/Bricolage_Grotesque/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf")
+    format("truetype");
+}
+@font-face {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("./assets/fonts/DM_Sans/DMSans-VariableFont_opsz,wght.ttf")
+    format("truetype");
+}
+@font-face {
+  font-family: "DM Sans";
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url("./assets/fonts/DM_Sans/DMSans-Italic-VariableFont_opsz,wght.ttf")
+    format("truetype");
+}
+
+@theme {
+  --font-sans: "DM Sans", sans-serif;
+  --font-serif: "Bricolage Grotesque", serif;
+
+  --neutral-900: hsl(243, 96%, 9%);
+  --neutral-800: hsl(243, 27%, 20%);
+  --neutral-700: hsl(243, 23%, 24%);
+  --neutral-600: hsl(243, 23%, 30%);
+  --neutral-300: hsl(240, 6%, 70%);
+  --neutral-200: hsl(250, 6%, 84%);
+  --neutral-000: hsl(0, 0%, 100%);
+  --orange-500: hsl(28, 100%, 52%);
+  --blue-500: hsl(233, 67%, 56%);
+  --blue-700: hsl(248, 70%, 36%);
+
+  /* === TEXT PRESETS === */
+  --text-preset-1-size: 6rem;
+  --text-preset-1-height: 100%;
+  --text-preset-1-spacing: -2px;
+  --text-preset-1-weight: 600; /* SemiBold */
+  --text-preset-1-style: italic;
+
+  --text-preset-2-size: 3.25rem;
+  --text-preset-2-height: 120%;
+  --text-preset-2-weight: 700; /* Bold */
+
+  --text-preset-3-size: 2rem;
+  --text-preset-3-height: 100%;
+  --text-preset-3-weight: 300; /* Light */
+
+  --text-preset-4-size: 1.75rem;
+  --text-preset-4-height: 120%;
+  --text-preset-4-weight: 700; /* Bold */
+
+  --text-preset-5-size: 1.25rem;
+  --text-preset-5-height: 120%;
+
+  --text-preset-6-size: 1.125rem;
+  --text-preset-6-height: 120%;
+  --text-preset-6-weight: 500; /* Medium */
+
+  --text-preset-7-size: 1rem;
+  --text-preset-7-height: 120%;
+  --text-preset-7-weight: 500; /* Medium */
+
+  --text-preset-8-size: 0.875rem;
+  --text-preset-8-height: 120%;
+  --text-preset-8-weight: 500; /* Medium */
+
+  --text-base: 1.125rem;
+
+  --breakpoint-xl: 90rem;
+}
+
+@layer base {
+  body {
+    font-size: var(--text-base); /* 18px */
+    font-family: var(--font-sans);
+    line-height: 1.5;
+  }
+}
+
+@layer components {
+  .text-preset-1 {
+    font-size: var(--text-preset-1-size);
+    line-height: var(--text-preset-1-height);
+    letter-spacing: var(--text-preset-1-spacing);
+    font-weight: var(--text-preset-1-weight);
+    font-style: var(--text-preset-1-style);
+    font-family: var(--font-sans);
+  }
+
+  .text-preset-2 {
+    font-size: var(--text-preset-2-size);
+    line-height: var(--text-preset-2-height);
+    font-weight: var(--text-preset-2-weight);
+    font-family: var(--font-serif);
+  }
+
+  .text-preset-3 {
+    font-size: var(--text-preset-3-size);
+    line-height: var(--text-preset-3-height);
+    font-weight: var(--text-preset-3-weight);
+    font-family: var(--font-sans);
+  }
+
+  .text-preset-4 {
+    font-size: var(--text-preset-4-size);
+    line-height: var(--text-preset-4-height);
+    font-weight: var(--text-preset-4-weight);
+    font-family: var(--font-sans);
+  }
+
+  .text-preset-5 {
+    font-size: var(--text-preset-5-size);
+    line-height: var(--text-preset-5-height);
+    font-family: var(--font-sans);
+  }
+
+  .text-preset-6 {
+    font-size: var(--text-preset-6-size);
+    line-height: var(--text-preset-6-height);
+    font-weight: var(--text-preset-6-weight);
+    font-family: var(--font-sans);
+  }
+
+  .text-preset-7 {
+    font-size: var(--text-preset-7-size);
+    line-height: var(--text-preset-7-height);
+    font-weight: var(--text-preset-7-weight);
+    font-family: var(--font-sans);
+  }
+
+  .text-preset-8 {
+    font-size: var(--text-preset-8-size);
+    line-height: var(--text-preset-8-height);
+    font-weight: var(--text-preset-8-weight);
+    font-family: var(--font-sans);
+  }
+
+  .layout {
+    @apply p-4 md:p-6 xl:p-28 bg-[var(--neutral-900)] min-h-screen text-white;
+  }
+
+  .searchBar::before {
+  }
+
+  /* WEATHER INFO */
+  .weather_info {
+    @apply h-60 w-full bg-no-repeat bg-contain
+    bg-[url("/src/assets/images/bg-today-small.svg")] sm:bg-[url("/src/assets/images/bg-today-large.svg")];
+  }
+  .temp_icon {
+    @apply w-auto h-32;
+  }
+
+  /* DAILY FORECAST */
+  .daily_icon {
+    @apply w-auto h-20;
+  }
+}
