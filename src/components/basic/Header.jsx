@@ -1,12 +1,15 @@
-import { Dropdown, Logo } from ".";
+import { memo } from "react";
+import { SettingsDropdown, Logo } from ".";
 
-const Header = () => {
+const Header = memo(() => {
   return (
-    <div>
+    <div className="flex justify-between items-center gap-8 w-full">
       <Logo />
-      <Dropdown />
+      <SettingsDropdown />
     </div>
   );
-};
+});
 
 export default Header;
+
+Header.displayName = "Header";

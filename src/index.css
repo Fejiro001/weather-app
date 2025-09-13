@@ -40,6 +40,12 @@
   --blue-500: hsl(233, 67%, 56%);
   --blue-700: hsl(248, 70%, 36%);
 
+  --night-gradient: linear-gradient(
+    to right,
+    var(--blue-500) 0,
+    var(--blue-700) 100%
+  );
+
   /* === TEXT PRESETS === */
   --text-preset-1-size: 6rem;
   --text-preset-1-height: 100%;
@@ -87,82 +93,134 @@
   }
 }
 
+@utility text-preset-1 {
+  font-size: var(--text-preset-1-size);
+  line-height: var(--text-preset-1-height);
+  letter-spacing: var(--text-preset-1-spacing);
+  font-weight: var(--text-preset-1-weight);
+  font-style: var(--text-preset-1-style);
+  font-family: var(--font-sans);
+}
+
+@utility text-preset-2 {
+  font-size: var(--text-preset-2-size);
+  line-height: var(--text-preset-2-height);
+  font-weight: var(--text-preset-2-weight);
+  font-family: var(--font-serif);
+}
+
+@utility text-preset-3 {
+  font-size: var(--text-preset-3-size);
+  line-height: var(--text-preset-3-height);
+  font-weight: var(--text-preset-3-weight);
+  font-family: var(--font-sans);
+}
+
+@utility text-preset-4 {
+  font-size: var(--text-preset-4-size);
+  line-height: var(--text-preset-4-height);
+  font-weight: var(--text-preset-4-weight);
+  font-family: var(--font-sans);
+}
+
+@utility text-preset-5 {
+  font-size: var(--text-preset-5-size);
+  line-height: var(--text-preset-5-height);
+  font-family: var(--font-sans);
+}
+
+@utility text-preset-6 {
+  font-size: var(--text-preset-6-size);
+  line-height: var(--text-preset-6-height);
+  font-weight: var(--text-preset-6-weight);
+  font-family: var(--font-sans);
+}
+
+@utility text-preset-7 {
+  font-size: var(--text-preset-7-size);
+  line-height: var(--text-preset-7-height);
+  font-weight: var(--text-preset-7-weight);
+  font-family: var(--font-sans);
+}
+
+@utility text-preset-8 {
+  font-size: var(--text-preset-8-size);
+  line-height: var(--text-preset-8-height);
+  font-weight: var(--text-preset-8-weight);
+  font-family: var(--font-sans);
+}
+
 @layer components {
-  .text-preset-1 {
-    font-size: var(--text-preset-1-size);
-    line-height: var(--text-preset-1-height);
-    letter-spacing: var(--text-preset-1-spacing);
-    font-weight: var(--text-preset-1-weight);
-    font-style: var(--text-preset-1-style);
-    font-family: var(--font-sans);
-  }
-
-  .text-preset-2 {
-    font-size: var(--text-preset-2-size);
-    line-height: var(--text-preset-2-height);
-    font-weight: var(--text-preset-2-weight);
-    font-family: var(--font-serif);
-  }
-
-  .text-preset-3 {
-    font-size: var(--text-preset-3-size);
-    line-height: var(--text-preset-3-height);
-    font-weight: var(--text-preset-3-weight);
-    font-family: var(--font-sans);
-  }
-
-  .text-preset-4 {
-    font-size: var(--text-preset-4-size);
-    line-height: var(--text-preset-4-height);
-    font-weight: var(--text-preset-4-weight);
-    font-family: var(--font-sans);
-  }
-
-  .text-preset-5 {
-    font-size: var(--text-preset-5-size);
-    line-height: var(--text-preset-5-height);
-    font-family: var(--font-sans);
-  }
-
-  .text-preset-6 {
-    font-size: var(--text-preset-6-size);
-    line-height: var(--text-preset-6-height);
-    font-weight: var(--text-preset-6-weight);
-    font-family: var(--font-sans);
-  }
-
-  .text-preset-7 {
-    font-size: var(--text-preset-7-size);
-    line-height: var(--text-preset-7-height);
-    font-weight: var(--text-preset-7-weight);
-    font-family: var(--font-sans);
-  }
-
-  .text-preset-8 {
-    font-size: var(--text-preset-8-size);
-    line-height: var(--text-preset-8-height);
-    font-weight: var(--text-preset-8-weight);
-    font-family: var(--font-sans);
-  }
-
   .layout {
-    @apply p-4 md:p-6 xl:p-28 bg-[var(--neutral-900)] min-h-screen text-white;
+    @apply flex flex-col items-center gap-12 p-4 md:p-6 xl:px-28 xl:py-12 bg-(--neutral-900) min-h-screen text-white;
   }
 
-  .searchBar::before {
+  /* HEADER */
+  .dropdown {
+    @apply bg-(--neutral-800) py-2 px-2.5 rounded-md text-preset-8 sm:text-preset-7 flex items-center gap-2 capitalize;
+  }
+
+  /* BUTTON */
+  .primary_btn {
+    @apply bg-(--blue-500) rounded-xl p-4 text-preset-5 font-medium;
+  }
+
+  /* SEARCH BAR */
+  .searchBar {
+    @apply bg-(--neutral-800) text-(--neutral-200) w-full rounded-xl py-4 pl-[3.75rem];
+    background-image: url("./assets/images/icon-search.svg");
+    background-repeat: no-repeat;
+    background-position: 24px center;
+    background-size: 20px;
   }
 
   /* WEATHER INFO */
   .weather_info {
-    @apply h-60 w-full bg-no-repeat bg-contain
-    bg-[url("/src/assets/images/bg-today-small.svg")] sm:bg-[url("/src/assets/images/bg-today-large.svg")];
+    @apply w-full bg-no-repeat rounded-[1.25rem] flex flex-col md:flex-row gap-4 items-center justify-between px-6 py-10 md:py-[5.125rem];
+    background-image: var(--night-gradient);
+  }
+  .location_info {
+    @apply space-y-3 text-center md:text-left;
+  }
+  .temp_container {
+    @apply flex items-center;
   }
   .temp_icon {
-    @apply w-auto h-32;
+    @apply h-auto w-[7.5rem];
+  }
+  .temp {
+    @apply text-preset-1;
+  }
+
+  /* WAETHER DETAILS */
+  .weather_details {
+    @apply grid grid-cols-2 md:grid-cols-4 gap-4;
+  }
+  .detail {
+    @apply bg-(--neutral-800) outline-(--neutral-600) outline-1 p-5 rounded-xl space-y-6;
   }
 
   /* DAILY FORECAST */
   .daily_icon {
-    @apply w-auto h-20;
+    @apply w-20 h-auto;
+  }
+  .forecast {
+    @apply bg-(--neutral-800) outline-(--neutral-600) outline-1 px-2.5 py-4 rounded-xl space-y-6 flex flex-col items-center;
+  }
+  .temp_range {
+    @apply flex justify-between text-preset-7 w-full;
+  }
+
+  /* HOURLY FORECAST */
+  .days_dropdown {
+    @apply flex items-center text-preset-7 bg-(--neutral-600) rounded-lg py-2 px-4 gap-3;
+  }
+
+  .hour_card {
+    @apply bg-(--neutral-700) flex gap-2 justify-between items-center py-3 px-2.5 rounded-lg outline-(--neutral-600) outline-1;
+  }
+
+  .hour_icon {
+    @apply w-10 h-auto;
   }
 }

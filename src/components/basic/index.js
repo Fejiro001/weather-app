@@ -1,6 +1,7 @@
-import Dropdown from "./Dropdown";
+import SettingsDropdown from "./SettingsDropdown";
 import Header from "./Header";
 import Logo from "./Logo";
 import SearchBar from "./SearchBar";
+import DaysDropdown from "./DaysDropdown";
 
-export { Dropdown, Header, Logo, SearchBar };
+export { SettingsDropdown, Header, Logo, SearchBar, DaysDropdown };
