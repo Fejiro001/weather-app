@@ -1,4 +1,4 @@
-import { SearchBar } from "../components";
+import { SearchBar } from "../components/basic";
 import {
   DailyForecast,
   HourlyForecast,
@@ -19,7 +19,7 @@ const HomePage = () => {
 
       <DailyForecast />
 
-      <HourlyForecast/>
+      <HourlyForecast />
     </>
   );
 };

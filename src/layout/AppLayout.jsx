@@ -1,4 +1,4 @@
-import { Header } from "../components";
+import { Header } from "../components/basic";
 import HomePage from "../pages/HomePage";
 
 const AppLayout = () => {
