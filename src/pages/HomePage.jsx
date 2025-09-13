@@ -8,19 +8,23 @@ import {
 
 const HomePage = () => {
   return (
-    <>
-      <h1>How's the sky looking today?</h1>
-
+    <main className="space-y-8 w-full max-w-7xl">
       <SearchBar />
 
-      <WeatherInfo />
+      <section className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+        <div className="xl:col-span-2 space-y-8">
+          <div className="space-y-5">
+            <WeatherInfo />
 
-      <WeatherDetails />
+            <WeatherDetails />
+          </div>
 
-      <DailyForecast />
+          <DailyForecast />
+        </div>
 
-      <HourlyForecast />
-    </>
+        <HourlyForecast />
+      </section>
+    </main>
   );
 };
 

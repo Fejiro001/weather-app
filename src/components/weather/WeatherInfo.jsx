@@ -3,11 +3,10 @@ import sun from "../../assets/images/icon-sunny.webp";
 const WeatherInfo = () => {
   return (
     <section className="weather_info">
-      <div>
         {/* Location */}
-        <h2>Berlin, Germany</h2>
-        {/* Date */}
-        <p>Tuesday, Aug 5, 2025</p>
+      <div className="location_info">
+        <h2 className="text-preset-4">Berlin, Germany</h2>
+        <p className="text-preset-6">Tuesday, Aug 5, 2025</p>
       </div>
 
       <div className="temp_container">

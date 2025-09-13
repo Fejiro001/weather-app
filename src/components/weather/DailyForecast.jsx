@@ -2,7 +2,7 @@ import weather_icon from "../../assets/images/icon-rain.webp";
 
 const Forecast = ({ day, icon, min_temp, max_temp }) => {
   return (
-    <div>
+    <div className="forecast">
       <p>{day}</p>
       <img className="daily_icon" src={icon} />
 
@@ -68,10 +68,10 @@ const dailyForecast = [
 
 const DailyForecast = () => {
   return (
-    <section>
-      <h3>Daily Forecast</h3>
+    <section className="space-y-5">
+      <h3 className="text-preset-5 text-(--neutral-000)">Daily Forecast</h3>
 
-      <div>
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(5.5rem,1fr))] gap-4">
         {dailyForecast.map((forecast) => (
           <Forecast
             key={forecast.id}

@@ -1,9 +1,9 @@
 
 const Detail = ({ label, value }) => {
   return (
-    <div>
-      <p>{label}</p>
-      <p>{value}</p>
+    <div className="detail">
+      <p className="text-preset-6 text-(--neutral-200)">{label}</p>
+      <p className="text-preset-3 text-(--neutral-000)">{value}</p>
     </div>
   );
 };
