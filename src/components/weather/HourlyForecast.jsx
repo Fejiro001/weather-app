@@ -64,7 +64,7 @@ const hourlyInfo = [
 
 const HourlyForecast = () => {
   return (
-    <div className="bg-(--neutral-800) px-4 py-5 rounded-[1.25rem] space-y-4">
+    <section className="bg-(--neutral-800) px-4 py-5 rounded-[1.25rem] space-y-4">
       <div className="flex justify-between items-center">
         <h3 className="text-preset-5 text-(--neutral-000)">Hourly forecast</h3>
         <DaysDropdown />
@@ -80,7 +80,7 @@ const HourlyForecast = () => {
           />
         ))}
       </ul>
-    </div>
+    </section>
   );
 };
 

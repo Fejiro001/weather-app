@@ -34,7 +34,7 @@ const SettingsDropdown = () => {
 
       {isOpen && (
         <div
-          className="settings_dropdownMenu"
+          className="dropdownMenu"
           id="dropdownMenu"
           aria-labelledby="dropdownButton"
           role="region"
