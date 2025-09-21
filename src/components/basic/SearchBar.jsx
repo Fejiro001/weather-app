@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import loadingIcon from "../../assets/images/icon-loading.svg";
+import { Loader } from "./Icons";
 
 const SearchBar = ({
   isFetching,
@@ -44,6 +44,7 @@ const SearchBar = ({
   const handleLocationSearch = useCallback(
     (e) => {
       e.preventDefault();
+      setIsDropdownOpen(true);
       getLocations(inputValue);
     },
     [getLocations, inputValue]
@@ -72,12 +73,12 @@ const SearchBar = ({
             (isFetching ? (
               <ul className="dropdownMenu absolute top-full left-0 w-full mt-3">
                 <li className="day_button flex gap-2.5">
-                  <img className="animate-spin" src={loadingIcon} />
+                  <Loader className="animate-spin" />
                   <span className="text-preset-7">Search in progress</span>
                 </li>
               </ul>
             ) : locations && locations.length > 0 ? (
-              <ul className="dropdownMenu absolute top-full left-0 w-full mt-3 max-h-72 overflow-y-auto scrollable_container">
+              <ul className="dropdownMenu absolute top-full left-0 w-full mt-3 max-h-72 overflow-y-auto scrollable_container z-30">
                 {locations.length > 0 &&
                   locations.map((loc) => (
                     <li key={loc.id}>

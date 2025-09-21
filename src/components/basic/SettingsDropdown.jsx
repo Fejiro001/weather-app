@@ -1,9 +1,8 @@
 import { memo, useCallback, useState } from "react";
 import useWeatherStore from "../../weatherStore";
 
-import gear from "../../assets/images/icon-units.svg";
-import arrow from "../../assets/images/icon-dropdown.svg";
 import checkmark from "../../assets/images/icon-checkmark.svg";
+import { Dropdown, Gear } from "./Icons";
 
 const SettingsDropdown = () => {
   const units = useWeatherStore((state) => state.units);
@@ -40,20 +39,18 @@ const SettingsDropdown = () => {
         aria-controls="dropdownMenu"
         className="settings_dropdown"
       >
-        <img className="size-3.5 md:size-4" src={gear} />
+        <Gear className="size-3.5 md:size-4" />
         <span>Units</span>
-        <img
+        <Dropdown
           className={`h-3.5 w-[0.5625rem] md:w-3 md:h-[1.125rem] ${
             isOpen ? "rotate-180" : ""
           } transition-all`}
-          src={arrow}
-          alt="Dropdown arrow"
         />
       </button>
 
       {isOpen && (
         <div
-          className="dropdownMenu"
+          className="dropdownMenu z-40"
           id="dropdownMenu"
           aria-labelledby="dropdownButton"
           role="region"

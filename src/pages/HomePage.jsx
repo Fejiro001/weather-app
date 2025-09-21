@@ -8,23 +8,55 @@ import {
 } from "../components/weather";
 import { useLocations } from "../hooks";
 import useWeatherStore from "../weatherStore";
+import { notifyError } from "../components/basic/toastConfig";
 
 const HomePage = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const { fetchingLocations, locations, getLocations } = useLocations();
+
   const fetchWeather = useWeatherStore((state) => state.fetchWeather);
+  const fetchGeolocationWeather = useWeatherStore(
+    (state) => state.fetchGeolocationWeather
+  );
   const units = useWeatherStore((state) => state.units);
   const storeLocation = useWeatherStore((state) => state.location);
   const setLocation = useWeatherStore((state) => state.setLocation);
 
+  // For getting weather in your location
+  useEffect(() => {
+    if (!storeLocation) {
+      if (!navigator.geolocation) {
+        notifyError("Geolocation is not supported by your browser");
+      } else {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            fetchGeolocationWeather(position);
+          },
+          (error) => {
+            notifyError(
+              error.message ||
+                "Geolocation permission denied. Please search for a location."
+            );
+          }
+        );
+      }
+    }
+  }, [fetchGeolocationWeather, storeLocation]);
+
+  // Fetching weather data for searched location
   useEffect(() => {
     if (selectedLocation) {
       setLocation(selectedLocation);
       fetchWeather();
-    } else if (storeLocation) {
+    }
+  }, [fetchWeather, selectedLocation, setLocation]);
+
+  // Fetching weather for stored location
+  useEffect(() => {
+    if (storeLocation) {
       fetchWeather();
     }
-  }, [fetchWeather, selectedLocation, setLocation, units, storeLocation]);
+  }, [fetchWeather, storeLocation, units]);
 
   return (
     <main className="space-y-8 xl:space-y-12 w-full max-w-7xl">

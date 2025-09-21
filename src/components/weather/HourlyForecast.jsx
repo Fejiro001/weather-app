@@ -71,16 +71,16 @@ const HourlyForecast = () => {
   }, [hourlyForecasts, selectedDay]);
 
   return (
-    <section className="bg-(--neutral-800) px-4 py-5 rounded-[1.25rem] max-h-[43.3125rem] flex flex-col gap-4">
+    <section className="bg-(--neutral-800) px-4 py-5 rounded-[1.25rem] max-h-[43.3125rem] flex flex-col gap-4 not-dark:bg-white">
       <div className="flex justify-between items-center">
-        <h3 className="text-preset-5 text-(--neutral-000)">Hourly forecast</h3>
+        <h3 className="text-preset-5 text-(--neutral-000) not-dark:text-(--neutral-900)">Hourly forecast</h3>
         <DaysDropdown
           selectedDay={selectedDay}
           setSelectedDay={setSelectedDay}
         />
       </div>
 
-      <ul className="flex flex-col gap-4 overflow-y-auto scrollable_container">
+      <ul className="flex flex-col gap-4 overflow-y-auto scrollable_container py-2">
         {Array(HOURS_IN_A_DAY)
           .fill(null)
           .map((_, index) => {
