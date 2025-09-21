@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @font-face {
   font-family: "Bricolage Grotesque";
@@ -29,7 +30,12 @@
   --font-sans: "DM Sans", sans-serif;
   --font-serif: "Bricolage Grotesque", serif;
 
-  --neutral-900: hsl(243, 96%, 9%);
+  --day-bg-start: #e0f7fa;
+  --day-bg-end: #fafafa;
+  --night-bg-start: #03012d;
+  --night-bg-end: hsl(243, 27%, 20%);
+
+  --neutral-900: rgb(3, 1, 45);
   --neutral-800: hsl(243, 27%, 20%);
   --neutral-700: hsl(243, 23%, 24%);
   --neutral-600: hsl(243, 23%, 30%);
@@ -37,12 +43,21 @@
   --neutral-200: hsl(250, 6%, 84%);
   --neutral-000: hsl(0, 0%, 100%);
   --orange-500: hsl(28, 100%, 52%);
+  --blue-200: hsl(210, 100%, 70%);
+  --blue-300: hsl(210, 100%, 47%);
+
   --blue-500: hsl(233, 67%, 56%);
   --blue-700: hsl(248, 70%, 36%);
 
+  --day-gradient: linear-gradient(
+    to right,
+    var(--blue-200) 0 50%,
+    var(--blue-300) 100%
+  );
+
   --night-gradient: linear-gradient(
     to right,
-    var(--blue-500) 0,
+    var(--blue-500) 0 50%,
     var(--blue-700) 100%
   );
 
@@ -83,6 +98,31 @@
   --text-base: 1.125rem;
 
   --breakpoint-xl: 90rem;
+
+  --animate-nightGradient: 15s ease infinite;
+  --animate-dayGradient: 15s ease infinite @keyframes dayGradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes nightGradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
 }
 
 :root {
@@ -91,6 +131,7 @@
 
 @layer base {
   body {
+    @apply fill-white not-dark:fill-(--neutral-900);
     font-size: var(--text-base); /* 18px */
     font-family: var(--font-sans);
     line-height: 1.5;
@@ -174,6 +215,31 @@
   background-color: var(--neutral-700);
 }
 
+@utility dark-focus-dropdown-btn {
+  outline: 1px solid var(--neutral-300);
+  outline-offset: 1px;
+  background-color: #e5e7eb;
+}
+@utility theme-day {
+  background-image: linear-gradient(
+    to right,
+    var(--day-bg-start),
+    var(--day-bg-end),
+    var(--day-bg-start)
+  );
+  animation: var(--animate-dayGradient);
+}
+
+@utility theme-night {
+  background-image: linear-gradient(
+    to left,
+    var(--night-bg-start),
+    var(--night-bg-end),
+    var(--night-bg-start)
+  );
+  animation: var(--animate-nightGradient);
+}
+
 @layer components {
   .layout {
     @apply flex flex-col items-center gap-12 xl:gap-16 p-4 md:p-6 xl:px-28 xl:py-12 bg-(--neutral-900) min-h-screen text-white;
@@ -181,15 +247,15 @@
 
   /* HEADER */
   .settings_dropdown {
-    @apply bg-(--neutral-800) hover:bg-(--neutral-700) py-2 px-2.5 rounded-md text-preset-8 sm:text-preset-7 flex items-center gap-2 capitalize focus-visible:focus-white;
+    @apply bg-(--neutral-800) not-dark:bg-gray-100 drop-shadow-lg not-dark:drop-shadow-gray-400 not-dark:text-(--neutral-900) hover:bg-(--neutral-700) py-2 px-2.5 rounded-md text-preset-8 sm:text-preset-7 flex items-center gap-2 capitalize focus-visible:focus-white not-dark:hover:bg-gray-100;
   }
 
   .switch_btn {
-    @apply py-2.5 px-2 rounded-lg hover:bg-(--neutral-700) text-preset-7 w-full focus-visible:focus-dropdown-btn text-left;
+    @apply py-2.5 px-2 rounded-lg hover:bg-(--neutral-700) not-dark:hover:bg-gray-200 text-preset-7 w-full focus-visible:focus-dropdown-btn not-dark:focus-visible:dark-focus-dropdown-btn text-left;
   }
 
   .dropdownMenu {
-    @apply absolute right-0 mt-2.5 bg-(--neutral-800) outline-(--neutral-600) outline-1 rounded-xl text-nowrap py-1.5 px-2 space-y-1 min-w-56 w-full z-20;
+    @apply absolute right-0 mt-2.5 bg-(--neutral-800) outline-(--neutral-600) outline-1 rounded-xl text-nowrap py-1.5 px-2 space-y-1 min-w-56 w-full z-20 not-dark:bg-gray-50 not-dark:outline-gray-200 not-dark:text-(--neutral-900) drop-shadow-md not-dark:drop-shadow-black;
   }
 
   hr {
@@ -197,7 +263,7 @@
   }
 
   legend {
-    @apply text-preset-8 text-(--neutral-300) px-2 pt-1.5;
+    @apply text-preset-8 text-(--neutral-300) not-dark:text-(--neutral-600) px-2 pt-1.5;
   }
 
   fieldset {
@@ -207,10 +273,10 @@
     @apply space-y-1;
   }
   .unit_options button {
-    @apply text-preset-7 py-2.5 px-2 flex gap-2.5 justify-between text-(--neutral-000) rounded-lg w-full hover:bg-(--neutral-700) focus-visible:focus-dropdown-btn;
+    @apply text-preset-7 py-2.5 px-2 flex gap-2.5 justify-between text-(--neutral-000) rounded-lg w-full hover:bg-(--neutral-700) focus-visible:focus-dropdown-btn not-dark:focus-visible:dark-focus-dropdown-btn not-dark:text-(--neutral-900) not-dark:hover:bg-gray-200;
   }
   .active {
-    @apply bg-(--neutral-700);
+    @apply bg-(--neutral-700) not-dark:bg-gray-200;
   }
 
   /* BUTTON */
@@ -220,7 +286,7 @@
 
   /* SEARCH BAR */
   .searchBar {
-    @apply bg-(--neutral-800) hover:bg-(--neutral-700) text-(--neutral-200) w-full rounded-xl py-4 pl-[3.75rem] focus-visible:focus-white;
+    @apply bg-(--neutral-800) hover:bg-(--neutral-700) text-(--neutral-200) w-full rounded-xl py-4 pl-[3.75rem] focus-visible:focus-white not-dark:bg-white not-dark:hover:bg-gray-50 not-dark:placeholder:text-(--neutral-700) not-dark:text-(--neutral-900) drop-shadow-lg not-dark:drop-shadow-gray-400;
     background-image: url("./assets/images/icon-search.svg");
     background-repeat: no-repeat;
     background-position: 24px center;
@@ -229,7 +295,7 @@
 
   /* WEATHER INFO */
   .weather_info {
-    @apply w-full bg-no-repeat rounded-[1.25rem] flex flex-col md:flex-row gap-4 items-center justify-between px-6 py-10 md:py-[5.125rem] min-h-[17.875rem];
+    @apply w-full bg-no-repeat rounded-[1.25rem] flex flex-col md:flex-row gap-4 items-center justify-between px-6 py-10 md:py-[5.125rem] min-h-[17.875rem] drop-shadow-lg not-dark:drop-shadow-gray-400;
   }
   .location_info {
     @apply space-y-3 text-center md:text-left;
@@ -249,15 +315,15 @@
     @apply grid grid-cols-2 md:grid-cols-4 gap-4;
   }
   .detail {
-    @apply bg-(--neutral-800) outline-(--neutral-600) outline-1 p-5 rounded-xl space-y-6;
+    @apply bg-(--neutral-800) text-(--neutral-000) outline-(--neutral-600) outline-1 p-5 rounded-xl space-y-6 not-dark:bg-white not-dark:outline-gray-200 drop-shadow-lg not-dark:drop-shadow-gray-400;
   }
 
   /* DAILY FORECAST */
   .daily_icon {
-    @apply w-[3.75rem] h-auto;
+    @apply w-[3.75rem] h-auto not-dark:bg-(--neutral-900)/80 rounded-full;
   }
   .forecast {
-    @apply min-h-[10.3125rem] bg-(--neutral-800) outline-(--neutral-600) outline-1 px-2.5 py-4 rounded-xl gap-4 flex flex-col items-center;
+    @apply min-h-[10.3125rem] bg-(--neutral-800) outline-(--neutral-600) outline-1 px-2.5 py-4 rounded-xl gap-4 flex flex-col items-center not-dark:bg-white not-dark:outline-gray-200 not-dark:text-(--neutral-900) drop-shadow-lg not-dark:drop-shadow-gray-400;
   }
   .temp_range {
     @apply flex justify-between text-preset-7 w-full;
@@ -265,16 +331,16 @@
 
   /* HOURLY FORECAST */
   .days_dropdown {
-    @apply capitalize flex items-center text-preset-7 bg-(--neutral-600) hover:bg-(--neutral-700) rounded-lg py-2 px-4 gap-3 focus-visible:focus-white;
+    @apply capitalize flex items-center text-preset-7 bg-(--neutral-600) hover:bg-(--neutral-700) rounded-lg py-2 px-4 gap-3 focus-visible:focus-white not-dark:bg-gray-100 not-dark:outline-gray-200 not-dark:text-(--neutral-900) not-dark:hover:bg-gray-200 drop-shadow-lg not-dark:drop-shadow-gray-400;
   }
   .day_button {
-    @apply py-2.5 px-2 w-full text-left hover:bg-(--neutral-600) rounded-lg capitalize;
+    @apply py-2.5 px-2 w-full text-left hover:bg-(--neutral-600) not-dark:hover:bg-gray-200 rounded-lg capitalize;
   }
   .hour_card {
-    @apply min-h-[3.75rem] bg-(--neutral-700) flex gap-2 justify-between items-center py-3 px-2.5 rounded-lg outline-(--neutral-600) outline-1;
+    @apply min-h-[3.75rem] bg-(--neutral-700) flex gap-2 justify-between items-center py-3 px-2.5 rounded-lg outline-(--neutral-600) outline-1 not-dark:bg-gray-100 not-dark:outline-gray-200 not-dark:text-(--neutral-900) drop-shadow-lg not-dark:drop-shadow-gray-400 mx-2;
   }
   .hour_icon {
-    @apply w-10 h-auto;
+    @apply w-10 h-auto not-dark:bg-(--neutral-900)/80 rounded-full;
   }
   .scrollable_container {
     overflow-y: scroll;
