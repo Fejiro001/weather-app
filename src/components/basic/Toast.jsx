@@ -1,9 +1,11 @@
-import React from 'react'
-
-const Toast = () => {
+const Toast = ({ children }) => {
   return (
-    <div>Toast</div>
-  )
-}
+    <div className="flex place-items-center">
+      <span className="font-medium text-base md:text-lg text-wrap">
+        {children}
+      </span>
+    </div>
+  );
+};
 
-export default Toast
+export default Toast;
