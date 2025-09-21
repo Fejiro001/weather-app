@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-import { useDebounce } from "../../hooks";
+import { useCallback, useEffect, useRef, useState } from "react";
 import loadingIcon from "../../assets/images/icon-loading.svg";
 
 const SearchBar = ({
@@ -10,18 +9,20 @@ const SearchBar = ({
 }) => {
   const [inputValue, setInputValue] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const debouncedInputValue = useDebounce(inputValue, 300);
   const searchBarRef = useRef(null);
 
-  const hideDropdown = () => {
+  const hideDropdown = useCallback(() => {
     setIsDropdownOpen(false);
-  };
+  }, []);
 
-  const handleLocationSelection = (loc) => {
-    setSelectedLocation(loc);
-    setInputValue(`${loc.name}, ${loc.country}`);
-    hideDropdown();
-  };
+  const handleLocationSelection = useCallback(
+    (loc) => {
+      setSelectedLocation(loc);
+      setInputValue(`${loc.name}, ${loc.country}`);
+      hideDropdown();
+    },
+    [hideDropdown, setSelectedLocation]
+  );
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -38,12 +39,15 @@ const SearchBar = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [searchBarRef]);
+  }, [hideDropdown, searchBarRef]);
 
-  const handleLocationSearch = (e) => {
-    e.preventDefault();
-    getLocations(debouncedInputValue);
-  };
+  const handleLocationSearch = useCallback(
+    (e) => {
+      e.preventDefault();
+      getLocations(inputValue);
+    },
+    [getLocations, inputValue]
+  );
 
   return (
     <section className="w-full flex flex-col items-center">
@@ -53,6 +57,8 @@ const SearchBar = ({
       >
         <div ref={searchBarRef} className="relative w-full max-w-3xl">
           <input
+            id="search"
+            name="search"
             value={inputValue}
             onChange={(e) => {
               setInputValue(e.target.value);
@@ -71,7 +77,7 @@ const SearchBar = ({
                 </li>
               </ul>
             ) : locations && locations.length > 0 ? (
-              <ul className="dropdownMenu absolute top-full left-0 w-full mt-3 max-h-72 overflow-y-auto">
+              <ul className="dropdownMenu absolute top-full left-0 w-full mt-3 max-h-72 overflow-y-auto scrollable_container">
                 {locations.length > 0 &&
                   locations.map((loc) => (
                     <li key={loc.id}>
