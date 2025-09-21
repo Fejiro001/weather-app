@@ -1,20 +1,59 @@
+import { useMemo } from "react";
+import useWeatherStore from "../../weatherStore";
 
-const Detail = ({ label, value }) => {
+const Detail = ({ label, value, unit, isFetching }) => {
   return (
     <div className="detail">
       <p className="text-preset-6 text-(--neutral-200)">{label}</p>
-      <p className="text-preset-3 text-(--neutral-000)">{value}</p>
+      <p className="text-preset-3 text-(--neutral-000)">
+        {isFetching ? "__" : `${Math.round(value ?? 0)}${unit}`}
+      </p>
     </div>
   );
 };
 
 const WeatherDetails = () => {
+  const { current } = useWeatherStore((state) => state.weatherData) || {};
+  const isFetching = useWeatherStore((state) => state.isFetching);
+  const units = useWeatherStore((state) => state.units);
+
+  const detailsData = useMemo(
+    () => [
+      {
+        label: "Feels Like",
+        value: current?.apparent_temperature,
+        unit: units.temperature_unit && "°",
+      },
+      {
+        label: "Humidity",
+        value: current?.relative_humidity_2m,
+        unit: "%",
+      },
+      {
+        label: "Wind",
+        value: current?.wind_speed_10m,
+        unit: units.wind_speed_unit,
+      },
+      {
+        label: "Precipitation",
+        value: current?.precipitation,
+        unit: units.precipitation_unit,
+      },
+    ],
+    [current, units]
+  );
+
   return (
     <section className="weather_details">
-      <Detail label={"Feels Like"} value={"18°"} />
-      <Detail label={"Humidity"} value={"46%"} />
-      <Detail label={"Wind"} value={"14 km/h"} />
-      <Detail label={"Precipitation"} value={"0 mm"} />
+      {detailsData.map((details) => (
+        <Detail
+          key={details.label}
+          isFetching={isFetching}
+          label={details.label}
+          value={details.value}
+          unit={details.unit}
+        />
+      ))}
     </section>
   );
 };

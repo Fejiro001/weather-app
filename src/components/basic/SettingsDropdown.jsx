@@ -1,16 +1,34 @@
+import { memo, useCallback, useState } from "react";
+import useWeatherStore from "../../weatherStore";
+
 import gear from "../../assets/images/icon-units.svg";
 import arrow from "../../assets/images/icon-dropdown.svg";
 import checkmark from "../../assets/images/icon-checkmark.svg";
-import { useState } from "react";
-
-const UnitsDropdown = () => {};
 
 const SettingsDropdown = () => {
+  const units = useWeatherStore((state) => state.units);
+  const setUnits = useWeatherStore((state) => state.setUnits);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
   };
+
+  const toggleSystem = useCallback(() => {
+    const isMetric = units.temperature_unit === "celsius";
+    const newUnits = isMetric
+      ? {
+          temperature_unit: "fahrenheit",
+          wind_speed_unit: "mph",
+          precipitation_unit: "inch",
+        }
+      : {
+          temperature_unit: "celsius",
+          wind_speed_unit: "kmh",
+          precipitation_unit: "mm",
+        };
+    setUnits(newUnits);
+  }, [setUnits, units.temperature_unit]);
 
   return (
     <div className="relative">
@@ -18,7 +36,7 @@ const SettingsDropdown = () => {
         onClick={toggleDropdown}
         id="dropdownButton"
         aria-haspopup="true"
-        aria-expanded="false"
+        aria-expanded={isOpen}
         aria-controls="dropdownMenu"
         className="settings_dropdown"
       >
@@ -29,6 +47,7 @@ const SettingsDropdown = () => {
             isOpen ? "rotate-180" : ""
           } transition-all`}
           src={arrow}
+          alt="Dropdown arrow"
         />
       </button>
 
@@ -41,22 +60,42 @@ const SettingsDropdown = () => {
           aria-label="Unit settings"
         >
           <button
+            onClick={toggleSystem}
             className="switch_btn"
             type="button"
             aria-label="Switch unit system"
           >
-            Switch to Imperial
+            {units.temperature_unit === "celsius"
+              ? "Switch to Imperial"
+              : "Switch to Metric"}
           </button>
 
           <fieldset>
             <legend>Temperature</legend>
             <div className="unit_options">
-              <button className="active" aria-current="true">
+              <button
+                onClick={() =>
+                  setUnits({ ...units, temperature_unit: "celsius" })
+                }
+                className={units.temperature_unit === "celsius" ? "active" : ""}
+              >
                 <span>Celsius (°C)</span>
-                <img src={checkmark} />
+                {units.temperature_unit === "celsius" && (
+                  <img src={checkmark} alt="Selected" />
+                )}
               </button>
-              <button>
+              <button
+                onClick={() =>
+                  setUnits({ ...units, temperature_unit: "fahrenheit" })
+                }
+                className={
+                  units.temperature_unit === "fahrenheit" ? "active" : ""
+                }
+              >
                 <span>Fahrenheit (°F)</span>
+                {units.temperature_unit === "fahrenheit" && (
+                  <img src={checkmark} alt="Selected" />
+                )}
               </button>
             </div>
           </fieldset>
@@ -66,12 +105,23 @@ const SettingsDropdown = () => {
           <fieldset>
             <legend>Wind Speed</legend>
             <div className="unit_options">
-              <button className="active" aria-current="true">
+              <button
+                onClick={() => setUnits({ ...units, wind_speed_unit: "kmh" })}
+                className={units.wind_speed_unit === "kmh" ? "active" : ""}
+              >
                 <span>km/h</span>
-                <img src={checkmark} />
+                {units.wind_speed_unit === "kmh" && (
+                  <img src={checkmark} alt="Selected" />
+                )}
               </button>
-              <button>
+              <button
+                onClick={() => setUnits({ ...units, wind_speed_unit: "mph" })}
+                className={units.wind_speed_unit === "mph" ? "active" : ""}
+              >
                 <span>mph</span>
+                {units.wind_speed_unit === "mph" && (
+                  <img src={checkmark} alt="Selected" />
+                )}
               </button>
             </div>
           </fieldset>
@@ -81,12 +131,25 @@ const SettingsDropdown = () => {
           <fieldset>
             <legend>Precipitation</legend>
             <div className="unit_options">
-              <button className="active" aria-current="true">
+              <button
+                onClick={() => setUnits({ ...units, precipitation_unit: "mm" })}
+                className={units.precipitation_unit === "mm" ? "active" : ""}
+              >
                 <span>Millimeters (mm)</span>
-                <img src={checkmark} />
+                {units.precipitation_unit === "mm" && (
+                  <img src={checkmark} alt="Selected" />
+                )}
               </button>
-              <button>
+              <button
+                onClick={() =>
+                  setUnits({ ...units, precipitation_unit: "inch" })
+                }
+                className={units.precipitation_unit === "inch" ? "active" : ""}
+              >
                 <span>Inches (in)</span>
+                {units.precipitation_unit === "inch" && (
+                  <img src={checkmark} alt="Selected" />
+                )}
               </button>
             </div>
           </fieldset>
@@ -96,4 +159,6 @@ const SettingsDropdown = () => {
   );
 };
 
-export default SettingsDropdown;
+const MemoizedSettingsDropdown = memo(SettingsDropdown);
+MemoizedSettingsDropdown.displayName = "SettingsDropdown";
+export default MemoizedSettingsDropdown;

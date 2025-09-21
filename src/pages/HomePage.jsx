@@ -6,46 +6,30 @@ import {
   WeatherDetails,
   WeatherInfo,
 } from "../components/weather";
-import axios from "axios";
+import { useLocations } from "../hooks";
+import useWeatherStore from "../weatherStore";
 
 const HomePage = () => {
-  const [isFetching, setIsFetching] = useState(false);
-  const [locations, setLocations] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState({});
-
-  const getLocations = async (value) => {
-    if (!value) {
-      return;
-    }
-
-    setIsFetching(true);
-    try {
-      const response = await axios.get(
-        `https://geocoding-api.open-meteo.com/v1/search?name=${value}&count=10`
-      );
-      const data = response.data;
-
-      console.log(data.results);
-      setLocations(data.results);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsFetching(false);
-    }
-  };
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const { fetchingLocations, locations, getLocations } = useLocations();
+  const fetchWeather = useWeatherStore((state) => state.fetchWeather);
+  const units = useWeatherStore((state) => state.units);
+  const storeLocation = useWeatherStore((state) => state.location);
+  const setLocation = useWeatherStore((state) => state.setLocation);
 
   useEffect(() => {
-    if (!selectedLocation) {
-      return;
+    if (selectedLocation) {
+      setLocation(selectedLocation);
+      fetchWeather();
+    } else if (storeLocation) {
+      fetchWeather();
     }
-
-
-  }, [selectedLocation]);
+  }, [fetchWeather, selectedLocation, setLocation, units, storeLocation]);
 
   return (
     <main className="space-y-8 xl:space-y-12 w-full max-w-7xl">
       <SearchBar
-        isFetching={isFetching}
+        isFetching={fetchingLocations}
         locations={locations}
         getLocations={getLocations}
         setSelectedLocation={setSelectedLocation}
@@ -56,7 +40,7 @@ const HomePage = () => {
           <p className="text-preset-4 mt-12">No search result found!</p>
         </div>
       ) : (
-        <section className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+        <section className="flex flex-col xl:grid xl:grid-cols-3 gap-8 xl:h-dvh xl:grid-rows-1">
           <div className="xl:col-span-2 space-y-8 xl:space-y-12">
             <div className="space-y-5 xl:space-y-8">
               <WeatherInfo />
