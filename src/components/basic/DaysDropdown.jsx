@@ -1,6 +1,6 @@
 import { useState } from "react";
-import arrow from "../../assets/images/icon-dropdown.svg";
 import useWeatherStore from "../../weatherStore";
+import { Dropdown } from "./Icons";
 
 const days = [
   "monday",
@@ -25,11 +25,10 @@ const DaysDropdown = ({ selectedDay, setSelectedDay }) => {
     <div className="relative">
       <button onClick={toggleDropdown} className="days_dropdown">
         <span>{isFetching ? "-" : days[days.indexOf(selectedDay)]}</span>
-        <img
+        <Dropdown
           className={`h-3.5 w-[0.5625rem] md:w-3 md:h-[1.125rem] ${
             isOpen ? "rotate-180" : ""
           } transition-all`}
-          src={arrow}
         />
       </button>
 

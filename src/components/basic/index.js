@@ -3,5 +3,15 @@ import Header from "./Header";
 import Logo from "./Logo";
 import SearchBar from "./SearchBar";
 import DaysDropdown from "./DaysDropdown";
+import BgNoise from "./BgNoise";
+import Loading from "./Loading";
 
-export { SettingsDropdown, Header, Logo, SearchBar, DaysDropdown };
+export {
+  BgNoise,
+  SettingsDropdown,
+  Header,
+  Loading,
+  Logo,
+  SearchBar,
+  DaysDropdown,
+};

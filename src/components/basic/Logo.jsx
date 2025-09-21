@@ -1,9 +1,9 @@
-import logo from "../../assets/images/logo.svg";
+import { HeaderLogo } from "./Icons";
 
 const Logo = () => {
   return (
     <div>
-      <img className="h-7 md:h-10 w-auto" alt="Weather Now Logo" src={logo} />
+      <HeaderLogo />
     </div>
   );
 };

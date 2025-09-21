@@ -17,7 +17,10 @@ const ErrorPage = () => {
           We couldn't connect to the server (API error). Please try again in a
           few moments.
         </p>
-        <button className="bg-(--neutral-800) hover:bg-(--neutral-700) px-4 py-3.5 flex gap-2.5 rounded-lg">
+        <button
+          onClick={() => window.location.reload()}
+          className="bg-(--neutral-800) hover:bg-(--neutral-700) px-4 py-3.5 flex gap-2.5 rounded-lg"
+        >
           <img src={retryIcon} />
           <span className="text-preset-7">Retry</span>
         </button>
