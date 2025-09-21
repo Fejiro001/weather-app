@@ -185,7 +185,7 @@
   }
 
   .switch_btn {
-    @apply py-2.5 px-2 rounded-lg hover:bg-(--neutral-700) text-preset-7 w-full focus-visible:focus-dropdown-btn;
+    @apply py-2.5 px-2 rounded-lg hover:bg-(--neutral-700) text-preset-7 w-full focus-visible:focus-dropdown-btn text-left;
   }
 
   .dropdownMenu {
@@ -229,14 +229,13 @@
 
   /* WEATHER INFO */
   .weather_info {
-    @apply w-full bg-no-repeat rounded-[1.25rem] flex flex-col md:flex-row gap-4 items-center justify-between px-6 py-10 md:py-[5.125rem];
-    background-image: var(--night-gradient);
+    @apply w-full bg-no-repeat rounded-[1.25rem] flex flex-col md:flex-row gap-4 items-center justify-between px-6 py-10 md:py-[5.125rem] min-h-[17.875rem];
   }
   .location_info {
     @apply space-y-3 text-center md:text-left;
   }
   .temp_container {
-    @apply flex items-center;
+    @apply flex items-center gap-5;
   }
   .temp_icon {
     @apply h-auto w-24 sm:w-[7.5rem];
@@ -255,10 +254,10 @@
 
   /* DAILY FORECAST */
   .daily_icon {
-    @apply w-20 h-auto;
+    @apply w-[3.75rem] h-auto;
   }
   .forecast {
-    @apply bg-(--neutral-800) outline-(--neutral-600) outline-1 px-2.5 py-4 rounded-xl space-y-6 flex flex-col items-center;
+    @apply min-h-[10.3125rem] bg-(--neutral-800) outline-(--neutral-600) outline-1 px-2.5 py-4 rounded-xl gap-4 flex flex-col items-center;
   }
   .temp_range {
     @apply flex justify-between text-preset-7 w-full;
@@ -266,15 +265,24 @@
 
   /* HOURLY FORECAST */
   .days_dropdown {
-    @apply flex items-center text-preset-7 bg-(--neutral-600) hover:bg-(--neutral-700) rounded-lg py-2 px-4 gap-3 focus-visible:focus-white;
+    @apply capitalize flex items-center text-preset-7 bg-(--neutral-600) hover:bg-(--neutral-700) rounded-lg py-2 px-4 gap-3 focus-visible:focus-white;
   }
   .day_button {
-    @apply py-2.5 px-2 w-full text-left hover:bg-(--neutral-600) rounded-lg;
+    @apply py-2.5 px-2 w-full text-left hover:bg-(--neutral-600) rounded-lg capitalize;
   }
   .hour_card {
-    @apply bg-(--neutral-700) flex gap-2 justify-between items-center py-3 px-2.5 rounded-lg outline-(--neutral-600) outline-1;
+    @apply min-h-[3.75rem] bg-(--neutral-700) flex gap-2 justify-between items-center py-3 px-2.5 rounded-lg outline-(--neutral-600) outline-1;
   }
   .hour_icon {
     @apply w-10 h-auto;
+  }
+  .scrollable_container {
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollable_container::-webkit-scrollbar {
+    display: none;
   }
 }
