@@ -1,13 +1,17 @@
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useRef, useState } from "react";
 import useWeatherStore from "../../weatherStore";
 
 import checkmark from "../../assets/images/icon-checkmark.svg";
 import { Dropdown, Gear } from "./Icons";
+import { useClickOutside } from "../../hooks";
 
 const SettingsDropdown = () => {
   const units = useWeatherStore((state) => state.units);
   const setUnits = useWeatherStore((state) => state.setUnits);
   const [isOpen, setIsOpen] = useState(false);
+  const settingsDropdownRef = useRef();
+
+  useClickOutside(settingsDropdownRef, setIsOpen);
 
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
@@ -30,7 +34,7 @@ const SettingsDropdown = () => {
   }, [setUnits, units.temperature_unit]);
 
   return (
-    <div className="relative">
+    <div ref={settingsDropdownRef} className="relative">
       <button
         onClick={toggleDropdown}
         id="dropdownButton"

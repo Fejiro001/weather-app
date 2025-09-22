@@ -3,6 +3,7 @@ import useWeatherStore from "../weatherStore";
 import { Header } from "../components/basic";
 import ErrorPage from "../pages/ErrorPage";
 import HomePage from "../pages/HomePage";
+import AuroraBackground from "../components/basic/AuroraBackground";
 
 const AppLayout = () => {
   const isError = useWeatherStore((state) => state.isError);

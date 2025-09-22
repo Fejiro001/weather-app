@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Loader } from "./Icons";
+import { useClickOutside } from "../../hooks";
 
 const SearchBar = ({
   isFetching,
@@ -10,6 +11,8 @@ const SearchBar = ({
   const [inputValue, setInputValue] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const searchBarRef = useRef(null);
+  
+  useClickOutside(searchBarRef, setIsDropdownOpen);
 
   const hideDropdown = useCallback(() => {
     setIsDropdownOpen(false);
@@ -23,23 +26,6 @@ const SearchBar = ({
     },
     [hideDropdown, setSelectedLocation]
   );
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        searchBarRef.current &&
-        !searchBarRef.current.contains(event.target)
-      ) {
-        hideDropdown();
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [hideDropdown, searchBarRef]);
 
   const handleLocationSearch = useCallback(
     (e) => {
