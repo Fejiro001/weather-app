@@ -33,7 +33,7 @@
   --day-bg-start: #e0f7fa;
   --day-bg-end: #fafafa;
   --night-bg-start: #03012d;
-  --night-bg-end: hsl(243, 27%, 20%);
+  --night-bg-end: #f3604263;
 
   --neutral-900: rgb(3, 1, 45);
   --neutral-800: hsl(243, 27%, 20%);
@@ -99,34 +99,31 @@
 
   --breakpoint-xl: 90rem;
 
-  --animate-nightGradient: 15s ease infinite;
-  --animate-dayGradient: 15s ease infinite @keyframes dayGradient {
-    0% {
-      background-position: 0% 50%;
+  --animate-nightGradient: nightGradient 60s linear infinite;
+  --animate-dayGradient: dayGradient 60s linear infinite;
+
+  @keyframes dayGradient {
+    from {
+      background-position: 50% 50%, 50% 50%;
     }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
+    to {
+      background-position: 350% 50%, 350% 50%;
     }
   }
 
   @keyframes nightGradient {
-    0% {
-      background-position: 0% 50%;
+    from {
+      background-position: 50% 50%, 50% 50%;
     }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
+    to {
+      background-position: 350% 50%, 350% 50%;
     }
   }
 }
 
 :root {
   scrollbar-color: var(--neutral-900) var(--neutral-600);
+  scroll-behavior: smooth;
 }
 
 @layer base {
@@ -237,7 +234,6 @@
     var(--night-bg-end),
     var(--night-bg-start)
   );
-  animation: var(--animate-nightGradient);
 }
 
 @layer components {

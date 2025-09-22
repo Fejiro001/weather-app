@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useClickOutside } from "../../hooks";
 import useWeatherStore from "../../weatherStore";
 import { Dropdown } from "./Icons";
 
@@ -14,15 +15,17 @@ const days = [
 
 const DaysDropdown = ({ selectedDay, setSelectedDay }) => {
   const isFetching = useWeatherStore((state) => state.isFetching);
-
   const [isOpen, setIsOpen] = useState(false);
+  const daysDropdownRef = useRef();
+
+  useClickOutside(daysDropdownRef, setIsOpen);
 
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
   };
 
   return (
-    <div className="relative">
+    <div ref={daysDropdownRef} className="relative">
       <button onClick={toggleDropdown} className="days_dropdown">
         <span>{isFetching ? "-" : days[days.indexOf(selectedDay)]}</span>
         <Dropdown
