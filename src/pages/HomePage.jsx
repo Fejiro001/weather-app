@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { useLocations } from "../hooks";
+import useWeatherStore from "../weatherStore";
+
 import { SearchBar } from "../components/basic";
 import {
   DailyForecast,
@@ -6,9 +9,8 @@ import {
   WeatherDetails,
   WeatherInfo,
 } from "../components/weather";
-import { useLocations } from "../hooks";
-import useWeatherStore from "../weatherStore";
 import { notifyError } from "../components/basic/toastConfig";
+import ErrorPage from "./ErrorPage";
 
 const HomePage = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -21,6 +23,7 @@ const HomePage = () => {
   const units = useWeatherStore((state) => state.units);
   const storeLocation = useWeatherStore((state) => state.location);
   const setLocation = useWeatherStore((state) => state.setLocation);
+  const isError = useWeatherStore((state) => state.isError);
 
   // For getting weather in your location
   useEffect(() => {
@@ -58,8 +61,16 @@ const HomePage = () => {
     }
   }, [fetchWeather, storeLocation, units]);
 
+  if (isError) {
+    return <ErrorPage />;
+  }
+
   return (
     <main className="space-y-8 xl:space-y-12 w-full max-w-7xl">
+      <h1 className="text-preset-2 text-center text-balance px-5 not-dark:text-(--neutral-900)">
+        How's the sky looking today?
+      </h1>
+
       <SearchBar
         isFetching={fetchingLocations}
         locations={locations}

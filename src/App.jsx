@@ -1,7 +1,10 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import AppLayout from "./layout/AppLayout";
 import { useTheme } from "./hooks";
 import { useEffect } from "react";
+import HomePage from "./pages/HomePage";
+import FavouritePage from "./pages/FavouritePage";
 
 function App() {
   const { isDark } = useTheme();
@@ -15,10 +18,15 @@ function App() {
   }, [isDark]);
 
   return (
-    <>
+    <Router>
       <ToastContainer />
-      <AppLayout />
-    </>
+      <Routes>
+        <Route element={<AppLayout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/favorites" element={<FavouritePage />} />
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 
