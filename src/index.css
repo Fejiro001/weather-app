@@ -30,10 +30,10 @@
   --font-sans: "DM Sans", sans-serif;
   --font-serif: "Bricolage Grotesque", serif;
 
-  --day-bg-start: #e0f7fa;
+  --day-bg-start: #c4f6fccb;
   --day-bg-end: #fafafa;
   --night-bg-start: #03012d;
-  --night-bg-end: #f3604263;
+  --night-bg-end: #f3604268;
 
   --neutral-900: rgb(3, 1, 45);
   --neutral-800: hsl(243, 27%, 20%);
@@ -98,9 +98,6 @@
   --text-base: 1.125rem;
 
   --breakpoint-xl: 90rem;
-
-  --animate-nightGradient: nightGradient 60s linear infinite;
-  --animate-dayGradient: dayGradient 60s linear infinite;
 
   @keyframes dayGradient {
     from {
@@ -224,21 +221,24 @@
     var(--day-bg-end),
     var(--day-bg-start)
   );
-  animation: var(--animate-dayGradient);
+  background-size: 200% 100%;
+  animation: dayGradient 60s ease-in-out infinite alternate;
 }
 
 @utility theme-night {
   background-image: linear-gradient(
-    to left,
+    to right,
     var(--night-bg-start),
     var(--night-bg-end),
     var(--night-bg-start)
   );
+  background-size: 200% 100%;
+  animation: nightGradient 60s ease-in-out infinite alternate;
 }
 
 @layer components {
   .layout {
-    @apply flex flex-col items-center gap-12 xl:gap-16 p-4 md:p-6 xl:px-28 xl:py-12 bg-(--neutral-900) min-h-screen text-white;
+    @apply flex flex-col items-center gap-12 xl:gap-16 p-4 md:p-6 xl:px-28 xl:py-12 theme-day dark:theme-night min-h-screen text-white bg-(--neutral-900) not-dark:bg-(--blue-200);
   }
 
   /* HEADER */

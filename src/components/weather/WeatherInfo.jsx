@@ -6,6 +6,7 @@ const WeatherInfo = () => {
   const { current } = useWeatherStore((state) => state.weatherData) || {};
   const isFetching = useWeatherStore((state) => state.isFetching);
   const location = useWeatherStore((state) => state.location);
+
   const weather_icon = getWeatherIcon(current?.weather_code);
 
   const date = new Date(current?.time ?? Date.now());
@@ -30,16 +31,12 @@ const WeatherInfo = () => {
     <section
       className={`weather_info relative overflow-hidden ${
         current?.is_day
-          ? "bg-(image:--day-gradient)"
-          : "bg-(image:--night-gradient)"
+          ? "not-dark:bg-(image:--day-gradient) bg-(image:--night-gradient)"
+          : "dark:bg-(image:--night-gradient) not-dark:bg-(image:--day-gradient)"
       } `}
     >
-      <BgNoise current={current} />
-      <div
-        className={`location_info z-20 ${
-          current?.is_day ? "text-(--neutral-900)" : ""
-        }`}
-      >
+      <BgNoise />
+      <div className={"location_info z-20 not-dark:text-(--neutral-800)"}>
         <h2 className="text-preset-4">
           {location
             ? `${location.name}, ${location.country}`
@@ -54,9 +51,7 @@ const WeatherInfo = () => {
           src={`src/assets/images/weather/icon-${weather_icon}.webp`}
           alt="Sun icon"
         />
-        <span
-          className={`temp ${current?.is_day ? "text-(--neutral-900)" : ""}`}
-        >
+        <span className={"temp not-dark:text-(--neutral-800)"}>
           {Math.round(current?.temperature_2m ?? 0)}°
         </span>
       </div>

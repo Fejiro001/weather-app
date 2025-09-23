@@ -1,7 +1,15 @@
 import starOne from "../../assets/images/star-1.svg";
 import starTwo from "../../assets/images/star-2.svg";
+import { useTheme } from "../../hooks";
 
-const BgNoise = ({ current }) => {
+const BgNoise = () => {
+  const { isDark } = useTheme();
+  const cloudOneStart = isDark ? "#3E45C5" : "#FFFFFF";
+  const cloudOneEnd = isDark ? "#3E46C7" : "#FFFFFF";
+
+  const cloudTwoStart = isDark ? "#332CAD" : "#D8D8D8";
+  const cloudTwoEnd = isDark ? "#332DAD" : "#FFFFFF";
+
   return (
     <>
       {/* CLOUD 1 */}
@@ -26,11 +34,8 @@ const BgNoise = ({ current }) => {
             y2="90.1671"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stopColor={`${current?.is_day ? "#FFFFFF" : "#3E45C5"}`} />
-            <stop
-              offset="1"
-              stopColor={`${current?.is_day ? "#FFFFFF" : "#3E46C7"}`}
-            />
+            <stop stopColor={cloudOneStart} />
+            <stop offset="1" stopColor={cloudOneEnd} />
           </linearGradient>
         </defs>
       </svg>
@@ -57,11 +62,8 @@ const BgNoise = ({ current }) => {
             y2="122.913"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stopColor={`${current?.is_day ? "#D8D8D8" : "#332CAD"}`} />
-            <stop
-              offset="1"
-              stopColor={`${current?.is_day ? "#FFFFFF" : "#332DAD"}`}
-            />
+            <stop stopColor={cloudTwoStart} />
+            <stop offset="1" stopColor={cloudTwoEnd} />
           </linearGradient>
         </defs>
       </svg>

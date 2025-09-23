@@ -1,7 +1,10 @@
 import { SyncLoader } from "react-spinners";
+import useTheme from "../../hooks/useTheme";
 
 const Loading = () => {
-  return <SyncLoader className="not-dark:fill-black text-white" margin={5} />;
+  const { isDark } = useTheme();
+  
+  return <SyncLoader color={isDark ? "#ffffff" : "#000000"} margin={5} />;
 };
 
 export default Loading;

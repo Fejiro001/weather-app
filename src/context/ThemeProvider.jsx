@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ThemeContext from "./ThemeContext";
 import useWeatherStore from "../weatherStore";
 
@@ -18,16 +18,17 @@ const ThemeProvider = ({ children }) => {
     return () => mediaQuery.removeEventListener("change", handler);
   }, []);
 
-  const isDark = (() => {
+  const isDark = useMemo(() => {
     if (userPreference === "dark") return true;
     if (userPreference === "light") return false;
 
+    // If userPreference is "auto", use isNightTime from weatherData
     if (weatherData) {
       return isNightTime;
     }
 
     return systemPreference;
-  })();
+  }, [isNightTime, systemPreference, userPreference, weatherData]);
 
   const toggleTheme = () => {
     setUserPreference((prev) => {

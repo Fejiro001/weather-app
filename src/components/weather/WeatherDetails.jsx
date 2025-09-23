@@ -4,7 +4,7 @@ import useWeatherStore from "../../weatherStore";
 const Detail = ({ label, value, unit, isFetching }) => {
   return (
     <div className="detail">
-      <p className="text-preset-6 text-(--neutral-200) not-dark:text-(--neutral-300)">{label}</p>
+      <p className="text-preset-6 text-(--neutral-200) not-dark:text-(--neutral-600)">{label}</p>
       <p className="text-preset-3 text-(--neutral-000) not-dark:text-(--neutral-900)">
         {isFetching ? "__" : `${Math.round(value ?? 0)}${unit}`}
       </p>
