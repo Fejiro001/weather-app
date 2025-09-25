@@ -1,6 +1,6 @@
 import axios from "axios";
 import { create } from "zustand";
-import { notifyError } from "./components/basic/toastConfig";
+import { notifyError } from "../components/basic/toastConfig";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 const useWeatherStore = create()(
@@ -10,7 +10,7 @@ const useWeatherStore = create()(
       isFetching: false,
       isError: false,
       location: null,
-      favoriteLocations: null,
+      favoriteLocations: [],
       units: {
         temperature_unit: "celsius",
         wind_speed_unit: "kmh",
@@ -89,6 +89,12 @@ const useWeatherStore = create()(
               "Failed to get location from geolocation."
           );
         }
+      },
+
+      addFavoriteLocation: (location) => {
+        set((state) => ({
+          favoriteLocations: [...(state.favoriteLocations || []), location],
+        }));
       },
 
       clearWeatherData: () => set({ weatherData: null }),

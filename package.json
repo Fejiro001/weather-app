@@ -22,6 +22,7 @@
     "react-spinners": "^0.17.0",
     "react-toastify": "^11.0.5",
     "tailwindcss": "^4.1.13",
+    "use-sound": "^5.0.0",
     "zustand": "^5.0.8"
   },
   "devDependencies": {
