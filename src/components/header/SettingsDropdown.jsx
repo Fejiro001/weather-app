@@ -1,8 +1,8 @@
 import { memo, useCallback, useRef, useState } from "react";
-import useWeatherStore from "../../weatherStore";
+import useWeatherStore from "../../store/weatherStore";
 
 import checkmark from "../../assets/images/icon-checkmark.svg";
-import { Dropdown, Gear } from "./Icons";
+import { Dropdown, Gear } from "../basic/Icons";
 import { useClickOutside } from "../../hooks";
 
 const SettingsDropdown = () => {
