@@ -1,5 +1,5 @@
 import { getWeatherIcon } from "../../utils/getWeatherIcon";
-import useWeatherStore from "../../weatherStore";
+import useWeatherStore from "../../store/weatherStore";
 
 const Forecast = ({ day, icon, min_temp, max_temp, isFetching }) => {
   return (

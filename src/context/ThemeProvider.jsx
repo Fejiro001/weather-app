@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import ThemeContext from "./ThemeContext";
-import useWeatherStore from "../weatherStore";
+import useWeatherStore from "../store/weatherStore";
 
 const ThemeProvider = ({ children }) => {
   const [userPreference, setUserPreference] = useState("auto");

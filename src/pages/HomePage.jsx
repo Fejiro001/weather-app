@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocations } from "../hooks";
-import useWeatherStore from "../weatherStore";
+import useWeatherStore from "../store/weatherStore";
 
 import { SearchBar } from "../components/basic";
 import {
@@ -66,7 +66,7 @@ const HomePage = () => {
   }
 
   return (
-    <main className="space-y-8 xl:space-y-12 w-full max-w-7xl">
+    <main className="main">
       <h1 className="text-preset-2 text-center text-balance px-5 not-dark:text-(--neutral-900)">
         How's the sky looking today?
       </h1>

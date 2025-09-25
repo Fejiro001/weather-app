@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import useWeatherStore from "../../weatherStore";
+import useWeatherStore from "../../store/weatherStore";
 
 const Detail = ({ label, value, unit, isFetching }) => {
   return (

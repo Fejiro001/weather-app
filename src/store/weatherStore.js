@@ -16,7 +16,6 @@ const useWeatherStore = create()(
         wind_speed_unit: "kmh",
         precipitation_unit: "mm",
       },
-
       setUnits: (newUnits) => set({ units: newUnits }),
 
       fetchWeather: async () => {
@@ -67,18 +66,10 @@ const useWeatherStore = create()(
           const geoData = geoResponse.data.results[0];
 
           if (!geoData) {
-            throw new Error("Location not found");
+            notifyError("Location not found");
           }
 
-          const newLocation = {
-            latitude: geoData.latitude,
-            longitude: geoData.longitude,
-            timezone: geoData.timezone,
-            name: geoData.name,
-            country: geoData.country,
-          };
-
-          set({ location: newLocation });
+          set({ location: geoData });
 
           // Get the data for the new location
           await get().fetchWeather();
@@ -95,6 +86,24 @@ const useWeatherStore = create()(
         set((state) => ({
           favoriteLocations: [...(state.favoriteLocations || []), location],
         }));
+      },
+
+      removeFavoriteLocation: (locationToRemove) => {
+        set((state) => {
+          const currentFavorites = state.favoriteLocations || [];
+
+          const updatedFavorites = currentFavorites.filter(
+            (favorite) =>
+              !(
+                favorite.latitude === locationToRemove.latitude &&
+                favorite.longitude === locationToRemove.longitude
+              )
+          );
+
+          return {
+            favoriteLocations: updatedFavorites,
+          };
+        });
       },
 
       clearWeatherData: () => set({ weatherData: null }),
