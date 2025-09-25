@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useClickOutside } from "../../hooks";
-import useWeatherStore from "../../weatherStore";
+import useWeatherStore from "../../store/weatherStore";
 import { Dropdown } from "./Icons";
 
 const days = [
@@ -26,7 +26,11 @@ const DaysDropdown = ({ selectedDay, setSelectedDay }) => {
 
   return (
     <div ref={daysDropdownRef} className="relative">
-      <button onClick={toggleDropdown} className="days_dropdown">
+      <button
+        aria-expanded={isOpen}
+        onClick={toggleDropdown}
+        className="days_dropdown"
+      >
         <span>{isFetching ? "-" : days[days.indexOf(selectedDay)]}</span>
         <Dropdown
           className={`h-3.5 w-[0.5625rem] md:w-3 md:h-[1.125rem] ${
@@ -38,7 +42,7 @@ const DaysDropdown = ({ selectedDay, setSelectedDay }) => {
       {isOpen && (
         <ul className="py-2 flex flex-col gap-1 z-10 dropdownMenu">
           {days.map((day) => (
-            <li key={day}>
+            <li role="menuitem" key={day}>
               <button
                 onClick={() => {
                   setSelectedDay(day);
