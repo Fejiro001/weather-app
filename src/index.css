@@ -30,8 +30,8 @@
   --font-sans: "DM Sans", sans-serif;
   --font-serif: "Bricolage Grotesque", serif;
 
-  --day-bg-start: #c4f6fccb;
-  --day-bg-end: #fafafa;
+  --day-bg-start: #c4f6fcdb;
+  --day-bg-end: #fafafaf0;
   --night-bg-start: #03012d;
   --night-bg-end: #f3604268;
 
@@ -222,7 +222,7 @@
     var(--day-bg-start)
   );
   background-size: 200% 100%;
-  animation: dayGradient 60s ease-in-out infinite alternate;
+  animation: dayGradient 30s ease-in-out infinite alternate;
 }
 
 @utility theme-night {
@@ -233,15 +233,24 @@
     var(--night-bg-start)
   );
   background-size: 200% 100%;
-  animation: nightGradient 60s ease-in-out infinite alternate;
+  animation: nightGradient 30s ease-in-out infinite alternate;
 }
 
 @layer components {
   .layout {
     @apply flex flex-col items-center gap-12 xl:gap-16 p-4 md:p-6 xl:px-28 xl:py-12 theme-day dark:theme-night min-h-screen text-white bg-(--neutral-900) not-dark:bg-(--blue-200);
   }
+  .main {
+    @apply space-y-8 xl:space-y-12 w-full max-w-7xl mt-12 lg:mt-0;
+  }
+  .back_button {
+    @apply flex gap-2 items-center hover:underline hover:gap-4 transition-all duration-[400ms] text-preset-6;
+  }
 
   /* HEADER */
+  .header {
+    @apply flex md:justify-between items-center gap-8 w-full bg-(--neutral-900)/90 not-dark:bg-white/90 py-2 px-8 shadow-lg shadow-(color:--neutral-800) not-dark:shadow-gray-400 rounded-full sticky top-5 sm:top-12 z-999 max-w-[100rem] outline-1 dark:outline-(--neutral-700) not-dark:outline-(--neutral-200);
+  }
   .settings_dropdown {
     @apply bg-(--neutral-800) not-dark:bg-gray-100 drop-shadow-lg not-dark:drop-shadow-gray-400 not-dark:text-(--neutral-900) hover:bg-(--neutral-700) py-2 px-2.5 rounded-md text-preset-8 sm:text-preset-7 flex items-center gap-2 capitalize focus-visible:focus-white not-dark:hover:bg-gray-100;
   }
@@ -288,6 +297,9 @@
     background-position: 24px center;
     background-size: 20px;
   }
+  .small_text {
+    @apply text-preset-8 text-(--neutral-300) not-dark:text-(--neutral-600);
+  }
 
   /* WEATHER INFO */
   .weather_info {
@@ -330,7 +342,7 @@
     @apply capitalize flex items-center text-preset-7 bg-(--neutral-600) hover:bg-(--neutral-700) rounded-lg py-2 px-4 gap-3 focus-visible:focus-white not-dark:bg-gray-100 not-dark:outline-gray-200 not-dark:text-(--neutral-900) not-dark:hover:bg-gray-200 drop-shadow-lg not-dark:drop-shadow-gray-400;
   }
   .day_button {
-    @apply py-2.5 px-2 w-full text-left hover:bg-(--neutral-600) not-dark:hover:bg-gray-200 rounded-lg capitalize;
+    @apply py-2.5 px-2 w-full text-left hover:bg-(--neutral-600) not-dark:hover:bg-gray-200 rounded-lg capitalize text-preset-7;
   }
   .hour_card {
     @apply min-h-[3.75rem] bg-(--neutral-700) flex gap-2 justify-between items-center py-3 px-2.5 rounded-lg outline-(--neutral-600) outline-1 not-dark:bg-gray-100 not-dark:outline-gray-200 not-dark:text-(--neutral-900) drop-shadow-lg not-dark:drop-shadow-gray-400 mx-2;
@@ -346,5 +358,10 @@
 
   .scrollable_container::-webkit-scrollbar {
     display: none;
+  }
+
+  /* FAVORITE PAGE */
+  .location_list {
+    @apply flex items-center justify-between p-4 rounded-lg shadow-lg transition-all duration-300;
   }
 }

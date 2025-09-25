@@ -1,6 +1,8 @@
 import { useCallback, useRef, useState } from "react";
 import { Loader } from "./Icons";
 import { useClickOutside } from "../../hooks";
+import woosh from "/sounds/woosh.mp3";
+import useSound from "use-sound";
 
 const SearchBar = ({
   isFetching,
@@ -11,7 +13,11 @@ const SearchBar = ({
   const [inputValue, setInputValue] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const searchBarRef = useRef(null);
-  
+  const [play] = useSound(woosh, {
+    volume: 0.02,
+    playbackRate: 1.5,
+  });
+
   useClickOutside(searchBarRef, setIsDropdownOpen);
 
   const hideDropdown = useCallback(() => {
@@ -32,8 +38,9 @@ const SearchBar = ({
       e.preventDefault();
       setIsDropdownOpen(true);
       getLocations(inputValue);
+      play();
     },
-    [getLocations, inputValue]
+    [getLocations, inputValue, play]
   );
 
   return (
@@ -74,7 +81,7 @@ const SearchBar = ({
                         className="day_button"
                       >
                         {loc.name}, {loc.country}
-                        <p className="text-preset-8 text-(--neutral-300)">
+                        <p className="small_text">
                           {loc.admin1}
                         </p>
                       </button>
