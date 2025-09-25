@@ -2,7 +2,9 @@ import React from 'react'
 
 const ComparisonPage = () => {
   return (
-    <div>ComparisonPage</div>
+    <div>
+      
+    </div>
   )
 }
 

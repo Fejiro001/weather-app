@@ -1,5 +1,5 @@
 import { DaysDropdown } from "../basic";
-import useWeatherStore from "../../weatherStore";
+import useWeatherStore from "../../store/weatherStore";
 import { useMemo, useState } from "react";
 import { getWeatherIcon } from "../../utils/getWeatherIcon";
 
@@ -26,6 +26,7 @@ const HourlyWeatherCard = ({ icon, time, min_temp, isFetching }) => {
 };
 
 const HOURS_IN_A_DAY = 24;
+const VISIBLE_SKELETON_COUNT = 10;
 
 const HourlyForecast = () => {
   const isFetching = useWeatherStore((state) => state.isFetching);
@@ -67,13 +68,31 @@ const HourlyForecast = () => {
         .toLowerCase()
         .includes(selectedDay.toLowerCase())
     );
-    return day || [];
-  }, [hourlyForecasts, selectedDay]);
+
+    if (!day) {
+      return [];
+    }
+
+    const currentHour = new Date(current?.time ?? Date.now()).getHours();
+
+    const isToday = selectedDay.toLowerCase() === today.toLowerCase();
+
+    if (isToday) {
+      return day.filter((hourData) => {
+        const forecastHour = new Date(hourData.time).getHours();
+        return forecastHour >= currentHour;
+      });
+    }
+
+    return day;
+  }, [current, hourlyForecasts, selectedDay, today]);
 
   return (
     <section className="bg-(--neutral-800) px-4 py-5 rounded-[1.25rem] max-h-[43.3125rem] flex flex-col gap-4 not-dark:bg-white drop-shadow-2xl">
       <div className="flex justify-between items-center">
-        <h3 className="text-preset-5 text-(--neutral-000) not-dark:text-(--neutral-900)">Hourly forecast</h3>
+        <h3 className="text-preset-5 text-(--neutral-000) not-dark:text-(--neutral-900)">
+          Hourly forecast
+        </h3>
         <DaysDropdown
           selectedDay={selectedDay}
           setSelectedDay={setSelectedDay}
@@ -81,29 +100,37 @@ const HourlyForecast = () => {
       </div>
 
       <ul className="flex flex-col gap-4 overflow-y-auto scrollable_container py-2">
-        {Array(HOURS_IN_A_DAY)
-          .fill(null)
-          .map((_, index) => {
-            const hourData = selectedDayData[index];
-
-            return (
-              <HourlyWeatherCard
-                key={index}
-                icon={hourData ? getWeatherIcon(hourData.weather_code) : null}
-                time={
-                  hourData
-                    ? new Date(hourData.time).toLocaleTimeString([], {
-                        hour: "numeric",
-                      })
-                    : ""
-                }
-                min_temp={
-                  hourData ? `${Math.round(hourData.temperature_2m)}°` : ""
-                }
-                isFetching={isFetching}
-              />
-            );
-          })}
+        {isFetching || selectedDayData.length === 0
+          ? Array(VISIBLE_SKELETON_COUNT)
+              .fill(null)
+              .map((_, index) => (
+                <HourlyWeatherCard
+                  key={index}
+                  isFetching={true}
+                  icon={null}
+                  time={null}
+                  min_temp={null}
+                />
+              ))
+          : selectedDayData.map((hourData) => {
+              return (
+                <HourlyWeatherCard
+                  key={hourData.time}
+                  icon={hourData ? getWeatherIcon(hourData.weather_code) : null}
+                  time={
+                    hourData
+                      ? new Date(hourData.time).toLocaleTimeString([], {
+                          hour: "numeric",
+                        })
+                      : ""
+                  }
+                  min_temp={
+                    hourData ? `${Math.round(hourData.temperature_2m)}°` : ""
+                  }
+                  isFetching={false}
+                />
+              );
+            })}
       </ul>
     </section>
   );
