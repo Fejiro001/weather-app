@@ -2,8 +2,12 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import ThemeContext from "./ThemeContext";
 import useWeatherStore from "../store/weatherStore";
 
+const THEME_KEY = "theme";
+
 const ThemeProvider = ({ children }) => {
-  const [userPreference, setUserPreference] = useState("auto");
+  const [userPreference, setUserPreference] = useState(() => {
+    return localStorage.getItem(THEME_KEY) || "auto";
+  });
   const [systemPreference, setSystemPreference] = useState(
     window.matchMedia("(prefers-color-scheme: dark)").matches
   );
@@ -11,6 +15,11 @@ const ThemeProvider = ({ children }) => {
 
   const isNightTime = weatherData?.current?.is_day === 0;
 
+  useEffect(() => {
+    localStorage.setItem(THEME_KEY, userPreference);
+  }, [userPreference]);
+
+  // System Preference
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handler = (e) => setSystemPreference(e.matches);
@@ -32,12 +41,21 @@ const ThemeProvider = ({ children }) => {
     if (userPreference === "dark") return true;
     if (userPreference === "light") return false;
 
-    if (weatherData) {
+    if (weatherData && weatherData.current) {
       return isNightTime;
     }
 
     return systemPreference;
   }, [isNightTime, systemPreference, userPreference, weatherData]);
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (isDark) {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+  }, [isDark]);
 
   /**
    * Memoized callback that toggles the user's theme preference.
@@ -48,15 +66,26 @@ const ThemeProvider = ({ children }) => {
    */
   const toggleTheme = useCallback(() => {
     setUserPreference((prev) => {
-      if (prev === "auto") {
-        return isDark ? "light" : "dark";
+      if (prev === "light") {
+        return "auto";
       }
-      return prev === "dark" ? "light" : "dark";
+      if (prev === "auto") {
+        return "dark";
+      }
+      return "light";
     });
-  }, [isDark]);
+  }, []);
 
   return (
-    <ThemeContext.Provider value={{ isDark, toggleTheme, isNightTime }}>
+    <ThemeContext.Provider
+      value={{
+        isDark,
+        toggleTheme,
+        isNightTime,
+        userPreference,
+        setUserPreference,
+      }}
+    >
       {children}
     </ThemeContext.Provider>
   );

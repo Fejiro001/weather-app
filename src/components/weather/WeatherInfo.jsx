@@ -4,6 +4,9 @@ import { BgNoise, Loading } from "../basic";
 import { Star } from "lucide-react";
 import { useCallback, useMemo } from "react";
 import { notifyError } from "../basic/toastConfig";
+import useSound from "use-sound";
+import bubblePop from "/sounds/bubble-pop.mp3";
+import { useSettings } from "../../hooks";
 
 const WeatherInfo = () => {
   const { current } = useWeatherStore((state) => state.weatherData) || {};
@@ -16,6 +19,20 @@ const WeatherInfo = () => {
     (state) => state.removeFavoriteLocation
   );
   const favoriteLocations = useWeatherStore((state) => state.favoriteLocations);
+  const { isSoundEnabled } = useSettings();
+
+  const [playOn] = useSound(bubblePop, {
+    volume: 0.15,
+    interrupt: true,
+    playbackRate: 1.25,
+    soundEnabled: isSoundEnabled,
+  });
+  const [playOff] = useSound(bubblePop, {
+    volume: 0.1,
+    interrupt: true,
+    playbackRate: 1.0,
+    soundEnabled: isSoundEnabled,
+  });
 
   const isSaved = useMemo(() => {
     if (!location) return false;
@@ -46,10 +63,19 @@ const WeatherInfo = () => {
 
     if (isSaved) {
       removeFavoriteLocation(location);
+      playOff();
     } else {
       addFavoriteLocation(location);
+      playOn();
     }
-  }, [addFavoriteLocation, isSaved, location, removeFavoriteLocation]);
+  }, [
+    addFavoriteLocation,
+    isSaved,
+    location,
+    playOff,
+    playOn,
+    removeFavoriteLocation,
+  ]);
 
   if (isFetching) {
     return (
