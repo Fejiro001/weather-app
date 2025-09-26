@@ -15,7 +15,7 @@ const ThemeToggle = () => {
   });
 
   const [playOff] = useSound(toggleOff, {
-    volume: 0.3,
+    volume: 0.4,
     playbackRate: 0.95,
     interrupt: true,
   });

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import ThemeContext from "./ThemeContext";
 import useWeatherStore from "../store/weatherStore";
 
@@ -18,11 +18,20 @@ const ThemeProvider = ({ children }) => {
     return () => mediaQuery.removeEventListener("change", handler);
   }, []);
 
+  /**
+   * Memoized boolean indicating whether the dark theme should be active.
+   *
+   * Resolution order:
+   * 1) userPreference: "dark" -> true, "light" -> false.
+   * 2) If weatherData is present, use isNightTime.
+   * 3) Otherwise, fall back to systemPreference.
+   *
+   * @type {boolean}
+   */
   const isDark = useMemo(() => {
     if (userPreference === "dark") return true;
     if (userPreference === "light") return false;
 
-    // If userPreference is "auto", use isNightTime from weatherData
     if (weatherData) {
       return isNightTime;
     }
@@ -30,14 +39,21 @@ const ThemeProvider = ({ children }) => {
     return systemPreference;
   }, [isNightTime, systemPreference, userPreference, weatherData]);
 
-  const toggleTheme = () => {
+  /**
+   * Memoized callback that toggles the user's theme preference.
+   * - If the current preference is "auto", it sets the next value to the inverse of the current isDark state.
+   * - Otherwise, it switches between "light" and "dark".
+   *
+   * @returns {void}
+   */
+  const toggleTheme = useCallback(() => {
     setUserPreference((prev) => {
       if (prev === "auto") {
         return isDark ? "light" : "dark";
       }
       return prev === "dark" ? "light" : "dark";
     });
-  };
+  }, [isDark]);
 
   return (
     <ThemeContext.Provider value={{ isDark, toggleTheme, isNightTime }}>

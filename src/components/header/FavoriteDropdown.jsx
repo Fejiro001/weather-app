@@ -56,7 +56,12 @@ const FavoriteDropdown = () => {
                     <p>
                       {location.name}, {location.country}
                     </p>
-                    <p className="small_text">{location.admin1}</p>
+
+                    {location.admin1 || location.admin2 && (
+                      <p className="small_text">
+                        {location.admin2}, {location.admin1}
+                      </p>
+                    )}
                   </button>
                 </li>
               ))}

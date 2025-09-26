@@ -82,7 +82,7 @@ const SearchBar = ({
                       >
                         {loc.name}, {loc.country}
                         <p className="small_text">
-                          {loc.admin1}
+                          {loc.admin2}, {loc.admin1}
                         </p>
                       </button>
                     </li>

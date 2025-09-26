@@ -80,7 +80,7 @@ const HomePage = () => {
 
       {locations === undefined ? (
         <div className="flex justify-center items-center">
-          <p className="text-preset-4 mt-12">No search result found!</p>
+          <p className="text-preset-4 mt-12 not-dark:text-(--neutral-900)">No search result found!</p>
         </div>
       ) : (
         <section className="flex flex-col xl:grid xl:grid-cols-3 gap-8 xl:h-dvh xl:grid-rows-1">
