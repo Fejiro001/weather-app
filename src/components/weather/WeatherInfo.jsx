@@ -101,8 +101,7 @@ const WeatherInfo = () => {
           <Star
             className={`${
               isSaved ? "fill-yellow-400 stroke-yellow-400" : ""
-            } absolute top-10 left-8`}
-            size={30}
+            } absolute top-8 sm:top-10 left-8 w-6 h-6 hover:fill-yellow-400 hover:stroke-yellow-400 transition-all`}
           />
         </button>
 

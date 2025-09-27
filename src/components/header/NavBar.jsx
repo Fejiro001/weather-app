@@ -25,13 +25,21 @@ const NavBar = () => {
           </li>
 
           <li>
-            <Link className="day_button flex gap-2 w-full" to="/favourites">
+            <Link
+              onClick={() => setIsOpen(false)}
+              className="day_button flex gap-2 w-full"
+              to="/favourites"
+            >
               <Star size={18} />
               <span>Favourite Locations</span>
             </Link>
           </li>
           <li>
-            <Link className="day_button flex gap-2 w-full" to="/compare">
+            <Link
+              onClick={() => setIsOpen(false)}
+              className="day_button flex gap-2 w-full"
+              to="/compare"
+            >
               <ArrowUpDown size={18} className="rotate-12" />
               <span>Compare Locations</span>
             </Link>

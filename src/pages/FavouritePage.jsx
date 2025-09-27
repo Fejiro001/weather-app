@@ -14,7 +14,8 @@ const FavouritePage = () => {
     <main className="main text-white not-dark:text-(--neutral-900)">
       <div className="flex flex-col justify-between gap-4 mb-10">
         <Link to="/" className="back_button">
-          <ArrowLeft size={20} /> Back to Home
+          <ArrowLeft size={20} />
+          Home
         </Link>
 
         <h1 className="text-preset-2 text-2xl sm:text-3xl">Manage Favorites</h1>
