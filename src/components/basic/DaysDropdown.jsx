@@ -13,16 +13,16 @@ const days = [
   "sunday",
 ];
 
-const DaysDropdown = ({ selectedDay, setSelectedDay }) => {
-  const isFetching = useWeatherStore((state) => state.isFetching);
+const DaysDropdown = ({ today, selectedDay, setSelectedDay }) => {
   const [isOpen, setIsOpen] = useState(false);
   const daysDropdownRef = useRef();
 
-  useClickOutside(daysDropdownRef, setIsOpen);
+  const isFetching = useWeatherStore((state) => state.isFetching);
 
-  const toggleDropdown = () => {
-    setIsOpen((prev) => !prev);
-  };
+  const isToday =
+    selectedDay === today ? "Today" : days[days.indexOf(selectedDay)];
+
+  const { toggleDropdown } = useClickOutside(daysDropdownRef, setIsOpen);
 
   return (
     <div ref={daysDropdownRef} className="relative">
@@ -31,12 +31,8 @@ const DaysDropdown = ({ selectedDay, setSelectedDay }) => {
         onClick={toggleDropdown}
         className="days_dropdown"
       >
-        <span>{isFetching ? "-" : days[days.indexOf(selectedDay)]}</span>
-        <Dropdown
-          className={`h-3.5 w-[0.5625rem] md:w-3 md:h-[1.125rem] ${
-            isOpen ? "rotate-180" : ""
-          } transition-all`}
-        />
+        <span>{isFetching ? "-" : isToday}</span>
+        <Dropdown isOpen={isOpen} />
       </button>
 
       {isOpen && (

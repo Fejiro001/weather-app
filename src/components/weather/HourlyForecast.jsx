@@ -34,11 +34,11 @@ const HourlyForecast = () => {
     useWeatherStore((state) => state.weatherData) || {};
 
   const date = new Date(current?.time ?? Date.now());
-  const today = new Intl.DateTimeFormat("en-US", { weekday: "long" }).format(
-    date
-  );
+  const today = new Intl.DateTimeFormat("en-US", { weekday: "long" })
+    .format(date)
+    .toLowerCase();
 
-  const [selectedDay, setSelectedDay] = useState(today.toLowerCase());
+  const [selectedDay, setSelectedDay] = useState(today);
 
   const hourlyForecasts = useMemo(() => {
     if (!hourly) {
@@ -75,7 +75,7 @@ const HourlyForecast = () => {
 
     const currentHour = new Date(current?.time ?? Date.now()).getHours();
 
-    const isToday = selectedDay.toLowerCase() === today.toLowerCase();
+    const isToday = selectedDay === today;
 
     if (isToday) {
       return day.filter((hourData) => {
@@ -94,6 +94,7 @@ const HourlyForecast = () => {
           Hourly forecast
         </h3>
         <DaysDropdown
+          today={today}
           selectedDay={selectedDay}
           setSelectedDay={setSelectedDay}
         />
