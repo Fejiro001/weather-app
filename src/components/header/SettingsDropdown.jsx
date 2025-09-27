@@ -1,4 +1,5 @@
 import { memo, useCallback, useRef, useState } from "react";
+import { Fragment } from "react";
 import useWeatherStore from "../../store/weatherStore";
 
 import { Dropdown, Gear } from "../basic/Icons";
@@ -94,15 +95,11 @@ const SettingsDropdown = () => {
           </button>
 
           {allFields.map((field) => (
-            <>
-              <SettingFieldset
-                key={field.legend}
-                legend={field.legend}
-                options={field.options}
-              />
-              
+            <Fragment key={field.legend}>
+              <SettingFieldset legend={field.legend} options={field.options} />
+
               <hr className="last:hidden" />
-            </>
+            </Fragment>
           ))}
         </div>
       )}

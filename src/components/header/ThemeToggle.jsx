@@ -5,12 +5,6 @@ import toggleOff from "/sounds/switch-off.mp3";
 import toggleOn from "/sounds/switch-on.mp3";
 import Tippy from "@tippyjs/react";
 
-const translateClasses = {
-  light: "translate-x-0",
-  auto: "translate-x-[70%]",
-  dark: "translate-x-[140%]",
-};
-
 const bgClasses = {
   light: "bg-white",
   auto: "bg-(--blue-500)",
@@ -54,16 +48,14 @@ const ThemeToggle = () => {
       <Sun className="text-orange-500" />
     );
 
-  const dynamicClasses = `${
-    translateClasses[userPreference] || translateClasses.light
-  } ${bgClasses[userPreference] || bgClasses.light}`;
+  const dynamicClasses = `${bgClasses[userPreference] || bgClasses.light}`;
 
   return (
     <Tippy content="Toggle Theme">
       <button
         className={`${
           isDark ? "bg-(--neutral-700)/80" : "bg-gray-300/70"
-        } p-1 rounded-full inset-shadow-2xs w-24 outline-none transition-all duration-300 ease-in-out`}
+        } p-1 rounded-full inset-shadow-2xs outline-none transition-all duration-300 ease-in-out`}
         onClick={handleToggle}
         aria-label="Toggle Theme"
         aria-pressed={isDark}
@@ -75,7 +67,7 @@ const ThemeToggle = () => {
         }}
       >
         <div
-          className={`${dynamicClasses} p-2 rounded-full w-fit shadow-2xl rotate-45 *:h-5 *:w-auto outline-1 dark:outline-(--neutral-700) not-dark:outline-(--neutral-200) transition-all duration-300 ease-in-out`}
+          className={`${dynamicClasses} p-2 rounded-full w-fit shadow-2xl *:h-5 *:w-auto outline-1 dark:outline-(--neutral-700) not-dark:outline-(--neutral-200) transition-all duration-300 ease-in-out`}
         >
           {iconContent}
         </div>
