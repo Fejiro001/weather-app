@@ -32,7 +32,7 @@ const FavoriteDropdown = () => {
           className="settings_dropdown flex gap-1 text-preset-8 sm:text-preset-7"
         >
           <Star className="w-auto h-4 sm:h-5" />
-          <span className="hidden md:block">Favourites</span>
+          <span className="hidden lg:block">Favourites</span>
         </button>
       </Tippy>
 
@@ -53,11 +53,12 @@ const FavoriteDropdown = () => {
                       {location.name}, {location.country}
                     </p>
 
-                    {location.admin1 || location.admin2 && (
-                      <p className="small_text">
-                        {location.admin2}, {location.admin1}
-                      </p>
-                    )}
+                    {location.admin1 ||
+                      (location.admin2 && (
+                        <p className="small_text">
+                          {location.admin2}, {location.admin1}
+                        </p>
+                      ))}
                   </button>
                 </li>
               ))}
@@ -66,7 +67,7 @@ const FavoriteDropdown = () => {
 
               <li>
                 <Link
-                  to="/favorites"
+                  to="/favourites"
                   onClick={() => setIsOpen(false)}
                   className="flex items-center gap-2 text-center day_button"
                 >

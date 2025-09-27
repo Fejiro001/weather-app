@@ -13,7 +13,7 @@ function App() {
       <Routes>
         <Route element={<AppLayout />}>
           <Route path="/" element={<HomePage />} />
-          <Route path="/favorites" element={<FavouritePage />} />
+          <Route path="/favourites" element={<FavouritePage />} />
           <Route path="/compare" element={<ComparisonPage />} />
         </Route>
       </Routes>

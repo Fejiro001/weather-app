@@ -123,6 +123,13 @@
   scroll-behavior: smooth;
 }
 
+@media (prefers-color-scheme: light) {
+  :root {
+    scrollbar-color: var(--blue-500) white;
+    scroll-behavior: smooth;
+  }
+}
+
 @layer base {
   body {
     @apply fill-white not-dark:fill-(--neutral-900);
@@ -241,7 +248,7 @@
     @apply flex flex-col items-center gap-12 xl:gap-16 p-4 md:p-6 xl:px-28 xl:py-12 theme-day dark:theme-night min-h-screen text-white bg-(--neutral-900) not-dark:bg-(--blue-200);
   }
   .main {
-    @apply space-y-8 xl:space-y-12 w-full max-w-7xl mt-12 lg:mt-0;
+    @apply space-y-8 xl:space-y-12 w-full max-w-7xl mt-5 lg:mt-0;
   }
   .back_button {
     @apply flex gap-2 items-center hover:underline hover:gap-4 transition-all duration-[400ms] text-preset-6;
@@ -249,7 +256,7 @@
 
   /* HEADER */
   .header {
-    @apply flex md:justify-between items-center gap-8 w-full bg-(--neutral-900)/90 not-dark:bg-white/90 py-2 px-8 shadow-lg shadow-(color:--neutral-800) not-dark:shadow-gray-400 rounded-full sticky top-5 sm:top-12 z-999 max-w-[100rem] outline-1 dark:outline-(--neutral-700) not-dark:outline-(--neutral-200);
+    @apply flex justify-between items-center gap-4 md:gap-8 w-full bg-(--neutral-900) not-dark:bg-white py-2 px-4 sm:px-8 shadow-lg shadow-(color:--neutral-800) not-dark:shadow-gray-400 rounded-lg sticky top-5 sm:top-12 z-999 max-w-[100rem] outline-1 dark:outline-(--neutral-700) not-dark:outline-(--neutral-200);
   }
   .settings_dropdown {
     @apply bg-(--neutral-800) not-dark:bg-gray-100 drop-shadow-lg not-dark:drop-shadow-gray-400 not-dark:text-(--neutral-900) hover:bg-(--neutral-700) py-2 px-2.5 rounded-md text-preset-8 sm:text-preset-7 flex items-center gap-2 capitalize focus-visible:focus-white not-dark:hover:bg-gray-100;
