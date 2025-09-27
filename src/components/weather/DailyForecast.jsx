@@ -5,7 +5,15 @@ const Forecast = ({ day, icon, min_temp, max_temp, isFetching }) => {
   return (
     <div className="forecast">
       {isFetching ? (
-        <div className="loading"></div>
+        <>
+          <div className="bg-black/10 dark:bg-white/10 motion-safe:animate-pulse h-7 w-2/3 rounded-full"></div>
+          <div className="bg-black/10 dark:bg-white/10 motion-safe:animate-pulse h-10 w-10 rounded-full"></div>
+
+          <div className="temp_range">
+            <div className="bg-black/10 dark:bg-white/10 motion-safe:animate-pulse h-5 w-1/3 rounded-full"></div>
+            <div className="bg-black/10 dark:bg-white/10 motion-safe:animate-pulse h-5 w-1/3 rounded-full"></div>
+          </div>
+        </>
       ) : (
         <>
           <p className="text-preset-6">{day}</p>
@@ -31,37 +39,41 @@ const DailyForecast = () => {
 
   return (
     <section className="space-y-5">
-      <h3 className="text-preset-5 text-(--neutral-000) not-dark:text-(--neutral-900)">Daily Forecast</h3>
+      <h3 className="text-preset-5 text-(--neutral-000) not-dark:text-(--neutral-900)">
+        Daily Forecast
+      </h3>
 
       <div className="grid grid-cols-[repeat(auto-fit,minmax(5.5rem,1fr))] gap-4">
         {Array(DAYS_IN_A_WEEK)
           .fill(null)
           .map((_, index) => {
-            const isDataAvailable = !isFetching && daily?.time?.[index];
+            const hasData = daily?.time?.[index];
+
+            const shouldDisplayData = !isFetching && hasData;
 
             return (
               <Forecast
                 key={index}
                 isFetching={isFetching}
                 day={
-                  isDataAvailable
+                  shouldDisplayData
                     ? new Intl.DateTimeFormat("en-US", {
                         weekday: "short",
                       }).format(new Date(daily.time[index]))
                     : ""
                 }
                 icon={
-                  isDataAvailable
+                  shouldDisplayData
                     ? getWeatherIcon(daily?.weather_code[index])
                     : ""
                 }
                 min_temp={
-                  isDataAvailable
+                  shouldDisplayData
                     ? `${Math.round(daily?.temperature_2m_min[index] ?? 0)}°`
                     : ""
                 }
                 max_temp={
-                  isDataAvailable
+                  shouldDisplayData
                     ? `${Math.round(daily?.temperature_2m_max[index] ?? 0)}°`
                     : ""
                 }

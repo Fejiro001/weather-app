@@ -2,11 +2,24 @@ import { useMemo } from "react";
 import useWeatherStore from "../../store/weatherStore";
 
 const Detail = ({ label, value, unit, isFetching }) => {
+  if (isFetching) {
+    return (
+      <div className="detail">
+        <p className="text-preset-6 text-(--neutral-200) not-dark:text-(--neutral-600)">
+          {label}
+        </p>
+        <div className="bg-black/10 dark:bg-white/10 motion-safe:animate-pulse h-10 w-1/3 rounded-full"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="detail">
-      <p className="text-preset-6 text-(--neutral-200) not-dark:text-(--neutral-600)">{label}</p>
+      <p className="text-preset-6 text-(--neutral-200) not-dark:text-(--neutral-600)">
+        {label}
+      </p>
       <p className="text-preset-3 text-(--neutral-000) not-dark:text-(--neutral-900)">
-        {isFetching ? "__" : `${Math.round(value ?? 0)}${unit}`}
+        {`${Math.round(value ?? 0)}${unit}`}
       </p>
     </div>
   );
