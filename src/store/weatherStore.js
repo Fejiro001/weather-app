@@ -57,19 +57,45 @@ const useWeatherStore = create()(
 
       fetchGeolocationWeather: async (position) => {
         set({ isFetching: true, isError: false });
+        const { latitude, longitude } = position.coords;
+
         try {
-          const { latitude, longitude } = position.coords;
-          const geoResponse = await axios.get(
-            `https://geocoding-api.open-meteo.com/v1/search?name=location&count=1&language=en&latitude=${latitude}&longitude=${longitude}`
+          const nomatimResponse = await axios.get(
+            `https://nominatim.openstreetmap.org/reverse`,
+            {
+              params: {
+                lat: latitude,
+                lon: longitude,
+                format: "json",
+                "accept-language": "en",
+              },
+            }
           );
 
-          const geoData = geoResponse.data.results[0];
+          const address = nomatimResponse.data.address;
+          const displayName = nomatimResponse.data.display_name;
 
-          if (!geoData) {
-            notifyError("Location not found");
-          }
+          const city =
+            address.city ||
+            address.town ||
+            address.village ||
+            address.hamlet ||
+            address.county ||
+            displayName.split(",")[0].trim();
+          const country = address.country || "";
 
-          set({ location: geoData });
+          const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+          // Structure location data
+          const geoData = {
+            name: city,
+            country: country,
+            latitude: latitude,
+            longitude: longitude,
+            timezone: timezone,
+          };
+
+          get().setLocation(geoData);
 
           // Get the data for the new location
           await get().fetchWeather();
