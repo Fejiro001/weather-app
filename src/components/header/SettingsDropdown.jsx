@@ -1,22 +1,48 @@
 import { memo, useCallback, useRef, useState } from "react";
 import useWeatherStore from "../../store/weatherStore";
 
-import checkmark from "../../assets/images/icon-checkmark.svg";
 import { Dropdown, Gear } from "../basic/Icons";
 import { useClickOutside } from "../../hooks";
+import { SettingFieldset } from ".";
+
+const allFields = [
+  {
+    legend: "Temperature",
+    options: [
+      { label: "Celsius (°C)", value: "celsius", type: "temperature_unit" },
+      {
+        label: "Fahrenheit (°F)",
+        value: "fahrenheit",
+        type: "temperature_unit",
+      },
+    ],
+  },
+  {
+    legend: "Wind Speed",
+    options: [
+      { label: "km/h", value: "kmh", type: "wind_speed_unit" },
+      { label: "mph", value: "mph", type: "wind_speed_unit" },
+    ],
+  },
+  {
+    legend: "Precipitation",
+    options: [
+      { label: "Millimeters (mm)", value: "mm", type: "precipitation_unit" },
+      { label: "Inches (in)", value: "inch", type: "precipitation_unit" },
+    ],
+  },
+];
 
 const SettingsDropdown = () => {
-  const units = useWeatherStore((state) => state.units);
-  const setUnits = useWeatherStore((state) => state.setUnits);
   const [isOpen, setIsOpen] = useState(false);
   const settingsDropdownRef = useRef();
 
-  useClickOutside(settingsDropdownRef, setIsOpen);
+  const units = useWeatherStore((state) => state.units);
+  const setUnits = useWeatherStore((state) => state.setUnits);
 
-  const toggleDropdown = () => {
-    setIsOpen((prev) => !prev);
-  };
+  const { toggleDropdown } = useClickOutside(settingsDropdownRef, setIsOpen);
 
+  // Toggle between Metric and Imperial unit systems
   const toggleSystem = useCallback(() => {
     const isMetric = units.temperature_unit === "celsius";
     const newUnits = isMetric
@@ -45,11 +71,7 @@ const SettingsDropdown = () => {
       >
         <Gear className="size-3.5 md:size-4" />
         <span>Units</span>
-        <Dropdown
-          className={`h-3.5 w-[0.5625rem] md:w-3 md:h-[1.125rem] ${
-            isOpen ? "rotate-180" : ""
-          } transition-all`}
-        />
+        <Dropdown isOpen={isOpen} />
       </button>
 
       {isOpen && (
@@ -71,89 +93,14 @@ const SettingsDropdown = () => {
               : "Switch to Metric"}
           </button>
 
-          <fieldset>
-            <legend>Temperature</legend>
-            <div className="unit_options">
-              <button
-                onClick={() =>
-                  setUnits({ ...units, temperature_unit: "celsius" })
-                }
-                className={units.temperature_unit === "celsius" ? "active" : ""}
-              >
-                <span>Celsius (°C)</span>
-                {units.temperature_unit === "celsius" && (
-                  <img src={checkmark} alt="Selected" />
-                )}
-              </button>
-              <button
-                onClick={() =>
-                  setUnits({ ...units, temperature_unit: "fahrenheit" })
-                }
-                className={
-                  units.temperature_unit === "fahrenheit" ? "active" : ""
-                }
-              >
-                <span>Fahrenheit (°F)</span>
-                {units.temperature_unit === "fahrenheit" && (
-                  <img src={checkmark} alt="Selected" />
-                )}
-              </button>
-            </div>
-          </fieldset>
-
+          {allFields.map((field) => (
+            <SettingFieldset
+              key={field.legend}
+              legend={field.legend}
+              options={field.options}
+            />
+          ))}
           <hr />
-
-          <fieldset>
-            <legend>Wind Speed</legend>
-            <div className="unit_options">
-              <button
-                onClick={() => setUnits({ ...units, wind_speed_unit: "kmh" })}
-                className={units.wind_speed_unit === "kmh" ? "active" : ""}
-              >
-                <span>km/h</span>
-                {units.wind_speed_unit === "kmh" && (
-                  <img src={checkmark} alt="Selected" />
-                )}
-              </button>
-              <button
-                onClick={() => setUnits({ ...units, wind_speed_unit: "mph" })}
-                className={units.wind_speed_unit === "mph" ? "active" : ""}
-              >
-                <span>mph</span>
-                {units.wind_speed_unit === "mph" && (
-                  <img src={checkmark} alt="Selected" />
-                )}
-              </button>
-            </div>
-          </fieldset>
-
-          <hr />
-
-          <fieldset>
-            <legend>Precipitation</legend>
-            <div className="unit_options">
-              <button
-                onClick={() => setUnits({ ...units, precipitation_unit: "mm" })}
-                className={units.precipitation_unit === "mm" ? "active" : ""}
-              >
-                <span>Millimeters (mm)</span>
-                {units.precipitation_unit === "mm" && (
-                  <img src={checkmark} alt="Selected" />
-                )}
-              </button>
-              <button
-                onClick={() =>
-                  setUnits({ ...units, precipitation_unit: "inch" })
-                }
-                className={units.precipitation_unit === "inch" ? "active" : ""}
-              >
-                <span>Inches (in)</span>
-                {units.precipitation_unit === "inch" && (
-                  <img src={checkmark} alt="Selected" />
-                )}
-              </button>
-            </div>
-          </fieldset>
         </div>
       )}
     </div>
