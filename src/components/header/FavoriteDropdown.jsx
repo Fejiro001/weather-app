@@ -68,7 +68,7 @@ const FavoriteDropdown = () => {
                 <Link
                   to="/favorites"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center gap-2 justify-center text-center day_button"
+                  className="flex items-center gap-2 text-center day_button"
                 >
                   <Gear />
                   <span>Manage Locations</span>

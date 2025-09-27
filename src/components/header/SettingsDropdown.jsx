@@ -94,13 +94,16 @@ const SettingsDropdown = () => {
           </button>
 
           {allFields.map((field) => (
-            <SettingFieldset
-              key={field.legend}
-              legend={field.legend}
-              options={field.options}
-            />
+            <>
+              <SettingFieldset
+                key={field.legend}
+                legend={field.legend}
+                options={field.options}
+              />
+              
+              <hr className="last:hidden" />
+            </>
           ))}
-          <hr />
         </div>
       )}
     </div>

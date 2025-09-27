@@ -1,7 +1,7 @@
 import { memo } from "react";
-import { FavoriteDropdown, SettingsDropdown, ThemeToggle } from "../header";
+import { FavoriteDropdown, SettingsDropdown, ThemeToggle } from ".";
 import { ArrowDownUp, Volume, Volume2 } from "lucide-react";
-import { HeaderLogo } from "./Icons";
+import { HeaderLogo } from "../basic/Icons";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import { useSettings } from "../../hooks";
@@ -25,7 +25,10 @@ const Header = () => {
 
         <ThemeToggle />
 
-        <button onClick={toggleSound} className="settings_dropdown rounded-full">
+        <button
+          onClick={toggleSound}
+          className="settings_dropdown rounded-full *:w-auto *:h-4 *:sm:h-5"
+        >
           {isSoundEnabled ? <Volume2 /> : <Volume />}
         </button>
 
