@@ -68,7 +68,7 @@ export const Gear = ({ className }) => {
   );
 };
 
-export const Dropdown = ({ className }) => {
+export const Dropdown = ({ isOpen }) => {
   return (
     <>
       <svg
@@ -76,7 +76,9 @@ export const Dropdown = ({ className }) => {
         width="13"
         height="8"
         viewBox="0 0 13 8"
-        className={className}
+        className={`h-3.5 w-[0.5625rem] md:w-3 md:h-[1.125rem] ${
+          isOpen ? "rotate-180" : ""
+        } transition-all`}
       >
         <path d="M6.309 7.484 1.105 2.316c-.175-.14-.175-.421 0-.597l.704-.668a.405.405 0 0 1 .597 0l4.219 4.148 4.184-4.148c.175-.176.457-.176.597 0l.703.668c.176.176.176.457 0 .597L6.906 7.484a.405.405 0 0 1-.597 0Z" />
       </svg>
@@ -99,7 +101,3 @@ export const Loader = ({ className }) => {
     </>
   );
 };
-
-// export const Dropdown = () => {
-//   return <></>;
-// };

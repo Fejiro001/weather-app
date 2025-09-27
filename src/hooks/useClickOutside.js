@@ -19,7 +19,11 @@ const useClickOutside = (ref, setIsOpen) => {
     };
   }, [hideDropdown, ref]);
 
-  return {};
+  const toggleDropdown = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  return { toggleDropdown };
 };
 
 export default useClickOutside;

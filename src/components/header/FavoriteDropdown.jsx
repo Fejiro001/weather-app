@@ -13,11 +13,7 @@ const FavoriteDropdown = () => {
   const setLocation = useWeatherStore((state) => state.setLocation);
   const fetchWeather = useWeatherStore((state) => state.fetchWeather);
 
-  useClickOutside(favoriteRef, setIsOpen);
-
-  const toggleDropdown = () => {
-    setIsOpen((prev) => !prev);
-  };
+  const { toggleDropdown } = useClickOutside(favoriteRef, setIsOpen);
 
   const handleFetchWeather = (location) => {
     if (location) {
