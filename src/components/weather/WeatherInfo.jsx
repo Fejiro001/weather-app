@@ -22,13 +22,13 @@ const WeatherInfo = () => {
   const { isSoundEnabled } = useSettings();
 
   const [playOn] = useSound(bubblePop, {
-    volume: 0.15,
+    volume: 0.25,
     interrupt: true,
     playbackRate: 1.25,
     soundEnabled: isSoundEnabled,
   });
   const [playOff] = useSound(bubblePop, {
-    volume: 0.1,
+    volume: 0.2,
     interrupt: true,
     playbackRate: 1.0,
     soundEnabled: isSoundEnabled,

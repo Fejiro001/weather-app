@@ -116,17 +116,31 @@
       background-position: 350% 50%, 350% 50%;
     }
   }
+
+  --animate-wiggle: wiggle 1s ease-in-out infinite;
+
+  @keyframes wiggle {
+    0%,
+    100% {
+      transform: rotate(-15deg);
+    }
+    50% {
+      transform: rotate(15deg);
+    }
+  }
 }
 
 :root {
   scrollbar-color: var(--neutral-900) var(--neutral-600);
   scroll-behavior: smooth;
+  scrollbar-width: thin;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
     scrollbar-color: var(--blue-500) white;
     scroll-behavior: smooth;
+    scrollbar-width: thin;
   }
 }
 
@@ -136,6 +150,7 @@
     font-size: var(--text-base); /* 18px */
     font-family: var(--font-sans);
     line-height: 1.5;
+    overflow-y: scroll;
   }
 
   button {
@@ -268,6 +283,10 @@
 
   .dropdownMenu {
     @apply absolute right-0 mt-2.5 bg-(--neutral-800) outline-(--neutral-600) outline-1 rounded-xl text-nowrap py-1.5 px-2 space-y-1 min-w-56 w-full z-20 not-dark:bg-gray-50 not-dark:outline-gray-200 not-dark:text-(--neutral-900) drop-shadow-md not-dark:drop-shadow-black;
+  }
+
+  .theme_toggle_icon {
+    @apply p-2 rounded-full w-fit shadow-2xl *:h-5 *:w-auto outline-1 dark:outline-(--neutral-700) not-dark:outline-(--neutral-200);
   }
 
   hr {

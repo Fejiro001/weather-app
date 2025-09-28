@@ -3,7 +3,11 @@ import SettingsContext from "./SettingsContext";
 
 const SettingsProvider = ({ children }) => {
   const [isSoundEnabled, setIsSoundEnabled] = useState(() => {
-    return localStorage.getItem("sound") === "true";
+    const localSound = localStorage.getItem("sound");
+    if (localSound !== null) {
+      return localSound === "true";
+    }
+    return true;
   });
 
   const toggleSound = () => setIsSoundEnabled((prev) => !prev);

@@ -1,6 +1,7 @@
 import { memo, useCallback, useRef, useState } from "react";
 import { Fragment } from "react";
 import useWeatherStore from "../../store/weatherStore";
+import { AnimatePresence, motion } from "motion/react";
 
 import { Dropdown, Gear } from "../basic/Icons";
 import { useClickOutside } from "../../hooks";
@@ -62,47 +63,57 @@ const SettingsDropdown = () => {
 
   return (
     <div ref={settingsDropdownRef} className="relative">
-      <button
+      <motion.button
+        whileTap={{ scale: 0.95 }}
         onClick={toggleDropdown}
         id="dropdownButton"
         aria-haspopup="true"
         aria-expanded={isOpen}
         aria-controls="dropdownMenu"
-        className="settings_dropdown"
+        className="settings_dropdown group"
       >
-        <Gear className="size-3.5 md:size-4" />
+        <Gear className="size-3.5 md:size-4 group-hover:animate-spin" />
         <span>Units</span>
         <Dropdown isOpen={isOpen} />
-      </button>
+      </motion.button>
 
-      {isOpen && (
-        <div
-          className="dropdownMenu z-40"
-          id="dropdownMenu"
-          aria-labelledby="dropdownButton"
-          role="region"
-          aria-label="Unit settings"
-        >
-          <button
-            onClick={toggleSystem}
-            className="switch_btn"
-            type="button"
-            aria-label="Switch unit system"
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+            className="dropdownMenu z-40"
+            id="dropdownMenu"
+            aria-labelledby="dropdownButton"
+            role="region"
+            aria-label="Unit settings"
           >
-            {units.temperature_unit === "celsius"
-              ? "Switch to Imperial"
-              : "Switch to Metric"}
-          </button>
+            <button
+              onClick={toggleSystem}
+              className="switch_btn"
+              type="button"
+              aria-label="Switch unit system"
+            >
+              {units.temperature_unit === "celsius"
+                ? "Switch to Imperial"
+                : "Switch to Metric"}
+            </button>
 
-          {allFields.map((field) => (
-            <Fragment key={field.legend}>
-              <SettingFieldset legend={field.legend} options={field.options} />
+            {allFields.map((field) => (
+              <Fragment key={field.legend}>
+                <SettingFieldset
+                  legend={field.legend}
+                  options={field.options}
+                />
 
-              <hr className="last:hidden" />
-            </Fragment>
-          ))}
-        </div>
-      )}
+                <hr className="last:hidden" />
+              </Fragment>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

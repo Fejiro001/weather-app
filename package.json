@@ -10,12 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@gsap/react": "^2.1.2",
     "@tailwindcss/vite": "^4.1.13",
     "@tippyjs/react": "^4.2.6",
     "axios": "^1.12.2",
-    "gsap": "^3.13.0",
     "lucide-react": "^0.544.0",
+    "motion": "^12.23.22",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.1",

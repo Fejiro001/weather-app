@@ -1,5 +1,7 @@
 import { memo } from "react";
-import { ArrowDownUp, Menu } from "lucide-react";
+import { Link } from "react-router-dom";
+import { ArrowDownUp } from "lucide-react";
+import { motion } from "motion/react";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import {
@@ -11,9 +13,19 @@ import {
 } from ".";
 import { Logo } from "../basic";
 
+const headerVariants = {
+  initial: { y: -50, opacity: 0 },
+  animate: { y: 0, opacity: 1, transition: { duration: 0.7, ease: "easeOut" } },
+};
+
 const Header = () => {
   return (
-    <div className="header">
+    <motion.div
+      className="header"
+      variants={headerVariants}
+      initial="initial"
+      animate="animate"
+    >
       <Logo />
 
       <div className="flex items-center gap-2 md:gap-4">
@@ -21,10 +33,15 @@ const Header = () => {
           <FavoriteDropdown />
 
           <Tippy content="Compare Locations">
-            <button className="settings_dropdown flex gap-1 text-preset-8 sm:text-preset-7">
-              <ArrowDownUp className="rotate-12 w-auto h-4 sm:h-5" />
-              <span className="hidden lg:block">Compare</span>
-            </button>
+            <Link to="/compare" className="h-full">
+              <motion.button
+                className="settings_dropdown flex gap-1 text-preset-8 sm:text-preset-7"
+                whileTap={{ scale: 0.95 }}
+              >
+                <ArrowDownUp className="rotate-12 w-auto h-4 sm:h-5" />
+                <span className="hidden lg:block">Compare</span>
+              </motion.button>
+            </Link>
           </Tippy>
         </div>
 
@@ -38,7 +55,7 @@ const Header = () => {
 
         <NavBar />
       </div>
-    </div>
+    </motion.div>
   );
 };
 
