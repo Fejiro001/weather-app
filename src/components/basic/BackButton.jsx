@@ -1,0 +1,17 @@
+import { Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+
+const BackButton = ({ children }) => {
+  return (
+    <div className="flex flex-col justify-between gap-4 mb-10">
+      <Link to="/" className="back_button">
+        <ArrowLeft size={20} />
+        Home
+      </Link>
+
+      <h1 className="text-preset-2 text-2xl sm:text-3xl">{children}</h1>
+    </div>
+  );
+};
+
+export default BackButton;

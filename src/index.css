@@ -371,4 +371,7 @@
   .location_list {
     @apply flex items-center justify-between p-4 rounded-lg shadow-lg transition-all duration-300;
   }
+  .no_locations {
+    @apply text-center p-12 border border-dashed border-(--neutral-300) rounded-lg text-xl text-(--neutral-200) not-dark:text-(--neutral-800);
+  }
 }

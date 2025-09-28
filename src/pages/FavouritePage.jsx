@@ -1,6 +1,6 @@
 import useWeatherStore from "../store/weatherStore";
-import { ArrowLeft, Trash2 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Trash2 } from "lucide-react";
+import { BackButton } from "../components/basic";
 
 const FavouritePage = () => {
   const favoriteLocations =
@@ -12,21 +12,12 @@ const FavouritePage = () => {
 
   return (
     <main className="main text-white not-dark:text-(--neutral-900)">
-      <div className="flex flex-col justify-between gap-4 mb-10">
-        <Link to="/" className="back_button">
-          <ArrowLeft size={20} />
-          Home
-        </Link>
-
-        <h1 className="text-preset-2 text-2xl sm:text-3xl">Manage Favorites</h1>
-      </div>
+      <BackButton>Manage Favorites</BackButton>
 
       <div className="space-y-4">
         {favoriteLocations.length === 0 ? (
-          <div className="text-center p-12 border border-dashed border-(--neutral-300) rounded-lg">
-            <p className="text-xl text-(--neutral-200) not-dark:text-(--neutral-800)">
-              You haven't saved any locations yet.
-            </p>
+          <div className="no_locations">
+            <p>You haven't saved any locations yet.</p>
           </div>
         ) : (
           <ul className="space-y-4">
