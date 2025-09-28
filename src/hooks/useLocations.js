@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { notifyError } from "../components/basic/toastConfig";
+import { notifyError } from "../components/basic/toast";
 
 const useLocations = () => {
   const [fetchingLocations, setFetchingLocations] = useState(false);

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { create } from "zustand";
-import { notifyError } from "../components/basic/toastConfig";
 import { createJSONStorage, persist } from "zustand/middleware";
+import { notifyError } from "../components/basic/toast";
 
 const useWeatherStore = create()(
   persist(
@@ -84,6 +84,8 @@ const useWeatherStore = create()(
             displayName.split(",")[0].trim();
           const country = address.country || "";
 
+          const state = address.state || address.province || "";
+
           const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
           // Structure location data
@@ -93,6 +95,7 @@ const useWeatherStore = create()(
             latitude: latitude,
             longitude: longitude,
             timezone: timezone,
+            admin1: state,
           };
 
           get().setLocation(geoData);

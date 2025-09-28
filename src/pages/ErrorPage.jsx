@@ -3,8 +3,8 @@ import retryIcon from "../assets/images/icon-retry.svg";
 
 const ErrorPage = () => {
   return (
-    <main className="space-y-8 xl:space-y-12 w-full max-w-7xl mt-[1.125rem]">
-      <section className="flex flex-col items-center text-center gap-6">
+    <>
+      <section className="main flex flex-col items-center text-center gap-6 lg:mt-[1.125rem]">
         <img
           src={errorIcon}
           alt="Error icon"
@@ -25,7 +25,7 @@ const ErrorPage = () => {
           <span className="text-preset-7">Retry</span>
         </button>
       </section>
-    </main>
+    </>
   );
 };
 
