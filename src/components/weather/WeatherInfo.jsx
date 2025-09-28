@@ -1,12 +1,25 @@
-import { getWeatherIcon } from "../../utils/getWeatherIcon";
-import useWeatherStore from "../../store/weatherStore";
-import { BgNoise, Loading } from "../basic";
-import { Star } from "lucide-react";
 import { useCallback, useMemo } from "react";
-import { notifyError } from "../basic/toastConfig";
+import useWeatherStore from "../../store/weatherStore";
 import useSound from "use-sound";
-import bubblePop from "/sounds/bubble-pop.mp3";
+import { motion } from "motion/react";
+
+import { Star } from "lucide-react";
+import { getWeatherIcon, weatherIconMap } from "../../utils/getWeatherIcon";
 import { useSettings } from "../../hooks";
+
+import bubblePop from "/sounds/bubble-pop.mp3";
+import { BgNoise, Loading } from "../basic";
+import { notifyError } from "../basic/toast";
+
+const cloudContainerVariants = {
+  hidden: { transition: { staggerChildren: 0.05 } },
+  visible: {
+    transition: {
+      staggerChildren: 0.15,
+      delay: 0.5,
+    },
+  },
+};
 
 const WeatherInfo = () => {
   const { current } = useWeatherStore((state) => state.weatherData) || {};
@@ -87,7 +100,10 @@ const WeatherInfo = () => {
   }
 
   return (
-    <section
+    <motion.section
+      variants={cloudContainerVariants}
+      initial="hidden"
+      animate="visible"
       className={`weather_info relative overflow-hidden ${
         current?.is_day
           ? "not-dark:bg-(image:--day-gradient) bg-(image:--night-gradient)"
@@ -101,7 +117,7 @@ const WeatherInfo = () => {
           <Star
             className={`${
               isSaved ? "fill-yellow-400 stroke-yellow-400" : ""
-            } absolute top-8 sm:top-10 left-8 w-6 h-6 hover:fill-yellow-400 hover:stroke-yellow-400 transition-all`}
+            } absolute top-8 sm:top-10 left-8 w-6 h-6 lg:hover:fill-yellow-400 lg:hover:stroke-yellow-400 transition-all`}
           />
         </button>
 
@@ -123,7 +139,7 @@ const WeatherInfo = () => {
           {Math.round(current?.temperature_2m ?? 0)}°
         </span>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
