@@ -116,18 +116,6 @@
       background-position: 350% 50%, 350% 50%;
     }
   }
-
-  --animate-wiggle: wiggle 1s ease-in-out infinite;
-
-  @keyframes wiggle {
-    0%,
-    100% {
-      transform: rotate(-15deg);
-    }
-    50% {
-      transform: rotate(15deg);
-    }
-  }
 }
 
 :root {
@@ -271,7 +259,7 @@
 
   /* HEADER */
   .header {
-    @apply flex justify-between items-center gap-4 md:gap-8 w-full bg-(--neutral-900) not-dark:bg-white py-2 px-4 sm:px-8 shadow-lg shadow-(color:--neutral-800) not-dark:shadow-gray-400 rounded-lg sticky top-5 sm:top-12 z-999 max-w-[100rem] outline-1 dark:outline-(--neutral-700) not-dark:outline-(--neutral-200);
+    @apply flex justify-between items-center gap-4 md:gap-8 w-full bg-(--neutral-900) not-dark:bg-white py-2 px-2 sm:px-8 shadow-lg shadow-(color:--neutral-800) not-dark:shadow-gray-400 rounded-lg sticky top-5 sm:top-12 z-999 max-w-[100rem] outline-1 dark:outline-(--neutral-700) not-dark:outline-(--neutral-200);
   }
   .settings_dropdown {
     @apply bg-(--neutral-800) not-dark:bg-gray-100 drop-shadow-lg not-dark:drop-shadow-gray-400 not-dark:text-(--neutral-900) hover:bg-(--neutral-700) py-2 px-2.5 rounded-md text-preset-8 sm:text-preset-7 flex items-center gap-2 capitalize focus-visible:focus-white not-dark:hover:bg-gray-100;
@@ -354,7 +342,7 @@
 
   /* DAILY FORECAST */
   .daily_icon {
-    @apply w-[3.75rem] h-auto not-dark:bg-(--neutral-900)/80 rounded-full;
+    @apply w-[3.75rem] h-auto bg-(--neutral-700) not-dark:bg-(--neutral-900)/50 rounded-full;
   }
   .forecast {
     @apply min-h-[10.3125rem] bg-(--neutral-800) outline-(--neutral-600) outline-1 px-2.5 py-4 rounded-xl gap-4 flex flex-col items-center not-dark:bg-white not-dark:outline-gray-200 not-dark:text-(--neutral-900) drop-shadow-lg not-dark:drop-shadow-gray-400;
@@ -374,7 +362,7 @@
     @apply min-h-[3.75rem] bg-(--neutral-700) flex gap-2 justify-between items-center py-3 px-2.5 rounded-lg outline-(--neutral-600) outline-1 not-dark:bg-gray-100 not-dark:outline-gray-200 not-dark:text-(--neutral-900) drop-shadow-lg not-dark:drop-shadow-gray-400 mx-2;
   }
   .hour_icon {
-    @apply w-10 h-auto not-dark:bg-(--neutral-900)/80 rounded-full;
+    @apply w-10 h-auto bg-(--neutral-800) not-dark:bg-(--neutral-900)/50 rounded-full;
   }
   .scrollable_container {
     overflow-y: scroll;
