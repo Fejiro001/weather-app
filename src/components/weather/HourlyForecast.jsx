@@ -1,35 +1,28 @@
-import { DaysDropdown } from "../basic";
+import { useMemo, useRef, useState } from "react";
 import useWeatherStore from "../../store/weatherStore";
-import { useMemo, useState } from "react";
 import { getWeatherIcon } from "../../utils/getWeatherIcon";
+import { motion } from "motion/react";
 
-const HourlyWeatherCard = ({ icon, time, min_temp, isFetching }) => {
-  if (isFetching) {
-    return (
-      <li className="hour_card">
-        <div className="bg-black/10 dark:bg-white/10 motion-safe:animate-pulse h-8 w-8 rounded-full"></div>
-        <div className="bg-black/10 dark:bg-white/10 motion-safe:animate-pulse h-4 w-1/2 rounded-full"></div>
-        <div className="bg-black/10 dark:bg-white/10 motion-safe:animate-pulse h-4 w-1/3 rounded-full"></div>
-      </li>
-    );
-  }
-
-  return (
-    <li className="hour_card">
-      <img
-        className="hour_icon"
-        src={icon ? `/assets/images/weather/icon-${icon}.webp` : null}
-      />
-      <span className="w-full text-preset-5 font-medium">{time}</span>
-      <span className="text-preset-7">{min_temp}</span>
-    </li>
-  );
-};
+import { DaysDropdown } from "../basic";
+import { HourlyWeatherCard } from ".";
 
 const HOURS_IN_A_DAY = 24;
 const VISIBLE_SKELETON_COUNT = 10;
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.1,
+    },
+  },
+};
+
 const HourlyForecast = () => {
+  const listRef = useRef();
+
   const isFetching = useWeatherStore((state) => state.isFetching);
   const { current, hourly } =
     useWeatherStore((state) => state.weatherData) || {};
@@ -101,45 +94,50 @@ const HourlyForecast = () => {
         />
       </div>
 
-      <ul className="flex flex-col gap-4 overflow-y-auto scrollable_container py-2">
-        {isFetching ? (
-          Array(VISIBLE_SKELETON_COUNT)
-            .fill(null)
-            .map((_, index) => (
-              <HourlyWeatherCard
-                key={index}
-                isFetching={true}
-                icon={null}
-                time={null}
-                min_temp={null}
-              />
-            ))
-        ) : selectedDayData.length === 0 ? (
-          <p className="text-center text-preset-6 text-(--neutral-400)">
-            No hourly data available for the selected day.
-          </p>
-        ) : (
-          selectedDayData.map((hourData) => {
-            return (
-              <HourlyWeatherCard
-                key={hourData.time}
-                icon={hourData ? getWeatherIcon(hourData.weather_code) : null}
-                time={
-                  hourData
-                    ? new Date(hourData.time).toLocaleTimeString([], {
-                        hour: "numeric",
-                      })
-                    : ""
-                }
-                min_temp={
-                  hourData ? `${Math.round(hourData.temperature_2m)}°` : ""
-                }
-                isFetching={false}
-              />
-            );
-          })
-        )}
-      </ul>
+      <motion.ul
+        key={selectedDay}
+        ref={listRef}
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="flex flex-col gap-4 overflow-y-auto scrollable_container py-2"
+      >
+        {isFetching || selectedDayData.length === 0
+          ? Array(VISIBLE_SKELETON_COUNT)
+              .fill(null)
+              .map((_, index) => (
+                <HourlyWeatherCard
+                  key={`skeleton-${index}`}
+                  isFetching={isFetching}
+                  icon={null}
+                  time={null}
+                  min_temp={null}
+                  index={index}
+                  scrollRootRef={null}
+                />
+              ))
+          : selectedDayData.map((hourData, index) => {
+              return (
+                <HourlyWeatherCard
+                  key={hourData.time}
+                  index={index}
+                  scrollRootRef={listRef}
+                  icon={hourData ? getWeatherIcon(hourData.weather_code) : null}
+                  time={
+                    hourData
+                      ? new Date(hourData.time).toLocaleTimeString([], {
+                          hour: "numeric",
+                        })
+                      : ""
+                  }
+                  min_temp={
+                    hourData ? `${Math.round(hourData.temperature_2m)}°` : ""
+                  }
+                  isFetching={false}
+                />
+              );
+            })}
+      </motion.ul>
     </section>
   );
 };
