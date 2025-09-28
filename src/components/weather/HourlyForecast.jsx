@@ -18,7 +18,7 @@ const HourlyWeatherCard = ({ icon, time, min_temp, isFetching }) => {
     <li className="hour_card">
       <img
         className="hour_icon"
-        src={icon ? `src/assets/images/weather/icon-${icon}.webp` : null}
+        src={icon ? `/assets/images/weather/icon-${icon}.webp` : null}
       />
       <span className="w-full text-preset-5 font-medium">{time}</span>
       <span className="text-preset-7">{min_temp}</span>

@@ -19,7 +19,7 @@ const Forecast = ({ day, icon, min_temp, max_temp, isFetching }) => {
           <p className="text-preset-6">{day}</p>
           <img
             className="daily_icon"
-            src={icon ? `src/assets/images/weather/icon-${icon}.webp` : null}
+            src={icon ? `/assets/images/weather/icon-${icon}.webp` : null}
           />
 
           <div className="temp_range">

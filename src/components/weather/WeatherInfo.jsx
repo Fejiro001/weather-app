@@ -116,8 +116,8 @@ const WeatherInfo = () => {
       <div className="temp_container  z-20">
         <img
           className="temp_icon"
-          src={`src/assets/images/weather/icon-${weather_icon}.webp`}
-          alt="Sun icon"
+          src={`/assets/images/weather/icon-${weather_icon}.webp`}
+          alt="Weather icon"
         />
         <span className={"temp not-dark:text-(--neutral-800)"}>
           {Math.round(current?.temperature_2m ?? 0)}°
