@@ -48,11 +48,11 @@ const ThemeToggle = () => {
 
   const iconContent =
     userPreference === "auto" ? (
-      <SunMoon className="text-white" />
+      <SunMoon size={20} className="text-white" />
     ) : isDark ? (
-      <Moon className="text-gray-300" />
+      <Moon size={20} className="text-gray-300" />
     ) : (
-      <Sun className="text-orange-500" />
+      <Sun size={20} className="text-orange-500" />
     );
 
   const dynamicClasses = `${bgClasses[userPreference] || bgClasses.light}`;

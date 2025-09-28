@@ -70,9 +70,9 @@ const SettingsDropdown = () => {
         aria-haspopup="true"
         aria-expanded={isOpen}
         aria-controls="dropdownMenu"
-        className="settings_dropdown group"
+        className="settings_dropdown"
       >
-        <Gear className="size-3.5 md:size-4 group-hover:animate-spin" />
+        <Gear className="size-3.5 md:size-4" />
         <span>Units</span>
         <Dropdown isOpen={isOpen} />
       </motion.button>

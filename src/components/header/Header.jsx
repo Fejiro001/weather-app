@@ -15,7 +15,11 @@ import { Logo } from "../basic";
 
 const headerVariants = {
   initial: { y: -50, opacity: 0 },
-  animate: { y: 0, opacity: 1, transition: { duration: 0.7, ease: "easeOut" } },
+  animate: {
+    y: 0,
+    opacity: 1,
+    transition: { duration: 0.5, ease: "easeOut", delay: 0.3 },
+  },
 };
 
 const Header = () => {

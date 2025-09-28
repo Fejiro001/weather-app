@@ -13,7 +13,7 @@ const dropdownVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.3,
+      duration: 0.2,
       ease: "easeOut",
       when: "beforeChildren",
       staggerChildren: 0.05,
@@ -24,18 +24,15 @@ const dropdownVariants = {
     y: -10,
     transition: {
       duration: 0.2,
-      ease: "easeIn",
-      when: "afterChildren",
-      staggerChildren: 0.03,
-      staggerDirection: -1,
+      ease: "easeOut",
     },
   },
 };
 
 const listItemVariants = {
   initial: { opacity: 0, x: -10 },
-  animate: { opacity: 1, x: 0, transition: { duration: 0.4, ease: "easeOut" } },
-  exit: { opacity: 0, x: -10, transition: { duration: 0.2, ease: "easeIn" } },
+  animate: { opacity: 1, x: 0, transition: { duration: 0.3, ease: "easeOut" } },
+  exit: { opacity: 0, x: -10, transition: { duration: 0.15, ease: "easeOut" } },
 };
 
 const FavoriteDropdown = () => {

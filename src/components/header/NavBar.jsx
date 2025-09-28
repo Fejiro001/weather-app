@@ -12,7 +12,7 @@ const menuVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.3,
+      duration: 0.15,
       ease: "easeInOut",
       when: "beforeChildren",
       staggerChildren: 0.08,
@@ -116,7 +116,10 @@ const NavBar = () => {
                 className="day_button flex gap-2 w-full group"
                 to="/compare"
               >
-                <ArrowUpDown size={18} className="group-hover:animate-wiggle" />
+                <ArrowUpDown
+                  size={18}
+                  className="group-hover:rotate-12 duration-500 ease-in-out"
+                />
                 <span>Compare Locations</span>
               </Link>
             </motion.li>
