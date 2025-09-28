@@ -43,7 +43,7 @@ const Header = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 <ArrowDownUp className="rotate-12 w-auto h-4 sm:h-5" />
-                <span className="hidden lg:block">Compare</span>
+                <span className="hidden min-[1024px]:block">Compare</span>
               </motion.button>
             </Link>
           </Tippy>

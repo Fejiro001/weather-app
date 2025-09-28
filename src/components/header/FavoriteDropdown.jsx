@@ -62,7 +62,7 @@ const FavoriteDropdown = () => {
           whileTap={{ scale: 0.95 }}
         >
           <Star className="w-auto h-4 sm:h-5" />
-          <span className="hidden lg:block">Favourites</span>
+          <span className="hidden min-[1024px]:block">Favourites</span>
         </motion.button>
       </Tippy>
 

@@ -90,9 +90,9 @@ const HomePage = () => {
           </p>
         </div>
       ) : (
-        <section className="flex flex-col xl:grid xl:grid-cols-3 gap-8 xl:h-dvh xl:grid-rows-1">
-          <div className="xl:col-span-2 space-y-8 xl:space-y-12">
-            <div className="space-y-5 xl:space-y-8">
+        <section className="flex flex-col lg:grid lg:grid-cols-3 gap-8 lg:min-h-dvh lg:grid-rows-1">
+          <div className="lg:col-span-2 space-y-8 lg:space-y-12">
+            <div className="space-y-5 lg:space-y-8">
               <WeatherInfo />
 
               <WeatherDetails />

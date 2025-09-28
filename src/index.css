@@ -98,6 +98,7 @@
   --text-base: 1.125rem;
 
   --breakpoint-xl: 90rem;
+  --breakpoint-lg: 72rem;
 
   @keyframes dayGradient {
     from {
