@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import { useLocations } from "../hooks";
 import useWeatherStore from "../store/weatherStore";
 
-import { SearchBar } from "../components/basic";
+import { AnimatedHeadline, SearchBar } from "../components/basic";
 import {
   DailyForecast,
   HourlyForecast,
   WeatherDetails,
   WeatherInfo,
 } from "../components/weather";
-import { notifyError } from "../components/basic/toastConfig";
 import ErrorPage from "./ErrorPage";
+import { notifyError } from "../components/basic/toast";
 
 const HomePage = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -70,10 +70,11 @@ const HomePage = () => {
   }
 
   return (
-    <main className="main">
-      <h1 className="text-preset-2 text-center text-balance px-5 not-dark:text-(--neutral-900)">
-        How's the sky looking today?
-      </h1>
+    <>
+      <AnimatedHeadline
+        text="How's the sky looking today?"
+        className="text-preset-2 text-center text-balance px-5 not-dark:text-(--neutral-900)"
+      />
 
       <SearchBar
         isFetching={fetchingLocations}
@@ -103,7 +104,7 @@ const HomePage = () => {
           <HourlyForecast />
         </section>
       )}
-    </main>
+    </>
   );
 };
 
