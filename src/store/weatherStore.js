@@ -1,7 +1,7 @@
 import axios from "axios";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { notifyError } from "../components/basic/toast";
+import { notifyError, notifySuccess } from "../components/basic/toast";
 
 const useWeatherStore = create()(
   persist(
@@ -115,6 +115,7 @@ const useWeatherStore = create()(
         set((state) => ({
           favoriteLocations: [...(state.favoriteLocations || []), location],
         }));
+        notifySuccess(`${location.name} added to favourites.`, "Success");
       },
 
       removeFavoriteLocation: (locationToRemove) => {

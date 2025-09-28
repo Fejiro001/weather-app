@@ -11,7 +11,11 @@ function App() {
   return (
     <Suspense>
       <Router>
-        <Toaster />
+        <Toaster
+          richColors
+          expand
+          toastOptions={{ style: { fontSize: "1rem" } }}
+        />
         <Routes>
           <Route element={<AppLayout />}>
             <Route path="/" element={<HomePage />} />
