@@ -4,7 +4,7 @@ import retryIcon from "../assets/images/icon-retry.svg";
 const ErrorPage = () => {
   return (
     <>
-      <section className="main flex flex-col items-center text-center gap-6 lg:mt-[1.125rem]">
+      <section className="main space-y-8 xl:space-y-12 flex flex-col items-center text-center gap-6 lg:mt-[1.125rem]">
         <img
           src={errorIcon}
           alt="Error icon"
@@ -21,7 +21,10 @@ const ErrorPage = () => {
           onClick={() => window.location.reload()}
           className="bg-(--neutral-800) hover:bg-(--neutral-700) px-4 py-3.5 flex gap-2.5 rounded-lg group"
         >
-          <img className="group-hover:rotate-180 duration-500 transition-transform" src={retryIcon} />
+          <img
+            className="group-hover:rotate-180 duration-500 transition-transform"
+            src={retryIcon}
+          />
           <span className="text-preset-7">Retry</span>
         </button>
       </section>

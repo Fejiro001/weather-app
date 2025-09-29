@@ -21,12 +21,11 @@ const HourlyWeatherCard = ({
   isFetching,
   scrollRootRef,
   index,
-  noData,
 }) => {
   const itemRef = useRef();
   const isItemInView = useInView(itemRef, {
     once: true,
-    amount: 0.2,
+    amount: "0.1",
     root: scrollRootRef,
   });
 
@@ -35,9 +34,9 @@ const HourlyWeatherCard = ({
         opacity: 1,
         y: 0,
         transition: {
-          delay: index * 0.05,
+          delay: index * 0.03,
           type: "spring",
-          stiffness: 400,
+          stiffness: 500,
           damping: 25,
         },
       }

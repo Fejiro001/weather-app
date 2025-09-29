@@ -70,7 +70,7 @@ const HomePage = () => {
   }
 
   return (
-    <>
+    <section className="space-y-8 xl:space-y-12">
       <AnimatedHeadline
         text="How's the sky looking today?"
         className="text-preset-2 text-center text-balance px-5 not-dark:text-(--neutral-900)"
@@ -104,7 +104,7 @@ const HomePage = () => {
           <HourlyForecast />
         </section>
       )}
-    </>
+    </section>
   );
 };
 

@@ -11,7 +11,7 @@ const FavouritePage = () => {
   const currentLocation = useWeatherStore((state) => state.location);
 
   return (
-    <>
+    <section className="space-y-8 xl:space-y-12">
       <BackButton>Manage Favorites</BackButton>
 
       <div className="space-y-4 text-white not-dark:text-(--neutral-900)">
@@ -76,7 +76,7 @@ const FavouritePage = () => {
           </ul>
         )}
       </div>
-    </>
+    </section>
   );
 };
 

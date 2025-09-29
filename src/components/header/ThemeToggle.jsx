@@ -17,7 +17,7 @@ const ThemeToggle = () => {
   const { isSoundEnabled } = useSettings();
   const tippyContent =
     userPreference === "auto"
-      ? "Auto Theme"
+      ? "System Theme"
       : isDark
       ? "Dark Theme"
       : "Light Theme";
