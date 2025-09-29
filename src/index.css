@@ -209,6 +209,11 @@
   outline-offset: 3px;
 }
 
+@utility dark-focus-white {
+  outline: 2px solid var(--neutral-800);
+  outline-offset: 3px;
+}
+
 @utility focus-blue {
   outline: 2px solid var(--blue-500);
   outline-offset: 3px;
@@ -252,7 +257,7 @@
     @apply flex flex-col items-center gap-12 xl:gap-16 p-4 md:p-6 xl:px-28 xl:py-12 theme-day dark:theme-night min-h-screen text-white bg-(--neutral-900) not-dark:bg-(--blue-200);
   }
   .main {
-    @apply space-y-8 xl:space-y-12 w-full max-w-7xl mt-5 lg:mt-0;
+    @apply w-full max-w-7xl mt-5 lg:mt-0;
   }
   .back_button {
     @apply flex gap-2 items-center hover:underline hover:gap-4 transition-all duration-[400ms] text-preset-6;
@@ -263,7 +268,7 @@
     @apply flex justify-between items-center gap-4 md:gap-8 w-full bg-(--neutral-900) not-dark:bg-white py-2 px-2 sm:px-8 shadow-lg shadow-(color:--neutral-800) not-dark:shadow-gray-400 rounded-lg sticky top-5 sm:top-12 z-999 max-w-[100rem] outline-1 dark:outline-(--neutral-700) not-dark:outline-(--neutral-200);
   }
   .settings_dropdown {
-    @apply bg-(--neutral-800) not-dark:bg-gray-100 drop-shadow-lg not-dark:drop-shadow-gray-400 not-dark:text-(--neutral-900) hover:bg-(--neutral-700) py-2 px-2.5 rounded-md text-preset-8 sm:text-preset-7 flex items-center gap-2 capitalize focus-visible:focus-white not-dark:hover:bg-gray-100;
+    @apply bg-(--neutral-800) not-dark:bg-gray-100 drop-shadow-lg not-dark:drop-shadow-gray-400 not-dark:text-(--neutral-900) hover:bg-(--neutral-700) py-2 px-2.5 rounded-md text-preset-8 sm:text-preset-7 flex items-center gap-2 capitalize focus-visible:focus-white not-dark:focus-visible:dark-focus-white not-dark:hover:bg-gray-100;
   }
 
   .switch_btn {
@@ -301,12 +306,12 @@
 
   /* BUTTON */
   .primary_btn {
-    @apply bg-(--blue-500) hover:bg-(--blue-700) rounded-xl p-4 text-preset-5 font-medium focus-visible:focus-blue;
+    @apply bg-(--blue-500) hover:bg-(--blue-700) rounded-xl p-4 text-preset-5 font-medium focus-visible:focus-blue text-white not-dark:text-(--neutral-000) drop-shadow-lg not-dark:drop-shadow-gray-400;
   }
 
   /* SEARCH BAR */
   .searchBar {
-    @apply bg-(--neutral-800) hover:bg-(--neutral-700) text-(--neutral-200) w-full rounded-xl py-4 pl-[3.75rem] focus-visible:focus-white not-dark:bg-white not-dark:hover:bg-gray-50 not-dark:placeholder:text-(--neutral-700) not-dark:text-(--neutral-900) drop-shadow-lg not-dark:drop-shadow-gray-400;
+    @apply bg-(--neutral-800) hover:bg-(--neutral-700) text-(--neutral-200) w-full rounded-xl py-4 pl-[3.75rem] focus-visible:focus-white not-dark:focus-visible:dark-focus-white not-dark:bg-white not-dark:hover:bg-gray-50 not-dark:placeholder:text-(--neutral-700) not-dark:text-(--neutral-900) drop-shadow-lg not-dark:drop-shadow-gray-400;
     background-image: url("./assets/images/icon-search.svg");
     background-repeat: no-repeat;
     background-position: 24px center;
@@ -381,5 +386,22 @@
   }
   .no_locations {
     @apply text-center p-12 border border-dashed border-(--neutral-300) rounded-lg text-xl text-(--neutral-200) not-dark:text-(--neutral-800);
+  }
+
+  /* COMPARE LOCATION PAGE */
+  .no_location {
+    @apply border-2 border-dashed border-gray-300 not-dark:border-(--neutral-700) rounded-lg p-6 flex flex-col items-center justify-center gap-6 mt-10 text-(--neutral-200) not-dark:text-(--neutral-700) w-full;
+  }
+  .modal {
+    @apply relative bg-(--neutral-900) not-dark:bg-white px-4 py-6 rounded-lg shadow-xl shadow-(color:--neutral-700) ring-(--blue-500)/50 ring-1 w-full max-w-lg mx-8;
+  }
+  .close_btn {
+    @apply absolute -top-2 -right-2 bg-red-500 hover:bg-white text-white ring-1 ring-red-500 hover:text-red-500 rounded-md p-1 transition;
+  }
+  .locations_list {
+    @apply p-3 rounded-lg outline-1 outline-(--neutral-200) dark:outline-(--neutral-700) flex gap-4 justify-between hover:py-5 hover:bg-(--neutral-800)/50 not-dark:hover:bg-(--neutral-200)/50 transition-all;
+  }
+  .add_location_btn {
+    @apply outline-1 rounded-sm px-2 not-dark:text-(--neutral-900) hover:bg-white hover:text-(--neutral-900)  not-dark:hover:bg-(--neutral-900) not-dark:hover:text-white transition-colors font-bold;
   }
 }

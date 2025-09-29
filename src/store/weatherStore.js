@@ -11,6 +11,7 @@ const useWeatherStore = create()(
       isError: false,
       location: null,
       favoriteLocations: [],
+      compareLocations: [],
       units: {
         temperature_unit: "celsius",
         wind_speed_unit: "kmh",
@@ -32,7 +33,7 @@ const useWeatherStore = create()(
             daily: "weather_code,temperature_2m_max,temperature_2m_min",
             hourly: "weather_code,temperature_2m",
             current:
-              "temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,precipitation,wind_speed_10m,is_day",
+              "temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,precipitation,wind_speed_10m,uv_index,visibility,surface_pressure,is_day",
             timezone: state.location.timezone,
             ...state.units,
           };
@@ -129,7 +130,6 @@ const useWeatherStore = create()(
                 favorite.longitude === locationToRemove.longitude
               )
           );
-
           return {
             favoriteLocations: updatedFavorites,
           };
@@ -139,6 +139,63 @@ const useWeatherStore = create()(
       clearWeatherData: () => set({ weatherData: null }),
 
       setLocation: (location) => set({ location: location }),
+
+      addCompareLocation: async (location) => {
+        const currentCompared = get().compareLocations || [];
+        const exists = currentCompared.some(
+          (loc) =>
+            loc.latitude === location.latitude &&
+            loc.longitude === location.longitude
+        );
+
+        if (!exists) {
+          try {
+            const params = {
+              latitude: location.latitude,
+              longitude: location.longitude,
+              current:
+                "temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,precipitation,wind_speed_10m,uv_index,visibility,surface_pressure,is_day",
+              timezone: location.timezone,
+              ...get().units,
+            };
+
+            const response = await axios.get(
+              `https://api.open-meteo.com/v1/forecast`,
+              { params }
+            );
+
+            set((state) => ({
+              compareLocations: [...state.compareLocations, response.data],
+            }));
+          } catch (error) {
+            notifyError(
+              error?.response?.data?.message ||
+                "Failed to fetch weather data for comparison. Please try again."
+            );
+          }
+        } else {
+          notifyError(
+            `${location.name} is already in comparison list.`,
+            "Error"
+          );
+        }
+      },
+
+      removeCompareLocation: (locationToRemove) => {
+        set((state) => {
+          const currentCompared = state.compareLocations || [];
+          const updatedCompared = currentCompared.filter(
+            (location) =>
+              !(
+                location.latitude === locationToRemove.latitude &&
+                location.longitude === locationToRemove.longitude
+              )
+          );
+          return {
+            compareLocations: updatedCompared,
+          };
+        });
+      },
     }),
     {
       name: "favorite-locations",
@@ -147,6 +204,7 @@ const useWeatherStore = create()(
         units: state.units,
         location: state.location,
         favoriteLocations: state.favoriteLocations,
+        compareLocations: state.compareLocations,
       }),
     }
   )
