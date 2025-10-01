@@ -1,28 +1,42 @@
 import { useState } from "react";
-import { useShallow } from "zustand/shallow";
 import { AnimatePresence, motion } from "motion/react";
 import useWeatherStore from "../../store/weatherStore";
 import { useWeatherDetails } from "../../hooks";
-
 import { WeatherDetailCard } from ".";
+
+const containerVariants = {
+  open: {
+    opacity: 1,
+    height: "auto",
+    transition: {
+      when: "beforeChildren",
+      staggerChildren: 0.05,
+    },
+  },
+  collapsed: {
+    opacity: 0,
+    height: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
+    marginBottom: 0,
+    transition: {
+      when: "afterChildren",
+      duration: 0.3,
+      ease: "easeInOut",
+    },
+  },
+};
+
+const itemVariants = {
+  open: { opacity: 1, y: 0 },
+  collapsed: { opacity: 0, y: 10 },
+};
 
 const WeatherDetails = () => {
   const [showExtras, setShowExtras] = useState(false);
+  const isFetching = useWeatherStore((state) => state.isFetching);
 
-  const { current, daily, current_units, isFetching } = useWeatherStore(
-    useShallow((state) => ({
-      current: state.weatherData?.current ?? {},
-      daily: state.weatherData?.daily ?? {},
-      current_units: state.weatherData?.current_units ?? {},
-      isFetching: state.isFetching,
-    }))
-  );
-
-  const { essentials, extras } = useWeatherDetails(
-    current,
-    current_units,
-    daily
-  );
+  const { essentials, extras } = useWeatherDetails();
 
   return (
     <section className="weather_details">
@@ -46,25 +60,20 @@ const WeatherDetails = () => {
         {showExtras && (
           <motion.div
             key="extras"
+            variants={containerVariants}
             initial="collapsed"
             animate="open"
             exit="collapsed"
-            transition={{
-              duration: 0.3,
-              ease: "easeInOut",
-            }}
-            variants={{
-              open: { opacity: 1, height: "auto" },
-              collapsed: { opacity: 0, height: 0 },
-            }}
             className="col-span-full grid grid-cols-1 md:grid-cols-4 gap-4"
           >
             {extras.map((details) => (
-              <WeatherDetailCard
+              <motion.div
                 key={details.label}
-                isFetching={isFetching}
-                {...details}
-              />
+                variants={itemVariants}
+                className={details.className || "col-span-1"}
+              >
+                <WeatherDetailCard isFetching={isFetching} {...details} />
+              </motion.div>
             ))}
           </motion.div>
         )}

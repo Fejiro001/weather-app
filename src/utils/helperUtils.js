@@ -11,6 +11,7 @@ export const roundUp = (num) => Math.round(num) || 0;
  * @returns {string}
  */
 export const formatTime = (date) => {
+  if (!date) return "N/A";
   return (
     new Date(date).toLocaleTimeString([], {
       hour: "2-digit",
