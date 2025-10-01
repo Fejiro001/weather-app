@@ -1,8 +1,9 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Loader } from "./Icons";
-import { useClickOutside } from "../../hooks";
+import { useClickOutside, useVoiceSearch } from "../../hooks";
 import woosh from "/sounds/woosh.mp3";
 import useSound from "use-sound";
+import { IconMicrophone, IconMicrophoneOff } from "@tabler/icons-react";
 
 const SearchBar = ({
   isFetching,
@@ -13,11 +14,20 @@ const SearchBar = ({
   const [inputValue, setInputValue] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const searchBarRef = useRef(null);
+
+  // Custom hooks
+  const {
+    isListening,
+    speechText,
+    startListening,
+    stopListening,
+    clearSpeechText,
+    supported,
+  } = useVoiceSearch();
   const [play] = useSound(woosh, {
     volume: 0.02,
     playbackRate: 1.5,
   });
-
   useClickOutside(searchBarRef, setIsDropdownOpen);
 
   const hideDropdown = useCallback(() => {
@@ -43,6 +53,19 @@ const SearchBar = ({
     [getLocations, inputValue, play]
   );
 
+  // Implement voice search functionality in search bar
+  useEffect(() => {
+    if (speechText) {
+      setInputValue(speechText);
+      setIsDropdownOpen(true);
+      getLocations(speechText);
+
+      if (clearSpeechText) {
+        clearSpeechText();
+      }
+    }
+  }, [clearSpeechText, getLocations, speechText]);
+
   return (
     <section className="w-full flex flex-col items-center">
       <form
@@ -62,33 +85,52 @@ const SearchBar = ({
             placeholder="Search for a place..."
           />
 
-          {isDropdownOpen &&
-            (isFetching ? (
-              <ul className="dropdownMenu absolute top-full left-0 w-full mt-3">
+          {supported && (
+            <button
+              onClick={isListening ? stopListening : startListening}
+              className="absolute top-1/2 -translate-y-1/2 right-0 bg-(--blue-500) hover:bg-(--blue-700) rounded-xl p-2 mx-2"
+              type="button"
+            >
+              {isListening ? <IconMicrophone /> : <IconMicrophoneOff />}
+            </button>
+          )}
+
+          {isDropdownOpen && (
+            <ul className="dropdownMenu absolute top-full left-0 w-full mt-3 max-h-72 overflow-y-auto scrollable_container z-30">
+              {isFetching && (
                 <li className="day_button flex gap-2.5">
                   <Loader className="animate-spin" />
                   <span className="text-preset-7">Search in progress</span>
                 </li>
-              </ul>
-            ) : locations && locations.length > 0 ? (
-              <ul className="dropdownMenu absolute top-full left-0 w-full mt-3 max-h-72 overflow-y-auto scrollable_container z-30">
-                {locations.length > 0 &&
-                  locations.map((loc) => (
-                    <li key={loc.id}>
-                      <button
-                        onClick={() => handleLocationSelection(loc)}
-                        type="button"
-                        className="day_button"
-                      >
-                        {loc.name}, {loc.country}
-                        <p className="small_text">
-                          {loc.admin2 ? `${loc.admin2},` : ""} {loc.admin1}
-                        </p>
-                      </button>
-                    </li>
-                  ))}
-              </ul>
-            ) : null)}
+              )}
+
+              {!isFetching &&
+                locations?.length > 0 &&
+                locations.map((loc) => (
+                  <li key={loc.id}>
+                    <button
+                      onClick={() => handleLocationSelection(loc)}
+                      type="button"
+                      className="day_button"
+                    >
+                      {loc.name}, {loc.country}
+                      <p className="small_text">
+                        {loc.admin2 ? `${loc.admin2},` : ""} {loc.admin1}
+                      </p>
+                    </button>
+                  </li>
+                ))}
+
+              {!isFetching &&
+                (locations?.length === 0 || locations === undefined) && (
+                  <li className="day_button">
+                    <span className="text-preset-7">
+                      No results found for &quot;{inputValue}&quot;
+                    </span>
+                  </li>
+                )}
+            </ul>
+          )}
         </div>
 
         <button type="submit" className="primary_btn">
