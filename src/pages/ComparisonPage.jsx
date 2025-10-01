@@ -18,7 +18,20 @@ const ComparisonPage = () => {
     <>
       {showModal && <AddLocationModal setShowModal={setShowModal} />}
 
-      <BackButton>Compare Locations</BackButton>
+      <div className="flex justify-between items-center gap-4">
+        <BackButton>Compare Locations</BackButton>
+
+        <div className="flex gap-2">
+          <button
+            onClick={() => setShowModal(true)}
+            className="primary_btn text-preset-6 flex items-center gap-2"
+          >
+            <IconPlus /> <span>Add Location</span>
+          </button>
+
+          <button className="primary_btn">Use Current Location</button>
+        </div>
+      </div>
 
       {compareLocations && compareLocations.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -38,19 +51,12 @@ const ComparisonPage = () => {
           ))}
         </div>
       ) : (
-        <div className="no_location">
-          <span className="font-medium text-center text-preset-5 md:text-preset-4">
-            Add locations to compare their weather info
-          </span>
-
-          <button
-            onClick={() => setShowModal(true)}
-            className="primary_btn text-preset-6 flex items-center gap-2"
-          >
-            <IconPlus /> <span>Add Location</span>
-          </button>
-
-          <button>Add Current Location</button>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="no_compare_location">
+            <span className="text-center text-preset-6">
+              No location selected
+            </span>
+          </div>
         </div>
       )}
     </>

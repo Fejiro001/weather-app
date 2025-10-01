@@ -10,6 +10,7 @@ import {
 } from "@tabler/icons-react";
 import Tippy from "@tippyjs/react";
 import useWeatherStore from "../../store/weatherStore";
+import { notifyInfo } from "./toast";
 
 const SearchBar = ({
   fetchingLocations,
@@ -64,6 +65,7 @@ const SearchBar = ({
   const handleCurrentLocation = () => {
     getCurrentLocation();
     hideDropdown();
+    notifyInfo("Fetching weather for your current location...");
   };
 
   // Implement voice search functionality in search bar
@@ -151,7 +153,7 @@ const SearchBar = ({
         <div className="flex gap-2">
           <button
             type="submit"
-            className="w-full md:w-fit primary_btn disabled:bg-gray-500"
+            className="w-full md:w-fit primary_btn disabled:bg-gray-500 disabled:cursor-not-allowed"
             disabled={isFetching}
           >
             Search
@@ -160,7 +162,7 @@ const SearchBar = ({
           <Tippy content="Current Location">
             <button
               onClick={handleCurrentLocation}
-              className="primary_btn group disabled:bg-gray-500"
+              className="primary_btn group disabled:bg-gray-500 disabled:cursor-not-allowed"
               type="button"
               disabled={isFetching}
             >

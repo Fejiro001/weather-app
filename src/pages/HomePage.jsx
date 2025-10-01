@@ -10,6 +10,7 @@ import {
   WeatherInfo,
 } from "../components/weather";
 import ErrorPage from "./ErrorPage";
+import { notifyInfo } from "../components/basic/toast";
 
 const HomePage = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -27,6 +28,7 @@ const HomePage = () => {
   useEffect(() => {
     if (!storeLocation) {
       getCurrentLocation();
+      notifyInfo("Fetching weather for your current location...");
     }
   }, [getCurrentLocation, storeLocation]);
 

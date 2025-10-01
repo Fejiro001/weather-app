@@ -392,8 +392,8 @@
   }
 
   /* COMPARE LOCATION PAGE */
-  .no_location {
-    @apply border-2 border-dashed border-gray-300 not-dark:border-(--neutral-700) rounded-lg p-6 flex flex-col items-center justify-center gap-6 mt-10 text-(--neutral-200) not-dark:text-(--neutral-700) w-full;
+  .no_compare_location {
+    @apply border-2 border-dashed border-gray-300 not-dark:border-(--neutral-700) rounded-lg p-6 flex flex-col items-center justify-center gap-6 mt-10 text-(--neutral-200) not-dark:text-(--neutral-700) w-full h-full;
   }
   .modal {
     @apply relative bg-(--neutral-900) not-dark:bg-white px-4 py-6 rounded-lg shadow-xl shadow-(color:--neutral-700) ring-(--blue-500)/50 ring-1 w-full max-w-lg mx-8;
