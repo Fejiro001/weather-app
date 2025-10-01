@@ -1,6 +1,5 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
-import { ArrowDownUp } from "lucide-react";
 import { motion } from "motion/react";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
@@ -12,6 +11,7 @@ import {
   ThemeToggle,
 } from ".";
 import { Logo } from "../basic";
+import { IconArrowsUpDown } from "@tabler/icons-react";
 
 const headerVariants = {
   initial: { y: -50, opacity: 0 },
@@ -42,7 +42,7 @@ const Header = () => {
                 className="settings_dropdown flex gap-1 text-preset-8 sm:text-preset-7"
                 whileTap={{ scale: 0.95 }}
               >
-                <ArrowDownUp className="rotate-12 w-auto h-4 sm:h-5" />
+                <IconArrowsUpDown className="rotate-12 w-auto h-4 sm:h-5" />
                 <span className="hidden min-[1024px]:block">Compare</span>
               </motion.button>
             </Link>

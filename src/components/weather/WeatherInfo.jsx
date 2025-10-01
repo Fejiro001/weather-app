@@ -3,13 +3,13 @@ import useWeatherStore from "../../store/weatherStore";
 import useSound from "use-sound";
 import { motion } from "motion/react";
 
-import { Star } from "lucide-react";
-import { getWeatherIcon, weatherIconMap } from "../../utils/getWeatherIcon";
+import { getWeatherIcon } from "../../utils/getWeatherIcon";
 import { useSettings } from "../../hooks";
 
 import bubblePop from "/sounds/bubble-pop.mp3";
 import { BgNoise, Loading } from "../basic";
 import { notifyError } from "../basic/toast";
+import { IconStar } from "@tabler/icons-react";
 
 const cloudContainerVariants = {
   hidden: { transition: { staggerChildren: 0.05 } },
@@ -114,7 +114,7 @@ const WeatherInfo = () => {
       <div className={"location_info z-20 not-dark:text-(--neutral-800)"}>
         {/* Favorite/Save Button */}
         <button onClick={handleAddFavorite}>
-          <Star
+          <IconStar
             className={`${
               isSaved ? "fill-yellow-400 stroke-yellow-400" : ""
             } absolute top-8 sm:top-10 left-8 w-6 h-6 lg:hover:fill-yellow-400 lg:hover:stroke-yellow-400 transition-all`}

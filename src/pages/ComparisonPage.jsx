@@ -1,10 +1,8 @@
 import { useState } from "react";
 import useWeatherStore from "../store/weatherStore";
-import { Link } from "react-router-dom";
-import { ArrowLeft, LoaderCircle, Plus, X } from "lucide-react";
-import { BackButton, SearchBar } from "../components/basic";
-import { useLocations } from "../hooks";
+import { BackButton } from "../components/basic";
 import { AddLocationModal } from "../components/weather";
+import { IconPlus } from "@tabler/icons-react";
 
 const GRID_SIZE = 3;
 
@@ -41,7 +39,7 @@ const ComparisonPage = () => {
         </div>
       ) : (
         <div className="no_location">
-          <span className="font-medium text-preset-4">
+          <span className="font-medium text-center text-preset-5 md:text-preset-4">
             Add locations to compare their weather info
           </span>
 
@@ -49,7 +47,7 @@ const ComparisonPage = () => {
             onClick={() => setShowModal(true)}
             className="primary_btn text-preset-6 flex items-center gap-2"
           >
-            <Plus /> <span>Add Location</span>
+            <IconPlus /> <span>Add Location</span>
           </button>
         </div>
       )}

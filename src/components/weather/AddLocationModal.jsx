@@ -1,6 +1,6 @@
-import { LoaderCircle, X } from "lucide-react";
 import { useLocations } from "../../hooks";
 import useWeatherStore from "../../store/weatherStore";
+import { IconLoader2, IconX } from "@tabler/icons-react";
 
 const AddLocationModal = ({ setShowModal }) => {
   const { fetchingLocations, locations, getLocations } = useLocations();
@@ -33,7 +33,7 @@ const AddLocationModal = ({ setShowModal }) => {
           onClick={() => setShowModal(false)}
           aria-label="Close modal"
         >
-          <X />
+          <IconX />
         </button>
 
         <h2 className="text-(--neutral-900) dark:text-(--neutral-200) mb-4 text-preset-5">
@@ -52,7 +52,7 @@ const AddLocationModal = ({ setShowModal }) => {
 
         {fetchingLocations ? (
           <div className="flex mt-4 justify-center items-center">
-            <LoaderCircle className="animate-spin" />
+            <IconLoader2 className="animate-spin" />
           </div>
         ) : (
           locations.length > 0 && (

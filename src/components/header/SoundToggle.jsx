@@ -1,8 +1,8 @@
 import Tippy from "@tippyjs/react";
-import { AnimatePresence, motion } from "motion/react";
-import { Volume, Volume2 } from "lucide-react";
+import { motion } from "motion/react";
 import { useSettings } from "../../hooks";
 import { useState } from "react";
+import { IconVolume, IconVolume3 } from "@tabler/icons-react";
 
 const SoundToggle = () => {
   const { isSoundEnabled, toggleSound } = useSettings();
@@ -36,7 +36,7 @@ const SoundToggle = () => {
         aria-label={tippyContent}
         className="bg-(--neutral-900) hover:bg-(--neutral-800) not-dark:hover:bg-(--neutral-200) text-white not-dark:bg-white not-dark:text-(--neutral-900) outline-1 outline-(--neutral-300) not-dark:outline-(--neutral-700) p-2.5 rounded-full *:w-auto *:h-4.5"
       >
-        {isSoundEnabled ? <Volume2 /> : <Volume />}
+        {isSoundEnabled ? <IconVolume /> : <IconVolume3 />}
       </motion.button>
     </Tippy>
   );

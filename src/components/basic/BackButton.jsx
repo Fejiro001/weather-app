@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { IconArrowNarrowLeft } from "@tabler/icons-react";
 
 const BackButton = ({ children }) => {
   return (
     <div className="flex flex-col justify-between gap-4 mb-10 text-white not-dark:text-(--neutral-900)">
       <Link to="/" className="back_button w-fit">
-        <ArrowLeft size={20} />
+        <IconArrowNarrowLeft size={20} />
         Home
       </Link>
 

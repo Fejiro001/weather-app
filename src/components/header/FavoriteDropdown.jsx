@@ -1,11 +1,11 @@
 import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import Tippy from "@tippyjs/react";
-import { Star } from "lucide-react";
 import { useClickOutside } from "../../hooks";
 import useWeatherStore from "../../store/weatherStore";
 import { Link } from "react-router-dom";
 import { Gear } from "../basic/Icons";
+import { IconStar } from "@tabler/icons-react";
 
 const dropdownVariants = {
   initial: { opacity: 0, y: -10 },
@@ -61,7 +61,7 @@ const FavoriteDropdown = () => {
           className="settings_dropdown flex gap-1 text-preset-8 sm:text-preset-7"
           whileTap={{ scale: 0.95 }}
         >
-          <Star className="w-auto h-4 sm:h-5" />
+          <IconStar className="w-auto h-4 sm:h-5" />
           <span className="hidden min-[1024px]:block">Favourites</span>
         </motion.button>
       </Tippy>

@@ -1,10 +1,10 @@
 import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowUpDown, Menu, Star, X } from "lucide-react";
 import { useClickOutside } from "../../hooks";
 import { Link } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
 import SoundToggle from "./SoundToggle";
+import { IconArrowsUpDown, IconMenu2, IconStar, IconX } from "@tabler/icons-react";
 
 const menuVariants = {
   hidden: { opacity: 0, y: -20, transition: { when: "afterChildren" } },
@@ -63,7 +63,7 @@ const NavBar = () => {
             transition={{ type: "spring", stiffness: 150, damping: 20 }}
             className="flex items-center justify-center"
           >
-            {isOpen ? <X size={18} /> : <Menu size={18} />}
+            {isOpen ? <IconX size={18} /> : <IconMenu2 size={18} />}
           </motion.span>
         </AnimatePresence>
       </motion.button>
@@ -97,7 +97,7 @@ const NavBar = () => {
                 className="day_button flex gap-2 w-full group"
                 to="/favourites"
               >
-                <Star
+                <IconStar
                   className="fill-(--neutral-900) not-dark:fill-white group-hover:fill-white not-dark:group-hover:fill-(--neutral-900) transition-all duration-500"
                   size={18}
                 />
@@ -116,7 +116,7 @@ const NavBar = () => {
                 className="day_button flex gap-2 w-full group"
                 to="/compare"
               >
-                <ArrowUpDown
+                <IconArrowsUpDown
                   size={18}
                   className="group-hover:rotate-12 duration-500 ease-in-out"
                 />

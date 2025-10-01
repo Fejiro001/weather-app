@@ -1,6 +1,6 @@
 import useWeatherStore from "../store/weatherStore";
-import { Trash2 } from "lucide-react";
 import { BackButton } from "../components/basic";
+import { IconTrash } from "@tabler/icons-react";
 
 const FavouritePage = () => {
   const favoriteLocations =
@@ -68,7 +68,7 @@ const FavouritePage = () => {
                       `}
                     aria-label={`Remove ${location.name} from favorites`}
                   >
-                    <Trash2 size={20} />
+                    <IconTrash size={20} />
                   </button>
                 </li>
               );
