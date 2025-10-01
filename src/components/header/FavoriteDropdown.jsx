@@ -31,13 +31,20 @@ const dropdownVariants = {
 
 const listItemVariants = {
   initial: { opacity: 0, x: -10 },
-  animate: { opacity: 1, x: 0, transition: { duration: 0.15, ease: "easeOut" } },
+  animate: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.15, ease: "easeOut" },
+  },
   exit: { opacity: 0, x: -10, transition: { duration: 0.15, ease: "easeOut" } },
 };
+
+const MAX_SIZE = 3;
 
 const FavoriteDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const favoriteRef = useRef();
+
   const favoriteLocations = useWeatherStore((state) => state.favoriteLocations);
   const setLocation = useWeatherStore((state) => state.setLocation);
   const fetchWeather = useWeatherStore((state) => state.fetchWeather);
@@ -52,6 +59,9 @@ const FavoriteDropdown = () => {
     }
   };
 
+  const maxDisplayedLocations = favoriteLocations.slice(0, MAX_SIZE);
+  const otherLocations = favoriteLocations.length - MAX_SIZE;
+
   return (
     <div ref={favoriteRef} className="relative">
       <Tippy content="Favourite Locations">
@@ -61,7 +71,7 @@ const FavoriteDropdown = () => {
           className="settings_dropdown flex gap-1 text-preset-8 sm:text-preset-7"
           whileTap={{ scale: 0.95 }}
         >
-          <IconStar className="w-auto h-4 sm:h-5" />
+          <IconStar className="w-auto h-4 sm:h-5 text-yellow-400 fill-yellow-400" />
           <span className="hidden min-[1024px]:block">Favourites</span>
         </motion.button>
       </Tippy>
@@ -76,9 +86,9 @@ const FavoriteDropdown = () => {
             exit="exit"
             role="menu"
           >
-            {favoriteLocations.length > 0 ? (
+            {maxDisplayedLocations.length > 0 ? (
               <>
-                {favoriteLocations.map((location) => (
+                {maxDisplayedLocations.map((location, index) => (
                   <motion.li
                     role="menuitem"
                     key={`${location.latitude}-${location.longitude}`}
@@ -99,10 +109,24 @@ const FavoriteDropdown = () => {
                       </p>
                     </motion.button>
 
-                    <hr />
+                    {index < maxDisplayedLocations.length - 1 && <hr />}
                   </motion.li>
                 ))}
-                <motion.li variants={listItemVariants}>
+
+                {favoriteLocations.length > MAX_SIZE && (
+                  <motion.li
+                    variants={listItemVariants}
+                    className="small_text px-2 pt-1"
+                  >
+                    + {otherLocations}{" "}
+                    {otherLocations > 1 ? "locations" : "location"} hidden
+                  </motion.li>
+                )}
+
+                <motion.li
+                  className="mt-1 border-t border-(--neutral-300)"
+                  variants={listItemVariants}
+                >
                   <Link
                     to="/favourites"
                     onClick={() => setIsOpen(false)}
@@ -110,7 +134,7 @@ const FavoriteDropdown = () => {
                   >
                     <Gear />
                     <motion.span whileTap={{ scale: 0.98 }}>
-                      Manage Locations
+                      Manage All Locations
                     </motion.span>
                   </Link>
                 </motion.li>
@@ -118,10 +142,17 @@ const FavoriteDropdown = () => {
             ) : (
               <motion.li
                 key="empty-state"
-                className="px-4 py-1 text-gray-500"
+                className="px-4 py-1 text-gray-500 text-sm"
                 variants={listItemVariants}
               >
-                <p>No locations saved</p>
+                <p>No locations saved yet.</p>
+                <Link
+                  to="/favourites"
+                  onClick={() => setIsOpen(false)}
+                  className="text-blue-500 hover:underline text-xs mt-1 block"
+                >
+                  Go to Favourites Page
+                </Link>
               </motion.li>
             )}
           </motion.ul>
