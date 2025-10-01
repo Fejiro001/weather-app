@@ -3,7 +3,12 @@ import { Loader } from "./Icons";
 import { useClickOutside, useVoiceSearch } from "../../hooks";
 import woosh from "/sounds/woosh.mp3";
 import useSound from "use-sound";
-import { IconMicrophone, IconMicrophoneOff } from "@tabler/icons-react";
+import {
+  IconCurrentLocation,
+  IconMicrophone,
+  IconMicrophoneOff,
+} from "@tabler/icons-react";
+import Tippy from "@tippyjs/react";
 
 const SearchBar = ({
   isFetching,
@@ -133,9 +138,17 @@ const SearchBar = ({
           )}
         </div>
 
-        <button type="submit" className="primary_btn">
-          Search
-        </button>
+        <div className="flex gap-2">
+          <button type="submit" className="w-full md:w-fit primary_btn">
+            Search
+          </button>
+
+          <Tippy content="Current Location">
+            <button className="primary_btn group" type="button">
+              <IconCurrentLocation className="group-hover:rotate-90 duration-500 transition-transform" />
+            </button>
+          </Tippy>
+        </div>
       </form>
     </section>
   );

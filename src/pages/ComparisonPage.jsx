@@ -49,6 +49,8 @@ const ComparisonPage = () => {
           >
             <IconPlus /> <span>Add Location</span>
           </button>
+
+          <button>Add Current Location</button>
         </div>
       )}
     </>

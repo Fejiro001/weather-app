@@ -10,6 +10,7 @@ const useWeatherStore = create()(
       isFetching: false,
       isError: false,
       location: null,
+      currentLocation: null,
       favoriteLocations: [],
       compareLocations: [],
       units: {
@@ -30,7 +31,8 @@ const useWeatherStore = create()(
           const params = {
             latitude: state.location.latitude,
             longitude: state.location.longitude,
-            daily: "weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset",
+            daily:
+              "weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset",
             hourly: "weather_code,temperature_2m",
             current:
               "temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,precipitation,wind_speed_10m,uv_index,visibility,surface_pressure,cloud_cover,is_day",
@@ -100,6 +102,7 @@ const useWeatherStore = create()(
           };
 
           get().setLocation(geoData);
+          get().setCurrentLocation(geoData);
 
           // Get the data for the new location
           await get().fetchWeather();
@@ -139,6 +142,9 @@ const useWeatherStore = create()(
       clearWeatherData: () => set({ weatherData: null }),
 
       setLocation: (location) => set({ location: location }),
+
+      setCurrentLocation: (currentLocation) =>
+        set({ currentLocation: currentLocation }),
 
       addCompareLocation: async (location) => {
         const currentCompared = get().compareLocations || [];
@@ -198,11 +204,12 @@ const useWeatherStore = create()(
       },
     }),
     {
-      name: "favorite-locations",
+      name: "weather-locations",
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         units: state.units,
         location: state.location,
+        currentLocation: state.currentLocation,
         favoriteLocations: state.favoriteLocations,
         compareLocations: state.compareLocations,
       }),

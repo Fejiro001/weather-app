@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocations } from "../hooks";
+import { useGeolocation, useLocations } from "../hooks";
 import useWeatherStore from "../store/weatherStore";
 
 import { AnimatedHeadline, SearchBar } from "../components/basic";
@@ -10,45 +10,18 @@ import {
   WeatherInfo,
 } from "../components/weather";
 import ErrorPage from "./ErrorPage";
-import { notifyError } from "../components/basic/toast";
 
 const HomePage = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const { fetchingLocations, locations, getLocations } = useLocations();
 
   const fetchWeather = useWeatherStore((state) => state.fetchWeather);
-  const fetchGeolocationWeather = useWeatherStore(
-    (state) => state.fetchGeolocationWeather
-  );
   const units = useWeatherStore((state) => state.units);
   const storeLocation = useWeatherStore((state) => state.location);
   const setLocation = useWeatherStore((state) => state.setLocation);
   const isError = useWeatherStore((state) => state.isError);
 
-  // For getting weather in your location
-  useEffect(() => {
-    if (!storeLocation) {
-      if (!navigator.geolocation) {
-        notifyError("Geolocation is not supported by your browser");
-      } else {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            fetchGeolocationWeather(position);
-          },
-          (error) => {
-            notifyError(
-              error.message ||
-                "Geolocation permission denied. Please search for a location."
-            );
-          },
-          {
-            enableHighAccuracy: true,
-            maximumAge: 0,
-          }
-        );
-      }
-    }
-  }, [fetchGeolocationWeather, storeLocation]);
+  useGeolocation(storeLocation);
 
   // Fetching weather data for searched location
   useEffect(() => {
