@@ -31,7 +31,7 @@
   --font-serif: "Bricolage Grotesque", serif;
 
   --day-bg-start: #c4f6fcdb;
-  --day-bg-end: #fafafaf0;
+  --day-bg-end: #fafafaf2;
   --night-bg-start: #03012d;
   --night-bg-end: #f3604268;
 
@@ -343,12 +343,15 @@
     @apply grid grid-cols-2 md:grid-cols-4 gap-4;
   }
   .detail {
-    @apply bg-(--neutral-800) text-(--neutral-000) outline-(--neutral-600) outline-1 p-5 rounded-xl space-y-6 not-dark:bg-white not-dark:outline-gray-200 drop-shadow-lg not-dark:drop-shadow-gray-400;
+    @apply bg-(--neutral-800) text-(--neutral-000) outline-(--neutral-600) outline-1 p-5 rounded-xl space-y-4 not-dark:bg-white not-dark:outline-gray-200 drop-shadow-lg not-dark:drop-shadow-gray-400;
+  }
+  .toggle_extras {
+    @apply bg-(--blue-500) text-white w-full text-center py-2 rounded-lg hover:bg-(--blue-700) text-preset-6 col-span-full drop-shadow-lg not-dark:drop-shadow-gray-500;
   }
 
   /* DAILY FORECAST */
   .daily_icon {
-    @apply w-[3.75rem] h-auto bg-(--neutral-700) not-dark:bg-(--neutral-900)/50 rounded-full;
+    @apply w-[3.75rem] h-auto bg-(--neutral-900)/50 rounded-full;
   }
   .forecast {
     @apply min-h-[10.3125rem] bg-(--neutral-800) outline-(--neutral-600) outline-1 px-2.5 py-4 rounded-xl gap-4 flex flex-col items-center not-dark:bg-white not-dark:outline-gray-200 not-dark:text-(--neutral-900) drop-shadow-lg not-dark:drop-shadow-gray-400;
