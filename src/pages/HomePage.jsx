@@ -21,7 +21,14 @@ const HomePage = () => {
   const setLocation = useWeatherStore((state) => state.setLocation);
   const isError = useWeatherStore((state) => state.isError);
 
-  useGeolocation(storeLocation);
+  const { getCurrentLocation } = useGeolocation();
+
+  // Fetching weather data for current location on initial load
+  useEffect(() => {
+    if (!storeLocation) {
+      getCurrentLocation();
+    }
+  }, [getCurrentLocation, storeLocation]);
 
   // Fetching weather data for searched location
   useEffect(() => {
@@ -50,7 +57,7 @@ const HomePage = () => {
       />
 
       <SearchBar
-        isFetching={fetchingLocations}
+        fetchingLocations={fetchingLocations}
         locations={locations}
         getLocations={getLocations}
         setSelectedLocation={setSelectedLocation}

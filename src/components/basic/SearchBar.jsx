@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Loader } from "./Icons";
-import { useClickOutside, useVoiceSearch } from "../../hooks";
+import { useClickOutside, useGeolocation, useVoiceSearch } from "../../hooks";
 import woosh from "/sounds/woosh.mp3";
 import useSound from "use-sound";
 import {
@@ -9,9 +9,10 @@ import {
   IconMicrophoneOff,
 } from "@tabler/icons-react";
 import Tippy from "@tippyjs/react";
+import useWeatherStore from "../../store/weatherStore";
 
 const SearchBar = ({
-  isFetching,
+  fetchingLocations,
   locations,
   getLocations,
   setSelectedLocation,
@@ -19,6 +20,8 @@ const SearchBar = ({
   const [inputValue, setInputValue] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const searchBarRef = useRef(null);
+  const { getCurrentLocation } = useGeolocation();
+  const isFetching = useWeatherStore((state) => state.isFetching);
 
   // Custom hooks
   const {
@@ -58,6 +61,11 @@ const SearchBar = ({
     [getLocations, inputValue, play]
   );
 
+  const handleCurrentLocation = () => {
+    getCurrentLocation();
+    hideDropdown();
+  };
+
   // Implement voice search functionality in search bar
   useEffect(() => {
     if (speechText) {
@@ -70,6 +78,10 @@ const SearchBar = ({
       }
     }
   }, [clearSpeechText, getLocations, speechText]);
+
+  const micButtonClass = isListening
+    ? "bg-red-500 text-white shadow-xl ring-2 ring-red-300 transition-all duration-300" // Active (Recording) state
+    : "bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors duration-300";
 
   return (
     <section className="w-full flex flex-col items-center">
@@ -84,7 +96,6 @@ const SearchBar = ({
             value={inputValue}
             onChange={(e) => {
               setInputValue(e.target.value);
-              setIsDropdownOpen(true);
             }}
             className="searchBar"
             placeholder="Search for a place..."
@@ -93,7 +104,7 @@ const SearchBar = ({
           {supported && (
             <button
               onClick={isListening ? stopListening : startListening}
-              className="absolute top-1/2 -translate-y-1/2 right-0 bg-(--blue-500) hover:bg-(--blue-700) rounded-xl p-2 mx-2"
+              className={`absolute top-1/2 -translate-y-1/2 right-0 rounded-xl p-2 mx-2 ${micButtonClass}`}
               type="button"
             >
               {isListening ? <IconMicrophone /> : <IconMicrophoneOff />}
@@ -102,14 +113,12 @@ const SearchBar = ({
 
           {isDropdownOpen && (
             <ul className="dropdownMenu absolute top-full left-0 w-full mt-3 max-h-72 overflow-y-auto scrollable_container z-30">
-              {isFetching && (
+              {fetchingLocations ? (
                 <li className="day_button flex gap-2.5">
                   <Loader className="animate-spin" />
                   <span className="text-preset-7">Search in progress</span>
                 </li>
-              )}
-
-              {!isFetching &&
+              ) : (
                 locations?.length > 0 &&
                 locations.map((loc) => (
                   <li key={loc.id}>
@@ -124,9 +133,10 @@ const SearchBar = ({
                       </p>
                     </button>
                   </li>
-                ))}
+                ))
+              )}
 
-              {!isFetching &&
+              {!fetchingLocations &&
                 (locations?.length === 0 || locations === undefined) && (
                   <li className="day_button">
                     <span className="text-preset-7">
@@ -139,12 +149,21 @@ const SearchBar = ({
         </div>
 
         <div className="flex gap-2">
-          <button type="submit" className="w-full md:w-fit primary_btn">
+          <button
+            type="submit"
+            className="w-full md:w-fit primary_btn disabled:bg-gray-500"
+            disabled={isFetching}
+          >
             Search
           </button>
 
           <Tippy content="Current Location">
-            <button className="primary_btn group" type="button">
+            <button
+              onClick={handleCurrentLocation}
+              className="primary_btn group disabled:bg-gray-500"
+              type="button"
+              disabled={isFetching}
+            >
               <IconCurrentLocation className="group-hover:rotate-90 duration-500 transition-transform" />
             </button>
           </Tippy>

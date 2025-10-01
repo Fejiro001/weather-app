@@ -21,7 +21,7 @@ const containerVariants = {
     marginBottom: 0,
     transition: {
       when: "afterChildren",
-      duration: 0.3,
+      duration: 0.4,
       ease: "easeInOut",
     },
   },
