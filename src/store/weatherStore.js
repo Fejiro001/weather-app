@@ -171,7 +171,13 @@ const useWeatherStore = create()(
             );
 
             set((state) => ({
-              compareLocations: [...state.compareLocations, response.data],
+              compareLocations: [
+                ...state.compareLocations,
+                {
+                  name: `${location.name}, ${location.country}`,
+                  ...response.data,
+                },
+              ],
             }));
           } catch (error) {
             notifyError(

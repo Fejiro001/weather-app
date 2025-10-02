@@ -13,30 +13,12 @@ import {
 } from "@tabler/icons-react";
 import useWeatherStore from "../store/weatherStore";
 import { formatTime, roundUp } from "../utils/helperUtils";
-
-const UV_INDEX_LEVELS = {
-  0: "Low",
-  1: "Low",
-  2: "Low",
-  3: "Moderate",
-  4: "Moderate",
-  5: "Moderate",
-  6: "High",
-  7: "High",
-  8: "Very High",
-  9: "Very High",
-  10: "Very High",
-  11: "Extreme",
-};
+import { getUvLevel } from "../constants/weatherConstants";
 
 const useWeatherDetails = () => {
   const { current } = useWeatherStore((state) => state.weatherData) || {};
   const { daily } = useWeatherStore((state) => state.weatherData) || {};
   const { current_units } = useWeatherStore((state) => state.weatherData) || {};
-
-  // Display same text for indexes greater than 11 as 11
-  const currentUvIndex =
-    Math.round(current?.uv_index) > 11 ? 11 : Math.round(current?.uv_index);
 
   // Memoize details data to avoid unnecessary recalculations
   const detailsData = useMemo(
@@ -81,14 +63,14 @@ const useWeatherDetails = () => {
       },
       {
         label: "UV Index",
-        value: UV_INDEX_LEVELS[currentUvIndex] || "N/A",
+        value: getUvLevel(current?.uv_index),
         unit: current_units?.uv_index || "",
         icon: <IconUvIndex className="text-amber-500" />,
       },
       {
         label: "Visibility",
-        value: roundUp(current?.visibility),
-        unit: current_units?.visibility || "m",
+        value: (current?.visibility / 1000).toFixed(1),
+        unit: "km",
         icon: <IconEye className="text-indigo-500" />,
       },
       {
@@ -104,7 +86,7 @@ const useWeatherDetails = () => {
         icon: <IconCloudFilled className="text-blue-400" />,
       },
     ],
-    [current, current_units, daily, currentUvIndex]
+    [current, current_units, daily]
   );
   const essentials = detailsData.slice(0, 4);
   const extras = detailsData.slice(4);

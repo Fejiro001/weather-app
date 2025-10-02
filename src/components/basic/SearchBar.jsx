@@ -129,7 +129,8 @@ const SearchBar = ({
                       type="button"
                       className="day_button"
                     >
-                      {loc.name}, {loc.country}
+                      {loc.name}
+                      {loc.country ? `, ${loc.country}` : ""}
                       <p className="small_text">
                         {loc.admin2 ? `${loc.admin2},` : ""} {loc.admin1}
                       </p>

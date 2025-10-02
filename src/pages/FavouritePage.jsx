@@ -17,7 +17,7 @@ const FavouritePage = () => {
       <div className="space-y-4 text-white not-dark:text-(--neutral-900)">
         {favoriteLocations.length === 0 ? (
           <div className="no_locations">
-            <p>You haven't saved any locations yet.</p>
+            <p>You haven&apos;t saved any locations yet.</p>
           </div>
         ) : (
           <ul className="space-y-4">
