@@ -254,7 +254,7 @@
 
 @layer components {
   .layout {
-    @apply flex flex-col items-center gap-12 xl:gap-16 p-4 md:p-6 xl:px-28 xl:py-12 theme-day dark:theme-night min-h-screen text-white bg-(--neutral-900) not-dark:bg-(--blue-200);
+    @apply flex flex-col items-center gap-12 xl:gap-16 p-4 md:p-6 xl:px-28 theme-day dark:theme-night min-h-screen text-white bg-(--neutral-900) not-dark:bg-(--blue-200);
   }
   .main {
     @apply w-full max-w-7xl pt-5 lg:mt-0;
@@ -306,7 +306,7 @@
 
   /* BUTTON */
   .primary_btn {
-    @apply bg-(--blue-500) hover:bg-(--blue-700) rounded-xl p-4 text-preset-5 font-medium focus-visible:focus-blue text-white not-dark:text-(--neutral-000) drop-shadow-lg not-dark:drop-shadow-gray-400;
+    @apply bg-(--blue-500) hover:bg-(--blue-700) rounded-xl p-4 text-preset-5 font-medium focus-visible:focus-blue text-white drop-shadow-lg not-dark:drop-shadow-gray-400;
   }
 
   /* SEARCH BAR */
@@ -392,8 +392,20 @@
   }
 
   /* COMPARE LOCATION PAGE */
-  .no_compare_location {
-    @apply border-2 border-dashed border-gray-300 not-dark:border-(--neutral-700) rounded-lg p-6 flex flex-col items-center justify-center gap-6 mt-10 text-(--neutral-200) not-dark:text-(--neutral-700) w-full h-full;
+  .comparison_btn {
+    @apply bg-(--blue-500) hover:bg-(--blue-700) text-white px-4 py-2.5 rounded-lg flex items-center gap-2 transition-colors font-medium shadow-lg shadow-blue-600/20 text-preset-6 md:text-preset-5;
+  }
+  .current_location_btn {
+    @apply bg-(--neutral-600) hover:bg-(--neutral-800) text-white px-4 py-2.5 rounded-lg flex items-center gap-2 transition-colors font-medium;
+  }
+  .compare_card {
+    @apply bg-gradient-to-br from-(--neutral-800) to-(--neutral-900) not-dark:from-(--neutral-000) not-dark:to-(--neutral-000) rounded-lg p-6 border border-(--neutral-700) not-dark:border-(--neutral-200) shadow-2xl relative overflow-hidden;
+  }
+  .compare_card_hover {
+    @apply absolute inset-0 bg-gradient-to-br from-(--blue-500)/10 to-(--blue-700)/10 not-dark:from-(--blue-200)/10 not-dark:to-(--blue-300)/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300;
+  }
+  .compare_card_location_name {
+    @apply text-xl font-bold text-white not-dark:text-(--neutral-900) mb-1;
   }
   .modal {
     @apply relative bg-(--neutral-900) not-dark:bg-white px-4 py-6 rounded-lg shadow-xl shadow-(color:--neutral-700) ring-(--blue-500)/50 ring-1 w-full max-w-lg mx-8;
@@ -405,6 +417,9 @@
     @apply p-3 rounded-lg outline-1 outline-(--neutral-200) dark:outline-(--neutral-700) flex gap-4 justify-between hover:py-5 hover:bg-(--neutral-800)/50 not-dark:hover:bg-(--neutral-200)/50 transition-all;
   }
   .add_location_btn {
-    @apply outline-1 rounded-sm px-2 not-dark:text-(--neutral-900) hover:bg-white hover:text-(--neutral-900)  not-dark:hover:bg-(--neutral-900) not-dark:hover:text-white transition-colors font-bold;
+    @apply outline-1 rounded-sm p-2 not-dark:text-(--neutral-900) hover:bg-white hover:text-(--neutral-900)  not-dark:hover:bg-(--neutral-900) not-dark:hover:text-white transition-colors font-bold;
+  }
+  .empty_slot {
+    @apply bg-(--neutral-800)/30 not-dark:bg-(--neutral-800)/10 rounded-2xl border-2 border-dashed border-(--neutral-700) not-dark:border-(--neutral-300) flex items-center justify-center min-h-[400px] cursor-pointer hover:border-slate-600 hover:bg-(--neutral-800)/50 not-dark:hover:bg-(--neutral-300)/50 transition-all;
   }
 }

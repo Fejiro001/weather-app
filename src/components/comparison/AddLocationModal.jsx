@@ -1,3 +1,4 @@
+import { motion } from "motion/react";
 import { useLocations } from "../../hooks";
 import useWeatherStore from "../../store/weatherStore";
 import { IconLoader2, IconX } from "@tabler/icons-react";
@@ -25,8 +26,20 @@ const AddLocationModal = ({ setShowModal }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/50">
-      <div className="modal">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 flex items-center justify-center z-50 bg-black/50 backdrop-blur-sm p-4"
+      onClick={() => setShowModal(false)}
+    >
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        onClick={(e) => e.stopPropagation()}
+        className="modal"
+      >
         <button
           type="button"
           className="close_btn"
@@ -36,9 +49,9 @@ const AddLocationModal = ({ setShowModal }) => {
           <IconX />
         </button>
 
-        <h2 className="text-(--neutral-900) dark:text-(--neutral-200) mb-4 text-preset-5">
-          Search for a location
-        </h2>
+        <h3 className="text-(--neutral-900) dark:text-(--neutral-200) mb-4 text-preset-5">
+          Add location
+        </h3>
 
         <form
           onSubmit={handleSearch}
@@ -51,7 +64,7 @@ const AddLocationModal = ({ setShowModal }) => {
         </form>
 
         {fetchingLocations ? (
-          <div className="flex mt-4 justify-center items-center">
+          <div className="flex mt-4 justify-center items-center not-dark:text-(--neutral-900)">
             <IconLoader2 className="animate-spin" />
           </div>
         ) : (
@@ -64,7 +77,8 @@ const AddLocationModal = ({ setShowModal }) => {
                 <li key={loc.id} className="day_button locations_list">
                   <div>
                     <p className="not-dark:text-(--neutral-900)">
-                      {loc.name}, {loc.country}
+                      {loc.name}
+                      {loc.country ? `, ${loc.country}` : ""}
                     </p>
                     <p className="small_text">
                       {loc.admin2 ? `${loc.admin2},` : ""} {loc.admin1}
@@ -81,8 +95,8 @@ const AddLocationModal = ({ setShowModal }) => {
             </ul>
           )
         )}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
