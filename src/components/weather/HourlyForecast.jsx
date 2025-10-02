@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 import useWeatherStore from "../../store/weatherStore";
-import { getWeatherIcon } from "../../utils/getWeatherIcon";
+import { getWeatherIcon } from "../../constants/weatherConstants";
 import { motion } from "motion/react";
 
 import { DaysDropdown } from "../basic";

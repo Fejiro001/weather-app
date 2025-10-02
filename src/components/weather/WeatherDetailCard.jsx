@@ -4,7 +4,7 @@ const WeatherDetailCard = ({
   unit,
   isFetching,
   icon,
-  className,
+  className = "",
 }) => {
   const displayValue = isNaN(Math.round(value ?? 0)) ? value : value ?? 0;
 

@@ -3,8 +3,8 @@ import useWeatherStore from "../../store/weatherStore";
 import useSound from "use-sound";
 import { motion } from "motion/react";
 
-import { getWeatherIcon } from "../../utils/getWeatherIcon";
 import { useSettings } from "../../hooks";
+import { getWeatherIcon } from "../../constants/weatherConstants";
 
 import bubblePop from "/sounds/bubble-pop.mp3";
 import { BgNoise, Loading } from "../basic";
@@ -117,7 +117,7 @@ const WeatherInfo = () => {
           <IconStar
             className={`${
               isSaved ? "fill-yellow-400 stroke-yellow-400" : ""
-            } absolute top-8 sm:top-10 left-8 w-6 h-6 lg:hover:fill-yellow-400 lg:hover:stroke-yellow-400 transition-all`}
+            } absolute top-8 sm:top-10 left-8 w-8 h-8 lg:hover:fill-yellow-400 lg:hover:stroke-yellow-400 transition-all`}
           />
         </button>
 

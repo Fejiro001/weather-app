@@ -1,4 +1,4 @@
-import { getWeatherIcon } from "../../utils/getWeatherIcon";
+import { getWeatherIcon } from "../../constants/weatherConstants";
 import useWeatherStore from "../../store/weatherStore";
 import { DailyForecastCard } from ".";
 
