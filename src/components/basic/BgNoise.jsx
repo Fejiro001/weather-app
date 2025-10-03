@@ -74,7 +74,10 @@ const BgNoise = () => {
     <>
       {/* CLOUD 1 */}
       <motion.svg
+        alt="Decorative cloud background element"
         variants={cloudOneItemVariants}
+        initial="hidden"
+        animate="visible"
         width="415"
         height="275"
         viewBox="0 0 415 275"
@@ -103,7 +106,10 @@ const BgNoise = () => {
 
       {/* CLOUD 2 */}
       <motion.svg
+        alt="Decorative cloud background element"
         variants={cloudTwoItemVariants}
+        initial="hidden"
+        animate="visible"
         width="665"
         height="340"
         viewBox="0 0 665 340"
@@ -131,6 +137,7 @@ const BgNoise = () => {
       </motion.svg>
 
       <motion.img
+        alt="Decorative star background element"
         src={starOne}
         variants={starOneVariants}
         initial={{ opacity: 0 }}
@@ -138,6 +145,7 @@ const BgNoise = () => {
         className="absolute left-20 top-10"
       />
       <motion.img
+        alt="Decorative star background element"
         src={starTwo}
         variants={starTwoVariants}
         initial={{ opacity: 0 }}
@@ -145,6 +153,7 @@ const BgNoise = () => {
         className="absolute right-20 bottom-10"
       />
       <motion.img
+        alt="Decorative star background element"
         src={starOne}
         variants={starOneVariants}
         initial={{ opacity: 0 }}
@@ -152,6 +161,7 @@ const BgNoise = () => {
         className="absolute left-2/5 bottom-10 z-10"
       />
       <motion.img
+        alt="Decorative star background element"
         src={starTwo}
         variants={starTwoVariants}
         initial={{ opacity: 0 }}
@@ -159,6 +169,7 @@ const BgNoise = () => {
         className="absolute left-10 bottom-5 h-auto w-3 z-10"
       />
       <motion.img
+        alt="Decorative star background element"
         src={starTwo}
         variants={starTwoVariants}
         initial={{ opacity: 0 }}

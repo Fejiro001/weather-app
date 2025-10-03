@@ -51,9 +51,12 @@ const NavBar = () => {
       <motion.button
         whileTap={{ scale: 0.95 }}
         className="settings_dropdown"
+        type="button"
         onClick={toggleDropdown}
         aria-expanded={isOpen}
         aria-controls="mobile-menu"
+        aria-haspopup="menu"
+        aria-label="Toggle menu"
       >
         <AnimatePresence mode="wait">
           <motion.span

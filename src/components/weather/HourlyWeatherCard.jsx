@@ -1,19 +1,6 @@
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      stiffness: 400,
-      damping: 25,
-    },
-  },
-};
-
 const HourlyWeatherCard = ({
   icon,
   time,
@@ -68,6 +55,7 @@ const HourlyWeatherCard = ({
       className="hour_card"
     >
       <img
+        alt="Weather icon"
         className="hour_icon"
         src={icon ? `/assets/images/weather/icon-${icon}.webp` : null}
       />

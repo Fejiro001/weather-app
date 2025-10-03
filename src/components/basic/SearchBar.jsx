@@ -108,6 +108,9 @@ const SearchBar = ({
               onClick={isListening ? stopListening : startListening}
               className={`absolute top-1/2 -translate-y-1/2 right-0 rounded-xl p-2 mx-2 ${micButtonClass}`}
               type="button"
+              aria-label={
+                isListening ? "Stop voice input" : "Start voice input"
+              }
             >
               {isListening ? <IconMicrophone /> : <IconMicrophoneOff />}
             </button>
@@ -166,6 +169,7 @@ const SearchBar = ({
               className="primary_btn group disabled:bg-gray-500 disabled:cursor-not-allowed"
               type="button"
               disabled={isFetching}
+              aria-label="Current Location"
             >
               <IconCurrentLocation className="group-hover:rotate-90 duration-500 transition-transform" />
             </button>

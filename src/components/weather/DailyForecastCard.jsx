@@ -15,6 +15,7 @@ const DailyForecastCard = ({ day, icon, min_temp, max_temp, isFetching }) => {
         <>
           <p className="text-preset-6">{day}</p>
           <img
+            alt="Weather icon"
             className="daily_icon"
             src={icon ? `/assets/images/weather/icon-${icon}.webp` : null}
           />

@@ -1,12 +1,12 @@
+import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AppLayout from "./layout/AppLayout";
-
-import HomePage from "./pages/HomePage";
-import FavouritePage from "./pages/FavouritePage";
-import ComparisonPage from "./pages/ComparisonPage";
-import { Suspense } from "react";
 import { Toaster } from "sonner";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+
+const HomePage = lazy(() => import("./pages/HomePage"));
+const FavouritePage = lazy(() => import("./pages/FavouritePage"));
+const ComparisonPage = lazy(() => import("./pages/ComparisonPage"));
 
 function App() {
   return (
