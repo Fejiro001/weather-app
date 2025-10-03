@@ -1,8 +1,6 @@
-import { memo } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import Tippy from "@tippyjs/react";
-import "tippy.js/dist/tippy.css";
 import {
   FavoriteDropdown,
   NavBar,
@@ -24,7 +22,7 @@ const headerVariants = {
 
 const Header = () => {
   return (
-    <motion.div
+    <motion.header
       className="header"
       variants={headerVariants}
       initial="initial"
@@ -36,17 +34,17 @@ const Header = () => {
         <div className="hidden md:flex items-center gap-4">
           <FavoriteDropdown />
 
-          <Tippy content="Compare Locations">
-            <Link to="/compare" className="h-full">
-              <motion.button
+          <Link to="/compare" aria-label="Compare Locations" className="h-full">
+            <Tippy content="Compare Locations">
+              <motion.div
                 className="settings_dropdown flex gap-1 text-preset-8 sm:text-preset-7"
                 whileTap={{ scale: 0.95 }}
               >
                 <IconArrowsUpDown className="rotate-12 w-auto h-4 sm:h-5" />
                 <span className="hidden min-[1024px]:block">Compare</span>
-              </motion.button>
-            </Link>
-          </Tippy>
+              </motion.div>
+            </Tippy>
+          </Link>
         </div>
 
         <div className="hidden md:flex items-center gap-4">
@@ -59,10 +57,8 @@ const Header = () => {
 
         <NavBar />
       </div>
-    </motion.div>
+    </motion.header>
   );
 };
 
-const MemoizedHeader = memo(Header);
-MemoizedHeader.displayName = "Header";
-export default MemoizedHeader;
+export default Header;

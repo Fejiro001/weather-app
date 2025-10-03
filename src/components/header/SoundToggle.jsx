@@ -22,19 +22,22 @@ const SoundToggle = () => {
     },
   };
 
+  const handleClick = () => {
+    setIsWiggling(true);
+    toggleSound();
+  };
+
   return (
     <Tippy content={tippyContent}>
       <motion.button
-        onClick={toggleSound}
+        onClick={handleClick}
         whileTap={{ scale: 0.95 }}
         animate={isWiggling ? "wiggle" : undefined}
         variants={wiggleVariants}
         onAnimationComplete={() => setIsWiggling(false)}
-        onMouseEnter={() => setIsWiggling(true)}
-        style={{ display: "inline-flex", transformOrigin: "center" }}
         aria-pressed={isSoundEnabled}
         aria-label={tippyContent}
-        className="bg-(--neutral-900) hover:bg-(--neutral-800) not-dark:hover:bg-(--neutral-200) text-white not-dark:bg-white not-dark:text-(--neutral-900) outline-1 outline-(--neutral-300) not-dark:outline-(--neutral-700) p-2.5 rounded-full *:w-auto *:h-4.5"
+        className="sound_btn"
       >
         {isSoundEnabled ? <IconVolume /> : <IconVolume3 />}
       </motion.button>

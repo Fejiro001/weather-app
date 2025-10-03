@@ -26,10 +26,8 @@ const HomePage = () => {
   // Fetching weather data for current location on initial load if first visit
   useEffect(() => {
     const hasVisited = localStorage.getItem("hasVisited");
-
     if (!hasVisited && !storeLocation) {
       localStorage.setItem("hasVisited", "true");
-
       getCurrentLocation();
     }
   }, [getCurrentLocation, storeLocation]);

@@ -7,6 +7,7 @@ import useWeatherStore from "../store/weatherStore";
 import { BackButton } from "../components/basic";
 import { ComparisonCard } from "../components/comparison";
 import { AddLocationModal } from "../components/comparison";
+import { notifyError } from "../components/basic/toast";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -31,18 +32,31 @@ const ComparisonPage = () => {
   const [showModal, setShowModal] = useState(false);
   const { getCurrentLocation } = useGeolocation();
   const compareLocations = useWeatherStore((state) => state.compareLocations);
-
   const addCompareLocation = useWeatherStore(
     (state) => state.addCompareLocation
   );
   const currentLocation = useWeatherStore((state) => state.currentLocation);
 
-  const handleAddCurrentLocation = () => {
+  /**
+   * Handles adding the user's current location to the comparison list.
+   * If the current location is already available in the store, it uses that.
+   * Otherwise, it attempts to fetch the current location using geolocation.
+   */
+  const handleAddCurrentLocation = async () => {
     if (currentLocation) {
       addCompareLocation(currentLocation);
     } else {
-      getCurrentLocation();
-      addCompareLocation(currentLocation);
+      try {
+        const location = await getCurrentLocation(true);
+        if (location) {
+          addCompareLocation(location);
+        }
+      } catch (error) {
+        notifyError(
+          error.message ||
+            "Geolocation permission denied. Please search for a location."
+        );
+      }
     }
   };
 

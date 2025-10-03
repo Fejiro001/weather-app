@@ -63,7 +63,7 @@ const ThemeToggle = () => {
         whileTap={{ scale: 0.95 }}
         className={`${
           isDark ? "bg-(--neutral-300)/30" : "bg-gray-300/70"
-        } p-1 rounded-full inset-shadow-2xs outline-none transition-all duration-300 ease-in-out`}
+        } theme_toggle`}
         onClick={handleToggle}
         aria-label="Toggle Theme"
         aria-pressed={isDark}
