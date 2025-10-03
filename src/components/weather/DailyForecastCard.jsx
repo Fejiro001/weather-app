@@ -17,7 +17,11 @@ const DailyForecastCard = ({ day, icon, min_temp, max_temp, isFetching }) => {
           <img
             alt="Weather icon"
             className="daily_icon"
-            src={icon ? `/assets/images/weather/icon-${icon}.webp` : null}
+            src={
+              icon
+                ? `/assets/images/weather/icon-${icon}.webp`
+                : "/assets/images/weather/icon-sunny.webp"
+            }
           />
 
           <div className="temp_range">

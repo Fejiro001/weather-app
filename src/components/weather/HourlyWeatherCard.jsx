@@ -57,7 +57,7 @@ const HourlyWeatherCard = ({
       <img
         alt="Weather icon"
         className="hour_icon"
-        src={icon ? `/assets/images/weather/icon-${icon}.webp` : null}
+        src={icon ? `/assets/images/weather/icon-${icon}.webp` : '/assets/images/weather/icon-sunny.webp'}
       />
       <span className="w-full text-preset-5 font-medium">{time}</span>
       <span className="text-preset-7">{min_temp}</span>
