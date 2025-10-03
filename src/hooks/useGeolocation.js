@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import useWeatherStore from "../store/weatherStore";
-import { notifyError } from "../components/basic/toast";
+import { notifyError, notifyInfo } from "../components/basic/toast";
 
 const useGeolocation = () => {
   const fetchGeolocationWeather = useWeatherStore(
@@ -16,6 +16,7 @@ const useGeolocation = () => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         fetchGeolocationWeather(position);
+        notifyInfo("Fetching weather for your current location...");
       },
       (error) => {
         notifyError(

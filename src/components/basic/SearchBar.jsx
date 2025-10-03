@@ -10,7 +10,6 @@ import {
 } from "@tabler/icons-react";
 import Tippy from "@tippyjs/react";
 import useWeatherStore from "../../store/weatherStore";
-import { notifyInfo } from "./toast";
 
 const SearchBar = ({
   fetchingLocations,
@@ -65,7 +64,6 @@ const SearchBar = ({
   const handleCurrentLocation = () => {
     getCurrentLocation();
     hideDropdown();
-    notifyInfo("Fetching weather for your current location...");
   };
 
   // Implement voice search functionality in search bar

@@ -10,7 +10,6 @@ import {
   WeatherInfo,
 } from "../components/weather";
 import ErrorPage from "./ErrorPage";
-import { notifyInfo } from "../components/basic/toast";
 
 const HomePage = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -24,11 +23,14 @@ const HomePage = () => {
 
   const { getCurrentLocation } = useGeolocation();
 
-  // Fetching weather data for current location on initial load
+  // Fetching weather data for current location on initial load if first visit
   useEffect(() => {
-    if (!storeLocation) {
+    const hasVisited = localStorage.getItem("hasVisited");
+
+    if (!hasVisited && !storeLocation) {
+      localStorage.setItem("hasVisited", "true");
+
       getCurrentLocation();
-      notifyInfo("Fetching weather for your current location...");
     }
   }, [getCurrentLocation, storeLocation]);
 
