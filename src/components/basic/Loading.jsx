@@ -5,7 +5,7 @@ const Loading = () => {
   const { isDark } = useTheme();
 
   return (
-    <div className="flex gap-1 justify-center">
+    <div className="flex gap-2 justify-center">
       {[0, 1, 2].map((i) => (
         <motion.div
           key={i}
