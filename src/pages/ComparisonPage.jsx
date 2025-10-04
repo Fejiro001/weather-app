@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { IconMapPin, IconPlus } from "@tabler/icons-react";
-import { useGeolocation } from "../hooks";
+import { IconLoader2, IconMapPin, IconPlus } from "@tabler/icons-react";
 import useWeatherStore from "../store/weatherStore";
 
 import { BackButton } from "../components/basic";
@@ -26,15 +25,24 @@ const emptySlotVariants = {
     scale: 1,
     transition: { duration: 0.3 },
   },
+  exit: {
+    opacity: 0,
+    scale: 0.95,
+    transition: { duration: 0.2 },
+  },
 };
 
 const ComparisonPage = () => {
   const [showModal, setShowModal] = useState(false);
-  const { getCurrentLocation } = useGeolocation();
+
+  const fetchGeolocationWeather = useWeatherStore(
+    (state) => state.fetchGeolocationWeather
+  );
   const compareLocations = useWeatherStore((state) => state.compareLocations);
   const addCompareLocation = useWeatherStore(
     (state) => state.addCompareLocation
   );
+  const isAddingLocation = useWeatherStore((state) => state.isAddingLocation);
   const currentLocation = useWeatherStore((state) => state.currentLocation);
 
   /**
@@ -43,20 +51,50 @@ const ComparisonPage = () => {
    * Otherwise, it attempts to fetch the current location using geolocation.
    */
   const handleAddCurrentLocation = async () => {
-    if (currentLocation) {
-      addCompareLocation(currentLocation);
-    } else {
-      try {
-        const location = await getCurrentLocation(true);
-        if (location) {
-          addCompareLocation(location);
+    try {
+      if (!currentLocation) {
+        await new Promise((resolve, reject) => {
+          if (!navigator.geolocation) {
+            notifyError("Geolocation is not supported by your browser");
+            reject(new Error("Geolocation not supported"));
+            return;
+          }
+
+          navigator.geolocation.getCurrentPosition(
+            async (position) => {
+              try {
+                await fetchGeolocationWeather(position);
+                resolve();
+              } catch (error) {
+                notifyError(
+                  error.message ||
+                    "Failed to fetch weather data for current location."
+                );
+                reject(error);
+              }
+            },
+            (error) => {
+              notifyError(
+                error.message ||
+                  "Geolocation permission denied. Please search for a location."
+              );
+              reject(error);
+            },
+            { enableHighAccuracy: true, maximumAge: 0 }
+          );
+        });
+
+        const updatedLocation = useWeatherStore.getState().currentLocation;
+        if (updatedLocation) {
+          await addCompareLocation(updatedLocation);
         }
-      } catch (error) {
-        notifyError(
-          error.message ||
-            "Geolocation permission denied. Please search for a location."
-        );
+      } else {
+        await addCompareLocation(currentLocation);
       }
+    } catch (error) {
+      notifyError(
+        error.message || "Failed to add current location to comparison."
+      );
     }
   };
 
@@ -81,6 +119,7 @@ const ComparisonPage = () => {
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setShowModal(true)}
                 className="comparison_btn"
+                disabled={isAddingLocation}
               >
                 <IconPlus size={20} />
                 <span>Add Location</span>
@@ -91,6 +130,7 @@ const ComparisonPage = () => {
                 whileTap={{ scale: 0.98 }}
                 onClick={handleAddCurrentLocation}
                 className="current_location_btn"
+                disabled={isAddingLocation}
               >
                 <IconMapPin size={20} />
                 <span>Current Location</span>
@@ -134,10 +174,33 @@ const ComparisonPage = () => {
                 />
               ))}
 
+              {/* Loading card while adding location */}
+              {isAddingLocation && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  className="empty_slot flex items-center justify-center min-h-[300px]"
+                >
+                  <div className="text-center">
+                    <IconLoader2
+                      size={48}
+                      className="animate-spin text-(--neutral-200) mx-auto mb-4"
+                    />
+                    <p className="text-(--neutral-300) not-dark:text-(--neutral-600) font-medium">
+                      Adding location...
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+
               {/* Empty slots to maintain grid */}
-              {compareLocations.length < 3 && (
+              {!isAddingLocation && compareLocations.length < 3 && (
                 <motion.div
                   variants={emptySlotVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
                   className="empty_slot group"
                   onClick={() => setShowModal(true)}
                 >

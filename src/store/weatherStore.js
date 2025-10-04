@@ -12,6 +12,7 @@ const useWeatherStore = create()(
     (set, get) => ({
       weatherData: null,
       isFetching: false,
+      isAddingLocation: false,
       isError: false,
       location: null,
       currentLocation: null,
@@ -158,11 +159,12 @@ const useWeatherStore = create()(
         const currentCompared = get().compareLocations || [];
         const exists = currentCompared.some(
           (loc) =>
-            loc.latitude === location.latitude &&
-            loc.longitude === location.longitude
+            loc.originalLatitude === location.latitude &&
+            loc.originalLongitude === location.longitude
         );
 
         if (!exists) {
+          set({ isAddingLocation: true });
           try {
             const params = {
               latitude: location.latitude,
@@ -183,15 +185,22 @@ const useWeatherStore = create()(
                 ...state.compareLocations,
                 {
                   name: `${location.name}, ${location.country}`,
+                  originalLatitude: location.latitude,
+                  originalLongitude: location.longitude,
                   ...response.data,
                 },
               ],
+              isAddingLocation: false,
             }));
+
+            notifySuccess(`${location.name} added for comparison.`, "Success");
           } catch (error) {
             notifyError(
               error?.response?.data?.message ||
                 "Failed to fetch weather data for comparison. Please try again."
             );
+          } finally {
+            set({ isAddingLocation: false });
           }
         } else {
           notifyError(

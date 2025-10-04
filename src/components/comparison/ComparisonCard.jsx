@@ -63,7 +63,7 @@ const ComparisonCard = ({ location }) => {
                 transition={{
                   duration: 2.5,
                   repeat: Infinity,
-                  repeatType: "reverse"
+                  repeatType: "reverse",
                 }}
               >
                 <img

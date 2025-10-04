@@ -58,7 +58,11 @@ const AddLocationModal = ({ setShowModal }) => {
           className="flex flex-col md:flex-row gap-y-3 gap-x-4 max-w-3xl w-full justify-center"
         >
           <input className="searchBar" placeholder="Enter any location..." />
-          <button type="submit" className="primary_btn">
+          <button
+            type="submit"
+            className="primary_btn"
+            disabled={fetchingLocations}
+          >
             {fetchingLocations ? "Searching..." : "Search"}
           </button>
         </form>

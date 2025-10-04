@@ -8,42 +8,16 @@ const useGeolocation = () => {
   );
 
   const getCurrentLocation = useCallback(
-    (returnLocation = false) => {
+    () => {
       if (!navigator.geolocation) {
         notifyError("Geolocation is not supported by your browser");
-        return returnLocation
-          ? Promise.reject(new Error("Geolocation not supported"))
-          : undefined;
+        return;
       }
 
-      // Return location for the comparison page
-      if (returnLocation) {
-        return new Promise((resolve, reject) => {
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              const locationData = {
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude,
-              };
-              resolve(locationData);
-            },
-            (error) => {
-              notifyError(
-                error.message ||
-                  "Geolocation permission denied. Please search for a location."
-              );
-              reject(error);
-            },
-            { enableHighAccuracy: true, maximumAge: 0 }
-          );
-        });
-      }
-
-      // For the home page, just fetch and notify
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          fetchGeolocationWeather(position);
           notifyInfo("Fetching weather for your current location...");
+          fetchGeolocationWeather(position);
         },
         (error) => {
           notifyError(
