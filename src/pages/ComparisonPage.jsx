@@ -158,10 +158,32 @@ const ComparisonPage = () => {
       </motion.div>
 
       {/* Comparison Grid */}
-      <div className="max-w-7xl mx-auto">
-        <AnimatePresence mode="popLayout">
+      <div className="max-w-7xl mx-auto relative">
+        <AnimatePresence mode="wait">
+          {/* Loading overlay */}
+          {isAddingLocation && (
+            <motion.div
+              key="loading-overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="bg-(--neutral-800)/30 not-dark:bg-(--neutral-800)/10 rounded-lg transition-all flex items-center justify-center absolute z-20 inset-0 backdrop-blur-sm"
+            >
+              <div className="text-center">
+                <IconLoader2
+                  size={48}
+                  className="animate-spin not-dark:text-(--neutral-900) text-(--neutral-200) mx-auto mb-4"
+                />
+                <p className="text-(--neutral-300) not-dark:text-(--neutral-600) font-medium">
+                  Adding location...
+                </p>
+              </div>
+            </motion.div>
+          )}
+
           {compareLocations.length > 0 ? (
             <motion.div
+              key="comparison-grid"
               variants={containerVariants}
               initial="hidden"
               animate="visible"
@@ -169,33 +191,13 @@ const ComparisonPage = () => {
             >
               {compareLocations.map((location) => (
                 <ComparisonCard
-                  key={`${location.latitude}-${location.longitude}`}
+                  key={`${location.originalLatitude}-${location.originalLongitude}`}
                   location={location}
                 />
               ))}
 
-              {/* Loading card while adding location */}
-              {isAddingLocation && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  className="empty_slot flex items-center justify-center min-h-[300px]"
-                >
-                  <div className="text-center">
-                    <IconLoader2
-                      size={48}
-                      className="animate-spin text-(--neutral-200) mx-auto mb-4"
-                    />
-                    <p className="text-(--neutral-300) not-dark:text-(--neutral-600) font-medium">
-                      Adding location...
-                    </p>
-                  </div>
-                </motion.div>
-              )}
-
               {/* Empty slots to maintain grid */}
-              {!isAddingLocation && compareLocations.length < 3 && (
+              {compareLocations.length < 3 && (
                 <motion.div
                   variants={emptySlotVariants}
                   initial="hidden"
@@ -220,6 +222,7 @@ const ComparisonPage = () => {
             </motion.div>
           ) : (
             <motion.div
+              key="empty-state"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               className="flex items-center justify-center min-h-[60vh]"

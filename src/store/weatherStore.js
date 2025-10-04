@@ -190,7 +190,6 @@ const useWeatherStore = create()(
                   ...response.data,
                 },
               ],
-              isAddingLocation: false,
             }));
 
             notifySuccess(`${location.name} added for comparison.`, "Success");
