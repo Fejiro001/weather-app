@@ -4,7 +4,6 @@ import AppLayout from "./layout/AppLayout";
 import { Toaster } from "sonner";
 import "tippy.js/dist/tippy.css";
 import { PreLoader } from "./components/basic";
-import UpdatePrompt from "./components/pwa/UpdatePrompt";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const FavouritePage = lazy(() => import("./pages/FavouritePage"));
@@ -29,7 +28,6 @@ function App() {
           </Routes>
         </Router>
       </Suspense>
-      <UpdatePrompt />
     </>
   );
 }
