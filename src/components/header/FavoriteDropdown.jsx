@@ -70,6 +70,7 @@ const FavoriteDropdown = () => {
           onClick={toggleDropdown}
           className="settings_dropdown flex gap-1 text-preset-8 sm:text-preset-7"
           whileTap={{ scale: 0.95 }}
+          aria-label="Favourite Locations Dropdown"
         >
           <IconStar className="w-auto h-4 sm:h-5 text-yellow-400 fill-yellow-400" />
           <span className="hidden min-[1024px]:block">Favourites</span>
@@ -142,14 +143,14 @@ const FavoriteDropdown = () => {
             ) : (
               <motion.li
                 key="empty-state"
-                className="px-4 py-1 text-gray-500 text-sm"
+                className="px-4 py-1 text-(--neutral-600) dark:text-(--neutral-300) text-base"
                 variants={listItemVariants}
               >
                 <p>No locations saved yet.</p>
                 <Link
                   to="/favourites"
                   onClick={() => setIsOpen(false)}
-                  className="text-blue-500 hover:underline text-xs mt-1 block"
+                  className="text-blue-500 hover:underline text-sm mt-1 block"
                 >
                   Go to Favourites Page
                 </Link>
