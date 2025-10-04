@@ -135,7 +135,7 @@ const WeatherInfo = () => {
             alt="Weather icon"
           />
         )}
-        <span className={"temp not-dark:text-(--neutral-800)"}>
+        <span className={"text-preset-1 not-dark:text-(--neutral-800)"}>
           {Math.round(current?.temperature_2m ?? 0)}°
         </span>
       </div>
