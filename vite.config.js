@@ -44,6 +44,7 @@ export default defineConfig({
             purpose: "maskable",
           },
         ],
+        categories: ["weather", "lifestyle", "utilities"],
       },
       workbox: {
         runtimeCaching: [
