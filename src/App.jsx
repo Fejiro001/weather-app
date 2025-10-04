@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import "tippy.js/dist/tippy.css";
 import { PreLoader } from "./components/basic";
+import { Analytics } from "@vercel/analytics/react";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const FavouritePage = lazy(() => import("./pages/FavouritePage"));
@@ -30,6 +31,7 @@ function App() {
         </Router>
       </Suspense>
       <SpeedInsights />
+      <Analytics />
     </>
   );
 }
