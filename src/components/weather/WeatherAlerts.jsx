@@ -1,8 +1,12 @@
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { IconX } from "@tabler/icons-react";
-import { useState } from "react";
+import useWeatherStore from "../../store/weatherStore";
 
-const WeatherAlerts = ({ weatherData, units }) => {
+const WeatherAlerts = () => {
+  const weatherData = useWeatherStore((state) => state.weatherData);
+  const units = useWeatherStore((state) => state.units);
+
   const [dismissed, setDismissed] = useState([]);
   const current = weatherData?.current;
 
@@ -26,14 +30,14 @@ const WeatherAlerts = ({ weatherData, units }) => {
       alerts.push({
         id: "extreme-heat",
         title: "🌡️ Extreme Heat Warning",
-        message: `Temperature is ${displayTemp}${displayUnit}. Stay hydrated and avoid prolonged sun exposure.`,
+        message: `Temperature feels like ${displayTemp}${displayUnit}. Stay hydrated and avoid prolonged sun exposure.`,
         color: "bg-red-700",
       });
     } else if (current.apparent_temperature <= FREEZING_THRESHOLD) {
       alerts.push({
         id: "freezing",
         title: "🥶 Freezing Temperatures",
-        message: `Temperature is ${displayTemp}${displayUnit}. Bundle up!`,
+        message: `Temperature feels like ${displayTemp}${displayUnit}. Bundle up!`,
         color: "bg-blue-700",
       });
     }
@@ -85,7 +89,9 @@ const WeatherAlerts = ({ weatherData, units }) => {
       alerts.push({
         id: "poor-visibility",
         title: "🌁 Poor Visibility",
-        message: `Visibility less than ${(VISIBILITY_THRESHOLD / 1000)} ${VISIBILITY_UNIT}. Drive carefully!`,
+        message: `Visibility less than ${
+          VISIBILITY_THRESHOLD / 1000
+        } ${VISIBILITY_UNIT}. Drive carefully!`,
         color: "bg-gray-700",
       });
     }
