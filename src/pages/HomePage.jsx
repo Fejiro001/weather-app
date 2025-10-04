@@ -6,6 +6,7 @@ import { AnimatedHeadline, SearchBar } from "../components/basic";
 import {
   DailyForecast,
   HourlyForecast,
+  WeatherAlerts,
   WeatherDetails,
   WeatherInfo,
 } from "../components/weather";
@@ -20,6 +21,7 @@ const HomePage = () => {
   const storeLocation = useWeatherStore((state) => state.location);
   const setLocation = useWeatherStore((state) => state.setLocation);
   const isError = useWeatherStore((state) => state.isError);
+  const weatherData = useWeatherStore((state) => state.weatherData);
 
   const { getCurrentLocation } = useGeolocation();
 
@@ -53,6 +55,8 @@ const HomePage = () => {
 
   return (
     <section className="space-y-8 xl:space-y-12 xl:py-12">
+      <WeatherAlerts weatherData={weatherData} units={units} />
+      
       <AnimatedHeadline
         text="How's the sky looking today?"
         className="text-preset-2 text-center text-balance px-5 not-dark:text-(--neutral-900)"
