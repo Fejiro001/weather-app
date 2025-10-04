@@ -23,7 +23,7 @@ const useWeatherStore = create()(
         wind_speed_unit: "kmh",
         precipitation_unit: "mm",
       },
-      setUnits: (newUnits) => set({ units: newUnits }),
+      setUnits: (newUnits) => set({ units: newUnits, weatherData: null }),
 
       fetchWeather: async () => {
         const state = get();

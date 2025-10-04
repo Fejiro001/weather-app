@@ -2,55 +2,68 @@ import { motion, AnimatePresence } from "framer-motion";
 import { IconX } from "@tabler/icons-react";
 import { useState } from "react";
 
-const WeatherAlerts = ({ weatherData }) => {
+const WeatherAlerts = ({ weatherData, units }) => {
   const [dismissed, setDismissed] = useState([]);
+  const current = weatherData?.current;
+
+  if (!current || current.apparent_temperature === undefined) {
+    return null;
+  }
+
+  const isMetric = units?.temperature_unit === "celsius";
+
+  const displayUnit = isMetric ? "°C" : "°F";
+  const displayTemp = Math.round(current.apparent_temperature);
 
   const generateAlerts = () => {
     const alerts = [];
-    const current = weatherData.current;
+
+    const HEAT_THRESHOLD = isMetric ? 35 : 95; // 35°C ≈ 95°F
+    const FREEZING_THRESHOLD = isMetric ? 0 : 32; // 0°C = 32°F
 
     // Extreme temperature
-    if (current.temperature_2m > 35) {
+    if (current.apparent_temperature > HEAT_THRESHOLD) {
       alerts.push({
         id: "extreme-heat",
-        severity: "high",
         title: "🌡️ Extreme Heat Warning",
-        message: `Temperature is ${Math.round(
-          current.temperature_2m
-        )}°C. Stay hydrated and avoid prolonged sun exposure.`,
-        color: "bg-red-500",
+        message: `Temperature is ${displayTemp}${displayUnit}. Stay hydrated and avoid prolonged sun exposure.`,
+        color: "bg-red-700",
       });
-    } else if (current.temperature_2m < 0) {
+    } else if (current.apparent_temperature <= FREEZING_THRESHOLD) {
       alerts.push({
         id: "freezing",
-        severity: "high",
         title: "🥶 Freezing Temperatures",
-        message: "Bundle up! Temperature below freezing.",
-        color: "bg-blue-500",
+        message: `Temperature is ${displayTemp}${displayUnit}. Bundle up!`,
+        color: "bg-blue-700",
       });
     }
 
+    const RAIN_THRESHOLD = isMetric ? 5 : 0.2; // 5 mm or 0.2 inches
+    const RAIN_UNIT = isMetric ? "mm" : "inches";
+
     // Heavy rain
-    if (current.precipitation > 5) {
+    if (current.precipitation > RAIN_THRESHOLD) {
       alerts.push({
         id: "heavy-rain",
-        severity: "medium",
         title: "🌧️ Heavy Rain Alert",
-        message: "Significant rainfall. Don't forget your umbrella!",
+        message: `Rainfall is ${current.precipitation.toFixed(
+          1
+        )}${RAIN_UNIT} high. Don't forget your umbrella!`,
         color: "bg-blue-600",
       });
     }
 
-    // Strong winds
-    if (current.wind_speed_10m > 40) {
+    const WIND_THRESHOLD = isMetric ? 40 : 25; // 40 km/h or 25 mph
+    const WIND_UNIT = isMetric ? "km/h" : "mph";
+
+    if (current.wind_speed_10m > WIND_THRESHOLD) {
       alerts.push({
         id: "strong-wind",
-        severity: "high",
         title: "💨 Strong Wind Warning",
         message: `Wind speeds at ${Math.round(
           current.wind_speed_10m
-        )} km/h. Secure loose objects.`,
-        color: "bg-orange-500",
+        )} ${WIND_UNIT}. Secure loose objects.`,
+        color: "bg-orange-700",
       });
     }
 
@@ -58,21 +71,22 @@ const WeatherAlerts = ({ weatherData }) => {
     if (current.uv_index > 7) {
       alerts.push({
         id: "high-uv",
-        severity: "medium",
         title: "☀️ High UV Index",
         message: `UV Index: ${current.uv_index}. Wear sunscreen and protective clothing.`,
-        color: "bg-yellow-500",
+        color: "bg-yellow-800",
       });
     }
 
+    const VISIBILITY_THRESHOLD = 1000;
+    const VISIBILITY_UNIT = "km";
+
     // Poor visibility
-    if (current.visibility < 1000) {
+    if (current.visibility < VISIBILITY_THRESHOLD) {
       alerts.push({
         id: "poor-visibility",
-        severity: "medium",
-        title: "🌫️ Poor Visibility",
-        message: "Visibility less than 1km. Drive carefully!",
-        color: "bg-gray-500",
+        title: "🌁 Poor Visibility",
+        message: `Visibility less than ${(VISIBILITY_THRESHOLD / 1000)} ${VISIBILITY_UNIT}. Drive carefully!`,
+        color: "bg-gray-700",
       });
     }
 
@@ -84,7 +98,7 @@ const WeatherAlerts = ({ weatherData }) => {
   if (alerts.length === 0) return null;
 
   return (
-    <div className="space-y-2 mb-6">
+    <div className="space-y-2 mb-6 absolute top-4 left-1/2 transform -translate-x-1/2 px-4 z-999">
       <AnimatePresence>
         {alerts.map((alert) => (
           <motion.div
@@ -96,8 +110,8 @@ const WeatherAlerts = ({ weatherData }) => {
           >
             <div className="flex items-start justify-between">
               <div className="flex-1">
-                <h4 className="font-bold text-preset-6 mb-1">{alert.title}</h4>
-                <p className="text-sm opacity-90">{alert.message}</p>
+                <h4 className="font-bold text-preset-7 mb-1">{alert.title}</h4>
+                <p className="text-sm">{alert.message}</p>
               </div>
               <button
                 onClick={() => setDismissed([...dismissed, alert.id])}
