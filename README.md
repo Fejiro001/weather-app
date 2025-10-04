@@ -61,9 +61,9 @@ This solution focuses heavily on providing a seamless, feature-rich user experie
 
 - **Global State Management (Zustand)**: All weather data, location information, and user favorites are managed globally. This prevents prop-drilling and ensures components like the main weather info and the favorites list are always synchronized.
 
-- **Dynamic Video Backgrounds**: The background of the main weather component is a seamlessly looping video asset (WebM/MP4) that dynamically switches based on the current weather condition (e.g., clear, rain, snow, storm).
-
 - **Favorites Functionality**: Users can save and remove favorite locations. State logic handles checking if the current location is already saved (isSaved) and triggers a sound and a toast notification upon success/removal.
+
+- **Compare Locations Functionality**: Users can seamlessly compare up tot 3 locations, viewing key metrics of compare locations. With the ability to compare their current location.
 
 - **Skeleton Loading States**: Sophisticated conditional rendering logic ensures that skeleton loaders are displayed not just when data is fetching (isFetching), but also on initial app load when no location has been selected (!isDataAvailable), providing a continuous and professional user experience.
 
@@ -89,16 +89,16 @@ Here's a sample of a code snippet I am proud of:
 
 ```
 
-If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
-
-
 ### Continued development
 
 There are several areas I want to continue developing my skills in:
 
 - **State Management**: While I successfully implemented global state management using Zustand, I want to explore more complex state management patterns and libraries like Redux or MobX to see how they compare in larger applications.
-- **Performance Optimization**: I want to delve deeper into performance optimization techniques, especially for React applications, including code-splitting, lazy loading, and memoization strategies.
-- **Testing**: I plan to enhance my skills in writing unit and integration tests for React components using libraries like Jest and React Testing Library to ensure robustness and reliability of my applications.
+
+- **Performance Optimization**: I want to delve deeper into more performance optimization techniques, especially for React applications, apart from lazy loading, and memoization strategies, which are already being implemented.
+
+- **Testing**: I plan to enhance my skills in writing unit and integration tests for React components using libraries like Jest (Vitest) and React Testing Library to ensure robustness and reliability of my applications.
+
 - **Accessibility**: I aim to improve my understanding of web accessibility standards and best practices to ensure that my applications are usable by all users, including those with disabilities.
 
 ### Useful resources
@@ -106,6 +106,8 @@ There are several areas I want to continue developing my skills in:
 - [Zustand Documentation](https://zustand-demo.pmnd.rs/) - Highly effective state management documentation for learning concise store patterns.
 
 - [Framer Motion Docs](https://www.framer.com/docs/) - Indispensable guide for implementing complex animation orchestration, particularly the useInView hook for scroll effects.
+
+- [use-sound](https://www.npmjs.com/package/use-sound) - Node package to integrate sounds into React applications, enhancing user interaction feedback.
 
 
 ## Author
@@ -116,4 +118,4 @@ There are several areas I want to continue developing my skills in:
 
 ## Acknowledgments
 
-- [Josh Comeau](https://www.joshwcomeau.com/) - for inspiring me to integrate sound effects into this project after checking out his website and reading his [use-sound](https://www.joshwcomeau.com/react/announcing-use-sound-react-hook/) blog post.
+- [Josh Comeau](https://www.joshwcomeau.com/) - for the inspiration to integrate sound effects into this project after checking out his website and reading his [use-sound](https://www.joshwcomeau.com/react/announcing-use-sound-react-hook/) blog post.

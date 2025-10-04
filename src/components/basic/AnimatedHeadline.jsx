@@ -1,44 +1,21 @@
-import { Fragment, useEffect, useState } from "react";
-import { motion } from "framer-motion";
-
-const ANIMATION_FLAG_KEY = "hasHeadlineAnimated";
+import { Fragment } from "react";
+import { motion } from "motion/react";
 
 const AnimatedHeadline = ({ text, className }) => {
-  const [hasAnimated, setHasAnimated] = useState(() => {
-    if (typeof window !== "undefined") {
-      return sessionStorage.getItem(ANIMATION_FLAG_KEY) === "true";
-    }
-    return true;
-  });
   const words = text.split(" ");
-
-  useEffect(() => {
-    if (!hasAnimated) {
-      const animationDurationMs = 200 * words.length + 200 + 500;
-      const timer = setTimeout(() => {
-        setHasAnimated(true);
-        sessionStorage.setItem(ANIMATION_FLAG_KEY, "true");
-      }, animationDurationMs);
-
-      return () => clearTimeout(timer);
-    }
-  }, [hasAnimated, words.length]);
-
-  const animationTarget = hasAnimated ? "finished" : "visible";
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
+        staggerChildren: 0.05,
         delay: 0.2,
       },
     },
-    finished: { opacity: 1, transition: { duration: 0 } },
   };
 
-  const itemVariants = {
+  const charVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
@@ -49,27 +26,30 @@ const AnimatedHeadline = ({ text, className }) => {
         stiffness: 200,
       },
     },
-    finished: { opacity: 1, transition: { duration: 0 } },
   };
 
   return (
     <motion.h1
       className={className}
       variants={containerVariants}
-      initial={hasAnimated ? "finished" : "hidden"}
-      animate={animationTarget}
+      initial="hidden"
+      animate="visible"
     >
       <span className="sr-only">{text}</span>
-      {words.map((word, index) => (
-        <Fragment key={index}>
-          <motion.span
-            variants={itemVariants}
-            className="inline-block whitespace-nowrap"
-          >
-            {word}
-          </motion.span>
-          {/* Add a space after each word except the last. */}
-          {index < words.length - 1 && " "}
+      {words.map((word, wordIndex) => (
+        <Fragment key={`word-${wordIndex}`}>
+          <span className="inline-block whitespace-nowrap">
+            {word.split("").map((char, charIndex) => (
+              <motion.span
+                key={`char-${wordIndex}-${charIndex}`}
+                variants={charVariants}
+                className="inline-block"
+              >
+                {char}
+              </motion.span>
+            ))}
+          </span>
+          {wordIndex < words.length - 1 && " "}
         </Fragment>
       ))}
     </motion.h1>
