@@ -258,7 +258,7 @@
     @apply flex flex-col items-center gap-12 xl:gap-16 p-4 md:p-6 xl:px-28 theme-day dark:theme-night min-h-screen text-white bg-(--neutral-900) not-dark:bg-(--blue-200);
   }
   .main {
-    @apply w-full max-w-7xl pt-5 lg:mt-0;
+    @apply w-full max-w-7xl pt-5 lg:pt-0;
   }
   .back_button {
     @apply flex gap-2 items-center hover:underline hover:gap-4 transition-all duration-[400ms] text-preset-6;

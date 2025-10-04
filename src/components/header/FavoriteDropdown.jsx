@@ -144,7 +144,7 @@ const FavoriteDropdown = () => {
             ) : (
               <motion.li
                 key="empty-state"
-                className="px-4 py-1 text-(--neutral-600) dark:text-(--neutral-300) text-base"
+                className="px-4 py-1 text-(--neutral-600) dark:text-(--neutral-300) text-sm"
                 variants={listItemVariants}
               >
                 <p>No locations saved yet.</p>
