@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import { useGeolocation, useLocations } from "../hooks";
 import useWeatherStore from "../store/weatherStore";
 
@@ -9,7 +9,7 @@ import {
   WeatherDetails,
   WeatherInfo,
 } from "../components/weather";
-import ErrorPage from "./ErrorPage";
+const ErrorPage = lazy(() => import("./ErrorPage"));
 
 const HomePage = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);

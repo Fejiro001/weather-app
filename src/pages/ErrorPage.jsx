@@ -14,7 +14,7 @@ const ErrorPage = () => {
           Something went wrong
         </h1>
         <p className="text-base sm:text-lg md:text-xl text-preset-5 font-medium text-(--neutral-800) dark:text-(--neutral-200)">
-          We couldn't connect to the server (API error). Please try again in a
+          We couldn&apos;t connect to the server (API error). Please try again in a
           few moments.
         </p>
         <button
