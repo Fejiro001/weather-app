@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 
 const PreLoader = () => {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-(--day-bg-start) to-(--day-bg-end) dark:from-(--night-bg-start) dark:to-(--night-bg-end-solid)">
+    <div className="flex items-center justify-center min-h-dvh bg-gradient-to-br from-(--day-bg-start) to-(--day-bg-end) dark:from-(--night-bg-start) dark:to-(--night-bg-end-solid)">
       <div className="text-center">
         {/* Animated weather icon */}
         <motion.div
