@@ -6,6 +6,7 @@ import Loading from "./Loading";
 import Logo from "./Logo";
 import BackButton from "./BackButton";
 import PreLoader from "./PreLoader";
+import VoiceSearchButton from "./VoiceSearchButton";
 
 export {
   AnimatedHeadline,
@@ -16,4 +17,5 @@ export {
   Logo,
   BackButton,
   PreLoader,
+  VoiceSearchButton,
 };

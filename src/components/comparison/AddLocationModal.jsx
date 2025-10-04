@@ -1,22 +1,32 @@
 import { motion } from "motion/react";
-import { useLocations } from "../../hooks";
+import { useLocations, useVoiceSearch } from "../../hooks";
 import useWeatherStore from "../../store/weatherStore";
 import { IconLoader2, IconX } from "@tabler/icons-react";
+import { VoiceSearchButton } from "../basic";
+import { useCallback, useEffect, useState } from "react";
 
 const AddLocationModal = ({ setShowModal }) => {
+  const [inputValue, setInputValue] = useState("");
   const { fetchingLocations, locations, getLocations } = useLocations();
   const addCompareLocation = useWeatherStore(
     (state) => state.addCompareLocation
   );
+  const {
+    isListening,
+    speechText,
+    startListening,
+    stopListening,
+    clearSpeechText,
+    supported,
+  } = useVoiceSearch();
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    const input = e.target.elements[0].value;
-
-    if (!input) return;
-
-    getLocations(input);
-  };
+  const handleSearch = useCallback(
+    (e) => {
+      e.preventDefault();
+      getLocations(inputValue);
+    },
+    [getLocations, inputValue]
+  );
 
   const addNewLocation = (loc) => {
     if (loc) {
@@ -24,6 +34,17 @@ const AddLocationModal = ({ setShowModal }) => {
       setShowModal(false);
     }
   };
+
+  useEffect(() => {
+    if (speechText) {
+      setInputValue(speechText);
+      getLocations(speechText);
+
+      if (clearSpeechText) {
+        clearSpeechText();
+      }
+    }
+  }, [clearSpeechText, getLocations, speechText]);
 
   return (
     <motion.div
@@ -54,10 +75,24 @@ const AddLocationModal = ({ setShowModal }) => {
         </h3>
 
         <form
-          onSubmit={handleSearch}
+          onSubmit={(e) => handleSearch(e)}
           className="flex flex-col md:flex-row gap-y-3 gap-x-4 max-w-3xl w-full justify-center"
         >
-          <input className="searchBar" placeholder="Enter any location..." />
+          <div className="relative w-full">
+            <input
+              className="searchBar"
+              placeholder="Enter any location..."
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
+            {supported && (
+              <VoiceSearchButton
+                isListening={isListening}
+                startListening={startListening}
+                stopListening={stopListening}
+              />
+            )}
+          </div>
           <button
             type="submit"
             className="primary_btn"

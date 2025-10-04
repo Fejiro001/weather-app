@@ -3,13 +3,10 @@ import { Loader } from "./Icons";
 import { useClickOutside, useGeolocation, useVoiceSearch } from "../../hooks";
 import woosh from "/sounds/woosh.mp3";
 import useSound from "use-sound";
-import {
-  IconCurrentLocation,
-  IconMicrophone,
-  IconMicrophoneOff,
-} from "@tabler/icons-react";
+import { IconCurrentLocation } from "@tabler/icons-react";
 import Tippy from "@tippyjs/react";
 import useWeatherStore from "../../store/weatherStore";
+import { VoiceSearchButton } from ".";
 
 const SearchBar = ({
   fetchingLocations,
@@ -79,10 +76,6 @@ const SearchBar = ({
     }
   }, [clearSpeechText, getLocations, speechText]);
 
-  const micButtonClass = isListening
-    ? "bg-red-500 text-white shadow-xl ring-2 ring-red-300 transition-all duration-300" // Active (Recording) state
-    : "bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors duration-300";
-
   return (
     <section className="w-full flex flex-col items-center">
       <form
@@ -102,16 +95,11 @@ const SearchBar = ({
           />
 
           {supported && (
-            <button
-              onClick={isListening ? stopListening : startListening}
-              className={`absolute top-1/2 -translate-y-1/2 right-0 rounded-xl p-2 mx-2 ${micButtonClass}`}
-              type="button"
-              aria-label={
-                isListening ? "Stop voice input" : "Start voice input"
-              }
-            >
-              {isListening ? <IconMicrophone /> : <IconMicrophoneOff />}
-            </button>
+            <VoiceSearchButton
+              isListening={isListening}
+              startListening={startListening}
+              stopListening={stopListening}
+            />
           )}
 
           {isDropdownOpen && (
