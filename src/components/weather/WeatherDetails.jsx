@@ -64,7 +64,7 @@ const WeatherDetails = () => {
             initial="collapsed"
             animate="open"
             exit="collapsed"
-            className="col-span-full grid grid-cols-1 md:grid-cols-4 gap-4"
+            className="col-span-full weather_details"
           >
             {extras.map((details) => (
               <motion.div
