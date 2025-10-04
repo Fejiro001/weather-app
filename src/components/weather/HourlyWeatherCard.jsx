@@ -54,11 +54,13 @@ const HourlyWeatherCard = ({
       animate={animationProps}
       className="hour_card"
     >
-      <img
-        alt="Weather icon"
-        className="hour_icon"
-        src={icon ? `/assets/images/weather/icon-${icon}.webp` : '/assets/images/weather/icon-sunny.webp'}
-      />
+      {icon && (
+        <img
+          alt="Weather icon"
+          className="hour_icon"
+          src={`/assets/images/weather/icon-${icon}.webp`}
+        />
+      )}
       <span className="w-full text-preset-5 font-medium">{time}</span>
       <span className="text-preset-7">{min_temp}</span>
     </motion.li>

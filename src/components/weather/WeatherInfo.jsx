@@ -122,19 +122,19 @@ const WeatherInfo = () => {
         </button>
 
         <h2 className="text-preset-4">
-          {location
-            ? `${location.name}, ${location.country}`
-            : "Nowhere, Somewhere"}
+          {location ? `${location.name}, ${location.country}` : "_, _"}
         </h2>
         <p className="text-preset-6">{formattedDate}</p>
       </div>
 
-      <div className="temp_container  z-20">
-        <img
-          className="temp_icon"
-          src={`/assets/images/weather/icon-${weather_icon}.webp`}
-          alt="Weather icon"
-        />
+      <div className="temp_container z-20">
+        {weather_icon && (
+          <img
+            className="temp_icon"
+            src={`/assets/images/weather/icon-${weather_icon}.webp`}
+            alt="Weather icon"
+          />
+        )}
         <span className={"temp not-dark:text-(--neutral-800)"}>
           {Math.round(current?.temperature_2m ?? 0)}°
         </span>

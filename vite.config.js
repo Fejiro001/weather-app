@@ -10,18 +10,24 @@ export default defineConfig({
       output: {
         manualChunks: (id) => {
           // Core UI/Routing Libraries (Already done)
-          const coreLibs = [
-            "react",
-            "react-dom",
-            "react-router-dom",
-            "axios",
-            "lodash",
-          ];
-          const matchCore = coreLibs.find((lib) =>
-            id.includes(`node_modules/${lib}`)
-          );
-          if (matchCore) {
-            return "vendor-core";
+          if (id.includes("node_modules/react")) {
+            return "vendor-react";
+          }
+
+          if (id.includes("node_modules/react-dom")) {
+            return "vendor-reactdom";
+          }
+
+          if (id.includes("node_modules/react-router-dom")) {
+            return "vendor-routing";
+          }
+          
+          if (id.includes("node_modules/lodash")) {
+            return "vendor-lodash";
+          }
+
+          if (id.includes("node_modules/axios")) {
+            return "vendor-axios";
           }
 
           // Animation, Icons & State Management Libraries

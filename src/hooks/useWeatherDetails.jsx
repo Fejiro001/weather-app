@@ -69,7 +69,7 @@ const useWeatherDetails = () => {
       },
       {
         label: "Visibility",
-        value: (current?.visibility / 1000).toFixed(1) || "0",
+        value: (current?.visibility / 1000 || 0).toFixed(1),
         unit: "km",
         icon: <IconEye className="text-indigo-500" />,
       },
