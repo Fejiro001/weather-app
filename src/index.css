@@ -34,6 +34,7 @@
   --day-bg-end: #fafafaf2;
   --night-bg-start: #03012d;
   --night-bg-end: #f3604268;
+  --night-bg-end-solid: #f36042;
 
   --neutral-900: rgb(3, 1, 45);
   --neutral-800: hsl(243, 27%, 20%);

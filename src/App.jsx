@@ -4,6 +4,7 @@ import AppLayout from "./layout/AppLayout";
 import { Toaster } from "sonner";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import "tippy.js/dist/tippy.css";
+import { PreLoader } from "./components/basic";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const FavouritePage = lazy(() => import("./pages/FavouritePage"));
@@ -12,7 +13,7 @@ const ComparisonPage = lazy(() => import("./pages/ComparisonPage"));
 function App() {
   return (
     <>
-      <Suspense>
+      <Suspense fallback={<PreLoader />}>
         <Router>
           <Toaster
             richColors
