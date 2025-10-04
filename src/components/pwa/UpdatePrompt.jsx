@@ -9,9 +9,9 @@ const UpdatePrompt = () => {
 
   if (!needRefresh) return null;
   return (
-    <div className="fixed top-4 right-4 bg-white p-4 rounded shadow-lg">
+    <div className="fixed z-999 top-4 right-4 bg-white py-2 px-4 rounded shadow-lg flex flex-col items-center gap-2">
       <p>A new version is available!</p>
-      <button onClick={handleRefresh}>Refresh to Update</button>
+      <button className="bg-(--blue-700) text-white p-2 rounded text-sm" onClick={handleRefresh}>Update</button>
     </div>
   );
 };
