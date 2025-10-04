@@ -1,5 +1,5 @@
 import useWeatherStore from "../../store/weatherStore";
-import checkmark from "../../assets/images/icon-checkmark.svg";
+import { Checkmark } from "../basic/Icons";
 
 const SettingFieldset = ({ legend, options }) => {
   const units = useWeatherStore((state) => state.units);
@@ -16,9 +16,7 @@ const SettingFieldset = ({ legend, options }) => {
             className={units[option.type] === option.value ? "active" : ""}
           >
             <span>{option.label}</span>
-            {units[option.type] === option.value && (
-              <img src={checkmark} alt="Selected" />
-            )}
+            {units[option.type] === option.value && <Checkmark />}
           </button>
         ))}
       </div>

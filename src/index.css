@@ -271,35 +271,29 @@
   .settings_dropdown {
     @apply bg-(--neutral-800) not-dark:bg-gray-100 drop-shadow-lg not-dark:drop-shadow-gray-400 not-dark:text-(--neutral-900) hover:bg-(--neutral-700) py-2 px-2.5 rounded-md text-preset-8 sm:text-preset-7 flex items-center gap-2 capitalize focus-visible:focus-white not-dark:focus-visible:dark-focus-white not-dark:hover:bg-gray-100;
   }
-
+  legend {
+    @apply text-preset-8 text-(--neutral-300) not-dark:text-(--neutral-600) px-2 pt-1.5;
+  }
+  fieldset {
+    @apply space-y-2;
+  }
   .switch_btn {
     @apply py-2.5 px-2 rounded-lg hover:bg-(--neutral-700) not-dark:hover:bg-gray-200 text-preset-7 w-full focus-visible:focus-dropdown-btn not-dark:focus-visible:dark-focus-dropdown-btn text-left;
   }
-
   .dropdownMenu {
     @apply absolute right-0 mt-2.5 bg-(--neutral-800) outline-(--neutral-600) outline-1 rounded-xl text-nowrap py-1.5 px-2 space-y-1 min-w-56 w-full z-20 not-dark:bg-gray-50 not-dark:outline-gray-200 not-dark:text-(--neutral-900) drop-shadow-md not-dark:drop-shadow-black;
   }
   .theme_toggle {
     @apply p-1 rounded-full inset-shadow-2xs outline-none transition-all duration-300 ease-in-out focus-visible:focus-white not-dark:focus-visible:dark-focus-white;
   }
-
   .theme_toggle_icon {
     @apply p-2 rounded-full w-fit shadow-2xl *:h-5 *:w-auto outline-1 dark:outline-(--neutral-700) not-dark:outline-(--neutral-200);
   }
   .sound_btn {
     @apply bg-(--neutral-900) hover:bg-(--neutral-800) not-dark:hover:bg-(--neutral-200) text-white not-dark:bg-white not-dark:text-(--neutral-900) outline-1 outline-(--neutral-300) not-dark:outline-(--neutral-700) p-2.5 rounded-full *:w-auto *:h-4.5 focus-visible:focus-white inline-flex not-dark:focus-visible:dark-focus-white;
   }
-
   hr {
     @apply border border-(--neutral-600);
-  }
-
-  legend {
-    @apply text-preset-8 text-(--neutral-300) not-dark:text-(--neutral-600) px-2 pt-1.5;
-  }
-
-  fieldset {
-    @apply space-y-2;
   }
   .unit_options {
     @apply space-y-1;
@@ -350,7 +344,7 @@
     @apply bg-(--neutral-800) text-(--neutral-000) outline-(--neutral-600) outline-1 p-5 rounded-xl space-y-4 not-dark:bg-white not-dark:outline-gray-200 drop-shadow-lg not-dark:drop-shadow-gray-400;
   }
   .toggle_extras {
-    @apply bg-(--blue-500) text-white w-full text-center py-2 rounded-lg hover:bg-(--blue-700) text-preset-6 col-span-full drop-shadow-lg not-dark:drop-shadow-gray-500;
+    @apply bg-(--blue-500) text-white w-full text-center py-2 rounded-lg hover:bg-(--blue-700) text-preset-6 col-span-full drop-shadow-lg not-dark:drop-shadow-gray-500 focus-visible:focus-blue;
   }
 
   /* DAILY FORECAST */
@@ -366,7 +360,7 @@
 
   /* HOURLY FORECAST */
   .days_dropdown {
-    @apply capitalize flex items-center text-preset-7 bg-(--neutral-600) hover:bg-(--neutral-700) rounded-lg py-2 px-4 gap-3 focus-visible:focus-white not-dark:bg-gray-100 not-dark:outline-gray-200 not-dark:text-(--neutral-900) not-dark:hover:bg-gray-200 drop-shadow-lg not-dark:drop-shadow-gray-400;
+    @apply capitalize flex items-center text-preset-7 bg-(--neutral-600) hover:bg-(--neutral-700) rounded-lg py-2 px-4 gap-3 focus-visible:focus-white not-dark:focus-visible:dark-focus-white not-dark:bg-gray-100 not-dark:outline-gray-200 not-dark:text-(--neutral-900) not-dark:hover:bg-gray-200 drop-shadow-lg not-dark:drop-shadow-gray-400;
   }
   .day_button {
     @apply py-2.5 px-2 w-full text-left hover:bg-(--neutral-600) not-dark:hover:bg-gray-200 rounded-lg capitalize text-preset-7;

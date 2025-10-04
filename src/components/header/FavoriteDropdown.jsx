@@ -72,7 +72,7 @@ const FavoriteDropdown = () => {
           whileTap={{ scale: 0.95 }}
           aria-label="Favourite Locations Dropdown"
         >
-          <IconStar className="w-auto h-4 sm:h-5 text-yellow-400 fill-yellow-400" />
+          <IconStar className="w-auto h-4 sm:h-5 text-amber-500 fill-amber-500" />
           <span className="hidden min-[1024px]:block">Favourites</span>
         </motion.button>
       </Tippy>

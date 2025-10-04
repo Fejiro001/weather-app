@@ -39,8 +39,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Solution URL: [Frontend Mentor](https://www.frontendmentor.io/solutions/weather-app-using-react-and-tailwind-css-3-0-8f8e1c5e1e)
+- Live Site URL: [Weather Now](https://weather-app-pearl-seven-35.vercel.app/)
 
 ## My process
 
@@ -55,6 +55,8 @@ Users should be able to:
 - use-sound - For audio feedback on interactions (for button clicks and other interactions)
 - Sonner - For aesthetically pleasing toast notifications
 - Lucide React and Tabler Icons - for weather and UI icons
+- Vite - For bundling and development server
+- PWA - To enable offline capabilities and improve performance
 
 ### Advanced Features and State Management
 This solution focuses heavily on providing a seamless, feature-rich user experience, utilizing a single source of truth for all weather data and application settings.
@@ -69,6 +71,12 @@ This solution focuses heavily on providing a seamless, feature-rich user experie
 
 - **In-View List Animations**: Hourly forecast cards utilize a combination of Framer Motion's list variants and useInView to animate individual list items only as they scroll into the viewport, improving perceived performance and user delight.
 
+- **PWA**: The app is configured as a Progressive Web App, allowing for offline access and improved performance on repeat visits.
+
+- **Audio Feedback**: The use-sound library is integrated to provide audio feedback for user interactions, enhancing the overall user experience.
+
+- **Voice Search**: Users can search for locations using voice input, enhancing accessibility and user convenience.
+
 ### What I learned
 
 This project was a great opportunity to practice and enhance my skills in several areas:
@@ -79,7 +87,7 @@ This project was a great opportunity to practice and enhance my skills in severa
 
 - **Responsive Design**: I improved my skills in creating responsive layouts that adapt seamlessly to different screen sizes, ensuring a consistent user experience across devices.
 
-- **API Integration**: I enhanced my ability to work with third-party APIs to fetch and display dynamic weather data, handling asynchronous operations and managing loading states effectively.
+- **API Integration**: I enhanced my ability to work with third-party APIs to fetch and display dynamic weather data, handling asynchronous operations, managing loading states effectively, and integrating geolocation and web speech capabilities.
 
 - **Audio Feedback**: I integrated sound effects into the application using the use-sound library, adding an extra layer of interactivity and feedback for users.
 

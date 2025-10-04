@@ -113,7 +113,11 @@ const WeatherInfo = () => {
       <BgNoise />
       <div className={"location_info z-20 not-dark:text-(--neutral-800)"}>
         {/* Favorite/Save Button */}
-        <button aria-label="Add to Favorites" onClick={handleAddFavorite}>
+        <button
+          className="focus-visible:*:scale-125 focus-visible:*:stroke-yellow-400"
+          aria-label="Add to Favorites"
+          onClick={handleAddFavorite}
+        >
           <IconStar
             className={`${
               isSaved ? "fill-yellow-400 stroke-yellow-400" : ""
