@@ -28,7 +28,7 @@ const DailyForecast = () => {
                 isFetching={isFetching}
                 day={
                   shouldDisplayData
-                    ? new Intl.DateTimeFormat("en-US", {
+                    ? new Intl.DateTimeFormat(navigator.language, {
                         weekday: "short",
                       }).format(new Date(daily.time[index]))
                     : ""

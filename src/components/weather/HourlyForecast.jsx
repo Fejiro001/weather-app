@@ -28,7 +28,7 @@ const HourlyForecast = () => {
     useWeatherStore((state) => state.weatherData) || {};
 
   const date = new Date(current?.time ?? Date.now());
-  const today = new Intl.DateTimeFormat("en-US", { weekday: "long" })
+  const today = new Intl.DateTimeFormat(navigator.language, { weekday: "long" })
     .format(date)
     .toLowerCase();
 
@@ -57,7 +57,7 @@ const HourlyForecast = () => {
   // Find the forecast data for the selected day once
   const selectedDayData = useMemo(() => {
     const day = hourlyForecasts.find((dayChunk) =>
-      new Intl.DateTimeFormat("en-US", { weekday: "long" })
+      new Intl.DateTimeFormat(navigator.language, { weekday: "long" })
         .format(new Date(dayChunk[0].time))
         .toLowerCase()
         .includes(selectedDay.toLowerCase())
@@ -82,7 +82,7 @@ const HourlyForecast = () => {
   }, [current, hourlyForecasts, selectedDay, today]);
 
   return (
-    <section className="bg-(--neutral-800) px-4 py-5 rounded-[1.25rem] max-h-[44rem] flex flex-col gap-4 not-dark:bg-white drop-shadow-2xl h-fit">
+    <section className="bg-(--neutral-800) px-4 py-5 rounded-[1.25rem] max-h-[48rem] flex flex-col gap-4 not-dark:bg-white drop-shadow-2xl h-fit">
       <div className="flex justify-between items-center">
         <h3 className="text-preset-5 text-(--neutral-000) not-dark:text-(--neutral-900)">
           Hourly forecast

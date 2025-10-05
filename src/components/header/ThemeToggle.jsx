@@ -2,8 +2,7 @@ import useSound from "use-sound";
 import { AnimatePresence, motion } from "motion/react";
 import Tippy from "@tippyjs/react";
 import { useSettings, useTheme } from "../../hooks";
-import toggleOff from "/sounds/switch-off.mp3";
-import toggleOn from "/sounds/switch-on.mp3";
+import toggle from "/sounds/switch.mp3";
 import { IconMoon, IconSun, IconSunMoon } from "@tabler/icons-react";
 
 const bgClasses = {
@@ -22,16 +21,16 @@ const ThemeToggle = () => {
       ? "Dark Theme"
       : "Light Theme";
 
-  const [playOn] = useSound(toggleOn, {
+  const [playOn] = useSound(toggle, {
     volume: 0.5,
-    playbackRate: 1.05,
+    playbackRate: 1.3,
     interrupt: true,
     soundEnabled: isSoundEnabled,
   });
 
-  const [playOff] = useSound(toggleOff, {
+  const [playOff] = useSound(toggle, {
     volume: 0.5,
-    playbackRate: 0.95,
+    playbackRate: 1.6,
     interrupt: true,
     soundEnabled: isSoundEnabled,
   });
