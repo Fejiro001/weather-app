@@ -40,8 +40,8 @@
   --neutral-800: hsl(243, 27%, 20%);
   --neutral-700: hsl(243, 23%, 24%);
   --neutral-600: hsl(243, 23%, 30%);
-  --neutral-300: hsl(240, 6%, 70%);
-  --neutral-200: hsl(250, 6%, 84%);
+  --neutral-300: rgb(174, 174, 183);
+  --neutral-200: rgb(213, 212, 217);
   --neutral-000: hsl(0, 0%, 100%);
   --orange-500: hsl(28, 100%, 52%);
   --blue-200: hsl(210, 100%, 70%);
@@ -126,12 +126,30 @@
   scrollbar-width: thin;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  box-shadow: 0 0 0 1000px #ffffff inset !important;
+  -webkit-text-fill-color: #272541 !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     scrollbar-color: var(--blue-500) white;
     scroll-behavior: smooth;
     scrollbar-width: thin;
   }
+}
+
+.dark input:-webkit-autofill,
+.dark input:-webkit-autofill:hover,
+.dark input:-webkit-autofill:focus,
+.dark input:-webkit-autofill:active {
+  box-shadow: 0 0 0 1000px #272541 inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s !important;
 }
 
 @layer base {
@@ -312,11 +330,7 @@
 
   /* SEARCH BAR */
   .searchBar {
-    @apply bg-(--neutral-800) hover:bg-(--neutral-700) text-(--neutral-200) w-full rounded-xl py-4 pl-[3.75rem] focus-visible:focus-white not-dark:focus-visible:dark-focus-white not-dark:bg-white not-dark:hover:bg-gray-50 not-dark:placeholder:text-(--neutral-700) not-dark:text-(--neutral-900) drop-shadow-lg not-dark:drop-shadow-gray-400;
-    background-image: url("./assets/images/icon-search.svg");
-    background-repeat: no-repeat;
-    background-position: 24px center;
-    background-size: 20px;
+    @apply bg-(--neutral-800) hover:bg-(--neutral-700) text-(--neutral-200) w-full rounded-xl py-4 px-[3.7rem] focus-visible:focus-white not-dark:focus-visible:dark-focus-white not-dark:bg-white not-dark:hover:bg-gray-50 not-dark:placeholder:text-(--neutral-700) not-dark:text-(--neutral-900) drop-shadow-lg not-dark:drop-shadow-gray-400;
   }
   .small_text {
     @apply text-preset-8 text-(--neutral-300) not-dark:text-(--neutral-600);
@@ -327,13 +341,13 @@
     @apply w-full bg-no-repeat rounded-[1.25rem] flex flex-col md:flex-row gap-4 items-center justify-between px-6 py-10 md:py-[5.125rem] min-h-[17.875rem] drop-shadow-lg not-dark:drop-shadow-gray-400;
   }
   .location_info {
-    @apply space-y-3 text-center md:text-left;
+    @apply space-y-4 text-center md:text-left z-20 not-dark:text-(--neutral-800);
   }
   .temp_container {
     @apply flex items-center gap-5;
   }
   .temp_icon {
-    @apply h-auto w-24 sm:w-[7.5rem];
+    @apply h-auto w-20 sm:w-[7.5rem];
   }
 
   /* WEATHER DETAILS */
@@ -419,5 +433,13 @@
   }
   .empty_slot {
     @apply bg-(--neutral-800)/30 not-dark:bg-(--neutral-800)/10 rounded-2xl border-2 border-dashed border-(--neutral-700) not-dark:border-(--neutral-300) flex items-center justify-center min-h-[400px] cursor-pointer hover:border-slate-600 hover:bg-(--neutral-800)/50 not-dark:hover:bg-(--neutral-300)/50 transition-all;
+  }
+
+  /* BEST TIME WIDGET */
+  .widget_bg {
+    @apply bg-(--neutral-800)/50 not-dark:bg-white/50 backdrop-blur-sm rounded-xl p-6 border border-(--neutral-700) not-dark:border-(--neutral-300) w-full;
+  }
+  .time_range_indicator {
+    @apply flex justify-between text-sm text-(--neutral-200) not-dark:text-(--neutral-700) mt-8 pt-2 border-t border-(--neutral-300) not-dark:border-(--neutral-700);
   }
 }

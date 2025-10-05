@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import useWeatherStore from "../../store/weatherStore";
 import useSound from "use-sound";
 import { motion } from "motion/react";
@@ -22,7 +22,8 @@ const cloudContainerVariants = {
 };
 
 const WeatherInfo = () => {
-  const { current } = useWeatherStore((state) => state.weatherData) || {};
+  const weatherData = useWeatherStore((state) => state.weatherData) || {};
+  const { current } = weatherData;
   const isFetching = useWeatherStore((state) => state.isFetching);
   const location = useWeatherStore((state) => state.location);
   const addFavoriteLocation = useWeatherStore(
@@ -59,14 +60,28 @@ const WeatherInfo = () => {
 
   const weather_icon = getWeatherIcon(current?.weather_code);
 
-  const date = new Date(current?.time ?? Date.now());
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
   const options = {
+    timeZone: weatherData?.timezone,
     weekday: "long",
     month: "short",
     day: "numeric",
     year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
   };
-  const formattedDate = new Intl.DateTimeFormat("en-US", options).format(date);
+  const formattedDate = new Intl.DateTimeFormat(
+    navigator.language,
+    options
+  ).format(currentTime);
 
   const handleAddFavorite = useCallback(() => {
     if (!location) {
@@ -111,7 +126,7 @@ const WeatherInfo = () => {
       }`}
     >
       <BgNoise />
-      <div className={"location_info z-20 not-dark:text-(--neutral-800)"}>
+      <div className={"location_info"}>
         {/* Favorite/Save Button */}
         <button
           className="focus-visible:*:scale-125 focus-visible:*:stroke-yellow-400"
