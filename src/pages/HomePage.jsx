@@ -11,6 +11,7 @@ import {
   WeatherDetails,
   WeatherInfo,
 } from "../components/weather";
+import { BestTimeWidget } from "../components/weather/BestTimeWidget";
 const ErrorPage = lazy(() => import("./ErrorPage"));
 
 const HomePage = () => {
@@ -76,7 +77,7 @@ const HomePage = () => {
           </p>
         </div>
       ) : (
-        <section className="flex flex-col lg:grid lg:grid-cols-3 gap-8 lg:min-h-dvh lg:grid-rows-1">
+        <section className="flex flex-col lg:grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8 lg:space-y-12">
             <div className="space-y-5 lg:space-y-8">
               <WeatherInfo />
@@ -87,9 +88,11 @@ const HomePage = () => {
             <DailyForecast />
           </div>
 
-          <div className="space-y-5 lg:space-y-8">
+          <HourlyForecast />
+
+          <div className="col-span-full h-fit flex flex-col md:flex-row gap-6 w-full">
             <SmartRecommendations />
-            <HourlyForecast />
+            <BestTimeWidget />
           </div>
         </section>
       )}

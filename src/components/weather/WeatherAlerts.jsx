@@ -32,6 +32,7 @@ const WeatherAlerts = () => {
         title: "🌡️ Extreme Heat Warning",
         message: `Temperature feels like ${displayTemp}${displayUnit}. Stay hydrated and avoid prolonged sun exposure.`,
         color: "bg-red-700",
+        borderColor: "border-red-500",
       });
     } else if (current.apparent_temperature <= FREEZING_THRESHOLD) {
       alerts.push({
@@ -39,6 +40,7 @@ const WeatherAlerts = () => {
         title: "🥶 Freezing Temperatures",
         message: `Temperature feels like ${displayTemp}${displayUnit}. Bundle up!`,
         color: "bg-blue-700",
+        borderColor: "border-blue-500",
       });
     }
 
@@ -54,6 +56,7 @@ const WeatherAlerts = () => {
           1
         )}${RAIN_UNIT} high. Don't forget your umbrella!`,
         color: "bg-blue-600",
+        borderColor: "border-blue-400",
       });
     }
 
@@ -68,6 +71,7 @@ const WeatherAlerts = () => {
           current.wind_speed_10m
         )} ${WIND_UNIT}. Secure loose objects.`,
         color: "bg-orange-700",
+        borderColor: "border-orange-500",
       });
     }
 
@@ -78,6 +82,7 @@ const WeatherAlerts = () => {
         title: "☀️ High UV Index",
         message: `UV Index: ${current.uv_index}. Wear sunscreen and protective clothing.`,
         color: "bg-yellow-800",
+        borderColor: "border-yellow-600",
       });
     }
 
@@ -93,6 +98,7 @@ const WeatherAlerts = () => {
           VISIBILITY_THRESHOLD / 1000
         } ${VISIBILITY_UNIT}. Drive carefully!`,
         color: "bg-gray-700",
+        borderColor: "border-gray-500",
       });
     }
 
@@ -104,27 +110,48 @@ const WeatherAlerts = () => {
   if (alerts.length === 0) return null;
 
   return (
-    <div className="space-y-2 mb-6 absolute top-4 left-1/2 transform -translate-x-1/2 px-4 z-999">
-      <AnimatePresence>
-        {alerts.map((alert) => (
+    <div className="fixed top-4 left-1/2 transform -translate-x-1/2 px-4 z-999 w-full max-w-lg md:max-w-xl">
+      <AnimatePresence mode="popLayout">
+        {alerts.map((alert, index) => (
           <motion.div
             key={alert.id}
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, x: 100 }}
-            className={`${alert.color} rounded-lg p-4 text-white shadow-lg`}
+            layout
+            initial={{ opacity: 0, y: -50, scale: 0.9 }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              transition: {
+                duration: 0.4,
+                delay: index * 0.1,
+                ease: "easeOut",
+              },
+            }}
+            exit={{
+              opacity: 0,
+              x: 100,
+              scale: 0.9,
+              transition: { duration: 0.3, ease: "easeIn" },
+            }}
+            className={`${alert.color} rounded-xl p-4 text-white shadow-2xl mb-3 border-l-4 ${alert.borderColor} backdrop-blur-sm`}
           >
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <h4 className="font-bold text-preset-7 mb-1">{alert.title}</h4>
-                <p className="text-sm">{alert.message}</p>
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex-1 min-w-0">
+                <h4 className="font-bold text-preset-7 mb-1.5 flex items-center gap-2">
+                  {alert.title}
+                </h4>
+                <p className="text-sm leading-relaxed">{alert.message}</p>
               </div>
-              <button
+
+              <motion.button
+                whileHover={{ scale: 1.1, rotate: 90 }}
+                whileTap={{ scale: 0.9 }}
                 onClick={() => setDismissed([...dismissed, alert.id])}
-                className="ml-4 hover:bg-white/20 rounded p-1 transition"
+                className="flex-shrink-0 hover:bg-white/20 rounded-lg p-1.5 transition-colors"
+                aria-label="Dismiss alert"
               >
-                <IconX size={20} />
-              </button>
+                <IconX size={20} strokeWidth={2.5} />
+              </motion.button>
             </div>
           </motion.div>
         ))}

@@ -33,7 +33,7 @@ export const WEATHER_ICON_MAP = {
 };
 
 export const WEATHER_CODE_DESCRIPTIONS = {
-  0: "Clear sky",
+  0: "Clear skies",
   1: "Mainly clear",
   2: "Partly cloudy",
   3: "Overcast",
@@ -91,7 +91,7 @@ export const getWeatherIcon = (code) => {
 
 // Function to get the detailed description from a weather code
 export const getWeatherDescription = (code) => {
-  return WEATHER_CODE_DESCRIPTIONS[code] || "Unknown";
+  return WEATHER_CODE_DESCRIPTIONS[code] || "Variable conditions";
 };
 
 // Helper function to retrieve the UV level based on the index number.
