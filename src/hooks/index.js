@@ -3,6 +3,7 @@ import useDebounce from "./useDebounce";
 import useGeolocation from "./useGeolocation";
 import useLocations from "./useLocations";
 import useSettings from "./useSettings";
+import useSmartRecommendations from "./useSmartRecommendations";
 import useTheme from "./useTheme";
 import useVoiceSearch from "./useVoiceSearch";
 import useWeatherAnalysis from "./useWeatherAnalysis";
@@ -14,6 +15,7 @@ export {
   useGeolocation,
   useLocations,
   useSettings,
+  useSmartRecommendations,
   useTheme,
   useVoiceSearch,
   useWeatherAnalysis,
