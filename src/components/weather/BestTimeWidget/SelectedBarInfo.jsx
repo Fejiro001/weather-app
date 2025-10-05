@@ -16,6 +16,8 @@ const SelectedBarInfo = ({ selectedBar, hourlyScores, tempUnit }) => {
         transition: { duration: 0.1 },
       }}
       exit={{ opacity: 0, height: 0, transition: { duration: 0.2 } }}
+      role="status"
+      aria-live="polite"
     >
       <div className="bg-(--neutral-700)/30 not-dark:bg-(--neutral-200)/30 rounded-lg p-3 text-sm">
         <div className="flex items-center justify-between">
@@ -31,13 +33,23 @@ const SelectedBarInfo = ({ selectedBar, hourlyScores, tempUnit }) => {
           </div>
 
           {/* Weather Score */}
-          <div className={`font-bold ${getScoreTextColor(score)}`}>
+          <div
+            className={`font-bold ${getScoreTextColor(score)}`}
+            aria-label={`Weather Score: ${Math.round(score)} out of 100`}
+          >
             {Math.round(score)}/100
           </div>
         </div>
 
         {/* Rain Expectations */}
-        <div className="text-xs text-(--neutral-200) not-dark:text-(--neutral-600) mt-1">
+        <div
+          className="text-xs text-(--neutral-200) not-dark:text-(--neutral-600) mt-1"
+          aria-label={
+            precipitation > 0
+              ? `Rain: ${precipitation.toFixed(1)} millimeters`
+              : "Rain expectation: Dry conditions."
+          }
+        >
           {precipitation > 0
             ? `Rain: ${precipitation.toFixed(1)}mm`
             : "Dry conditions expected."}

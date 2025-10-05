@@ -6,10 +6,14 @@ const legend = [
 ];
 const ScoreLegend = () => {
   return (
-    <div className="flex flex-wrap items-center gap-3 text-xs">
+    <div
+      className="flex flex-wrap items-center gap-3 text-xs md:text-sm"
+      role="region"
+      aria-label="Color key for outdoor activity score"
+    >
       {legend.map((tag) => (
         <div key={tag.label} className="flex items-center gap-1.5">
-          <div className={`w-3 h-3 rounded ${tag.color}`} />
+          <div aria-hidden="true" className={`w-3 h-3 rounded ${tag.color}`} />
           <span className="text-(--neutral-300) not-dark:text-(--neutral-600)">
             {tag.label}
           </span>

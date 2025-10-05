@@ -10,10 +10,17 @@ const OptimalWindow = () => {
   if (!analysis) return null;
 
   return (
-    <div className="bg-(--neutral-700) outline-(--neutral-600) outline-1 not-dark:bg-gray-100 not-dark:outline-gray-200 drop-shadow-lg rounded-lg p-4 mb-4">
+    <div
+      className="optimal_window"
+      role="region"
+      aria-labelledby="optimal-window-heading"
+    >
       <div className="flex items-end justify-between">
         <div className="flex-1">
-          <p className="text-(--neutral-200) not-dark:text-(--neutral-600) text-sm mb-1">
+          <p
+            id="optimal-window-heading"
+            className="text-(--neutral-200) not-dark:text-(--neutral-600) text-sm mb-1"
+          >
             Optimal Window
           </p>
           <p className="text-white not-dark:text-(--neutral-900) text-2xl font-bold">
@@ -37,9 +44,20 @@ const OptimalWindow = () => {
             className={`${getScoreColor(
               analysis.score
             )} w-16 h-16 rounded-full flex flex-col items-center justify-center shadow-lg font-serif text-(--neutral-800)`}
+            role="meter"
+            aria-valuenow={Math.round(analysis.score)}
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-label={`Overall outdoor activity score is ${Math.round(
+              analysis.score
+            )} out of 100`}
           >
-            <span className=" font-bold text-xl">{analysis.score}</span>
-            <span className="text-xs opacity-90">/100</span>
+            <span className=" font-bold text-xl" aria-hidden="true">
+              {analysis.score}
+            </span>
+            <span className="text-xs opacity-90" aria-hidden="true">
+              /100
+            </span>
           </div>
           <span className="text-xs text-(--neutral-200) not-dark:text-(--neutral-600) font-medium">
             {getScoreLabel(analysis.score)}

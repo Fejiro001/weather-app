@@ -13,8 +13,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("./assets/fonts/DM_Sans/static/DMSans-Bold.ttf")
-    format("truetype");
+  src: url("./assets/fonts/DM_Sans/static/DMSans-Bold.ttf") format("truetype");
 }
 @font-face {
   font-family: "DM Sans";
@@ -29,16 +28,14 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("./assets/fonts/DM_Sans/static/DMSans-Medium.ttf")
-    format("truetype");
+  src: url("./assets/fonts/DM_Sans/static/DMSans-Medium.ttf") format("truetype");
 }
 @font-face {
   font-family: "DM Sans";
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url("./assets/fonts/DM_Sans/static/DMSans-Light.ttf")
-    format("truetype");
+  src: url("./assets/fonts/DM_Sans/static/DMSans-Light.ttf") format("truetype");
 }
 @font-face {
   font-family: "DM Sans";
@@ -463,5 +460,8 @@ input:-webkit-autofill:active {
   /* BEST TIME WIDGET */
   .time_range_indicator {
     @apply flex justify-between text-sm text-(--neutral-200) not-dark:text-(--neutral-700) mt-8 pt-2 border-t border-(--neutral-300) not-dark:border-(--neutral-700);
+  }
+  .optimal_window {
+    @apply bg-(--neutral-700) outline-(--neutral-600) outline-1 not-dark:bg-gray-100 not-dark:outline-gray-200 drop-shadow-lg rounded-lg p-4 mb-4;
   }
 }
