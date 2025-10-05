@@ -4,7 +4,7 @@ import { formatHour } from "../../../utils/formatDateTime";
 import { getScoreColor } from "../../../utils/scoreUtils";
 import { SelectedBarInfo } from ".";
 
-const HourlyTimeline = ({ analysis, units, selectedBar, setSelectedBar }) => {
+const HourlyTimeline = ({ analysis, tempUnit, selectedBar, setSelectedBar }) => {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
@@ -42,7 +42,7 @@ const HourlyTimeline = ({ analysis, units, selectedBar, setSelectedBar }) => {
       </div>
 
       <SelectedBarInfo
-        units={units}
+        tempUnit={tempUnit}
         selectedBar={selectedBar}
         hourlyScores={analysis.hourlyScores}
       />
