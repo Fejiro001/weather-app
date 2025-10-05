@@ -2,7 +2,7 @@ import { lazy, useEffect, useState } from "react";
 import { useGeolocation, useLocations } from "../hooks";
 import useWeatherStore from "../store/weatherStore";
 
-import { AnimatedHeadline, SearchBar } from "../components/basic";
+import { SearchBar } from "../components/basic";
 import {
   DailyForecast,
   SmartRecommendations,
@@ -11,15 +11,12 @@ import {
   WeatherInfo,
 } from "../components/weather";
 import { HourlyForecast } from "../components/weather/HourlyForecast";
-import { motion } from "motion/react";
-import { IconBulb, IconChevronRight } from "@tabler/icons-react";
-import { useNavigate } from "react-router-dom";
+import { AnimatedHeadline, InsightsCTA } from "../components/homepage";
 const ErrorPage = lazy(() => import("./ErrorPage"));
 
 const HomePage = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const { fetchingLocations, locations, getLocations } = useLocations();
-  const navigate = useNavigate();
 
   const fetchWeather = useWeatherStore((state) => state.fetchWeather);
   const units = useWeatherStore((state) => state.units);
@@ -29,11 +26,9 @@ const HomePage = () => {
 
   const { getCurrentLocation } = useGeolocation();
 
-  // Fetching weather data for current location on initial load if first visit
+  // Fetching weather data for current location on initial load
   useEffect(() => {
-    const hasVisited = localStorage.getItem("hasVisited");
-    if (!hasVisited && !storeLocation) {
-      localStorage.setItem("hasVisited", "true");
+    if (!storeLocation) {
       getCurrentLocation();
     }
   }, [getCurrentLocation, storeLocation]);
@@ -89,32 +84,7 @@ const HomePage = () => {
             </div>
 
             <DailyForecast />
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="widget_bg cursor-pointer border-2 border-transparent hover:border-blue-500/50 transition-all duration-300 group"
-              onClick={() => navigate("/insights")}
-            >
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex items-center gap-4">
-                  <div className="bg-blue-500/20 p-3 rounded-lg group-hover:bg-blue-500/30 transition-colors">
-                    <IconBulb size={24} className="text-blue-400" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-lg mb-1 text-(--neutral-900) dark:text-white">
-                      Plan Your Day
-                    </h3>
-                    <p className="text-sm text-(--neutral-600) dark:text-(--neutral-400)">
-                      Get personalized insights and best times to go outside
-                    </p>
-                  </div>
-                </div>
-                <IconChevronRight
-                  className="text-(--neutral-400) group-hover:text-blue-400 group-hover:translate-x-1 transition-all flex-shrink-0"
-                  size={24}
-                />
-              </div>
-            </motion.div>
+            <InsightsCTA />
           </div>
 
           <div className="h-fit flex flex-col gap-5 w-full">

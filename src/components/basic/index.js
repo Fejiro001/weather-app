@@ -1,4 +1,3 @@
-import AnimatedHeadline from "./AnimatedHeadline";
 import SearchBar from "./SearchBar";
 import BgNoise from "./BgNoise";
 import Loading from "./Loading";
@@ -8,7 +7,6 @@ import PreLoader from "./PreLoader";
 import VoiceSearchButton from "./VoiceSearchButton";
 
 export {
-  AnimatedHeadline,
   BgNoise,
   Loading,
   SearchBar,
