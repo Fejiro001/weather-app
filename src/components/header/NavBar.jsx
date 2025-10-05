@@ -1,9 +1,6 @@
 import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useClickOutside } from "../../hooks";
-import { Link } from "react-router-dom";
-import ThemeToggle from "./ThemeToggle";
-import SoundToggle from "./SoundToggle";
 import {
   IconArrowsUpDown,
   IconBulb,
@@ -11,6 +8,25 @@ import {
   IconStar,
   IconX,
 } from "@tabler/icons-react";
+import { ThemeToggle, SoundToggle, MobileNavLink } from ".";
+
+const NAV_LINKS = [
+  {
+    Icon: IconStar,
+    label: "Favourite Locations",
+    to: "/favourites",
+  },
+  {
+    Icon: IconArrowsUpDown,
+    label: "Compare Locations",
+    to: "/compare",
+  },
+  {
+    Icon: IconBulb,
+    label: "Weather Insights",
+    to: "/insights",
+  },
+];
 
 const menuVariants = {
   hidden: { opacity: 0, y: -20, transition: { when: "afterChildren" } },
@@ -48,12 +64,12 @@ const itemVariants = {
 
 const NavBar = () => {
   const navbarRef = useRef();
-  const [isOpen, setIsOpen] = useState();
+  const [isOpen, setIsOpen] = useState(false);
 
   const { toggleDropdown } = useClickOutside(navbarRef, setIsOpen);
 
   return (
-    <div ref={navbarRef} className="relative block md:hidden">
+    <nav ref={navbarRef} className="relative block md:hidden">
       <motion.button
         whileTap={{ scale: 0.95 }}
         className="settings_dropdown"
@@ -61,7 +77,7 @@ const NavBar = () => {
         onClick={toggleDropdown}
         aria-expanded={isOpen}
         aria-controls="mobile-menu"
-        aria-haspopup="menu"
+        aria-haspopup="true"
         aria-label="Toggle menu"
       >
         <AnimatePresence mode="wait">
@@ -72,7 +88,11 @@ const NavBar = () => {
             transition={{ type: "spring", stiffness: 150, damping: 20 }}
             className="flex items-center justify-center"
           >
-            {isOpen ? <IconX size={18} /> : <IconMenu2 size={18} />}
+            {isOpen ? (
+              <IconX size={18} aria-hidden="true" />
+            ) : (
+              <IconMenu2 size={18} aria-hidden="true" />
+            )}
           </motion.span>
         </AnimatePresence>
       </motion.button>
@@ -89,72 +109,26 @@ const NavBar = () => {
           >
             <motion.li
               variants={itemVariants}
+              role="none"
               className="pb-2 flex items-center justify-center gap-4 border-b border-b-gray-500"
             >
               <ThemeToggle />
               <SoundToggle />
             </motion.li>
 
-            {/* FAVOURITES LINK */}
-            <motion.li
-              variants={itemVariants}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Link
-                onClick={() => setIsOpen(false)}
-                className="day_button flex gap-2 w-full group"
-                to="/favourites"
-              >
-                <IconStar
-                  className="fill-(--neutral-900) not-dark:fill-white group-hover:fill-white not-dark:group-hover:fill-(--neutral-900) transition-all duration-500"
-                  size={18}
-                />
-                <span>Favourite Locations</span>
-              </Link>
-            </motion.li>
-
-            {/* COMPARE LINK */}
-            <motion.li
-              variants={itemVariants}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Link
-                onClick={() => setIsOpen(false)}
-                className="day_button flex gap-2 w-full group"
-                to="/compare"
-              >
-                <IconArrowsUpDown
-                  size={18}
-                  className="group-hover:rotate-12 duration-500 ease-in-out"
-                />
-                <span>Compare Locations</span>
-              </Link>
-            </motion.li>
-
-            {/* INSIGHTS LINK */}
-            <motion.li
-              variants={itemVariants}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Link
-                onClick={() => setIsOpen(false)}
-                className="day_button flex gap-2 w-full group"
-                to="/insights"
-              >
-                <IconBulb
-                  size={18}
-                  className="fill-(--neutral-900) not-dark:fill-white group-hover:fill-white not-dark:group-hover:fill-(--neutral-900) transition-all duration-500"
-                />
-                <span>Insights</span>
-              </Link>
-            </motion.li>
+            {NAV_LINKS.map((link) => (
+              <MobileNavLink
+                key={link.to}
+                Icon={link.Icon}
+                label={link.label}
+                to={link.to}
+                setIsOpen={setIsOpen}
+              />
+            ))}
           </motion.ul>
         )}
       </AnimatePresence>
-    </div>
+    </nav>
   );
 };
 
