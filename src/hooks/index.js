@@ -6,6 +6,7 @@ import useSettings from "./useSettings";
 import useSmartRecommendations from "./useSmartRecommendations";
 import useTheme from "./useTheme";
 import useVoiceSearch from "./useVoiceSearch";
+import useWeatherAlerts from "./useWeatherAlerts";
 import useWeatherAnalysis from "./useWeatherAnalysis";
 import useWeatherDetails from "./useWeatherDetails";
 
@@ -18,6 +19,7 @@ export {
   useSmartRecommendations,
   useTheme,
   useVoiceSearch,
+  useWeatherAlerts,
   useWeatherAnalysis,
   useWeatherDetails,
 };

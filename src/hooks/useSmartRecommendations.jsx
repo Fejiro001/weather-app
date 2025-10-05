@@ -22,8 +22,15 @@ const useSmartRecommendations = () => {
       return [];
     }
 
+    const {
+      apparent_temperature: tempForComfort,
+      precipitation,
+      uv_index,
+      relative_humidity_2m,
+      wind_speed_10m,
+    } = weatherData.current;
+    
     const recommendations = [];
-    const tempForComfort = weatherData.current.apparent_temperature;
 
     // Thresholds
     const COLD_THRESHOLD_1 = isMetric ? 10 : 50;
@@ -56,7 +63,7 @@ const useSmartRecommendations = () => {
 
     // Umbrella
     if (
-      weatherData.current.precipitation > PRECIP_UMBRELLA_THRESHOLD ||
+      precipitation > PRECIP_UMBRELLA_THRESHOLD ||
       weatherData.daily?.precipitation_probability?.[0] > 30
     ) {
       recommendations.push({
@@ -67,19 +74,16 @@ const useSmartRecommendations = () => {
     }
 
     // Sunglasses/Sunscreen
-    if (weatherData.current.uv_index > 5) {
+    if (uv_index > 5) {
       recommendations.push({
         icon: <IconSunglasses size={24} />,
-        text: `Apply sunscreen (UV: ${weatherData.current.uv_index})`,
+        text: `Apply sunscreen (UV: ${uv_index})`,
         color: "text-yellow-400",
       });
     }
 
     // Hydration
-    if (
-      tempForComfort > HOT_THRESHOLD ||
-      weatherData.current.relative_humidity_2m > 70
-    ) {
+    if (tempForComfort > HOT_THRESHOLD || relative_humidity_2m > 70) {
       recommendations.push({
         icon: <IconBottle size={24} />,
         text: "Stay hydrated",
@@ -91,8 +95,8 @@ const useSmartRecommendations = () => {
     if (
       tempForComfort >= COLD_THRESHOLD_2 &&
       tempForComfort <= HOT_THRESHOLD &&
-      weatherData.current.precipitation < PRECIP_ACTIVITY_THRESHOLD &&
-      weatherData.current.wind_speed_10m < WIND_ACTIVITY_THRESHOLD
+      precipitation < PRECIP_ACTIVITY_THRESHOLD &&
+      wind_speed_10m < WIND_ACTIVITY_THRESHOLD
     ) {
       recommendations.push({
         icon: <IconWalk size={24} />,
