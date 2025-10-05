@@ -5,12 +5,12 @@ import useWeatherStore from "../store/weatherStore";
 import { AnimatedHeadline, SearchBar } from "../components/basic";
 import {
   DailyForecast,
-  HourlyForecast,
   SmartRecommendations,
   WeatherAlerts,
   WeatherDetails,
   WeatherInfo,
 } from "../components/weather";
+import { HourlyForecast } from "../components/weather/HourlyForecast";
 import { motion } from "motion/react";
 import { IconBulb, IconChevronRight } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";

@@ -1,10 +1,11 @@
 import { useMemo, useRef, useState } from "react";
-import useWeatherStore from "../../store/weatherStore";
-import { getWeatherIcon } from "../../constants/weatherConstants";
+import useWeatherStore from "../../../store/weatherStore";
+import {
+  getWeatherDescription,
+  getWeatherIcon,
+} from "../../../constants/weatherConstants";
 import { motion } from "motion/react";
-
-import { DaysDropdown } from "../basic";
-import { HourlyWeatherCard } from ".";
+import { DaysDropdown, HourlyWeatherCard } from ".";
 
 const HOURS_IN_A_DAY = 24;
 const VISIBLE_SKELETON_COUNT = 10;
@@ -34,12 +35,12 @@ const HourlyForecast = () => {
 
   const [selectedDay, setSelectedDay] = useState(today);
 
+  // Combine into a single array of objects
   const hourlyForecasts = useMemo(() => {
     if (!hourly) {
       return [];
     }
 
-    // Combine into a single array of objects
     const hourlyData = hourly.time.map((time, index) => ({
       time: time,
       weather_code: hourly.weather_code[index],
@@ -54,7 +55,7 @@ const HourlyForecast = () => {
     return chunks;
   }, [hourly]);
 
-  // Find the forecast data for the selected day once
+  // Find the forecast data for the selected day once and filter past hours for 'Today'
   const selectedDayData = useMemo(() => {
     const day = hourlyForecasts.find((dayChunk) =>
       new Intl.DateTimeFormat(navigator.language, { weekday: "long" })
@@ -82,9 +83,12 @@ const HourlyForecast = () => {
   }, [current, hourlyForecasts, selectedDay, today]);
 
   return (
-    <section className="widget_bg">
+    <section className="widget_bg" aria-labelledby="hourly-forecast-heading">
       <div className="flex justify-between items-center">
-        <h3 className="text-preset-5 text-(--neutral-000) not-dark:text-(--neutral-900)">
+        <h3
+          id="hourly-forecast-heading"
+          className="text-preset-5 text-(--neutral-000) not-dark:text-(--neutral-900)"
+        >
           Hourly forecast
         </h3>
         <DaysDropdown
@@ -100,6 +104,7 @@ const HourlyForecast = () => {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
+        role="list"
         className="flex flex-col gap-4 overflow-y-auto scrollable_container py-2"
       >
         {isFetching || selectedDayData.length === 0
@@ -109,20 +114,23 @@ const HourlyForecast = () => {
                 <HourlyWeatherCard
                   key={`skeleton-${index}`}
                   isFetching={isFetching}
+                  index={index}
                   icon={null}
                   time={null}
                   min_temp={null}
-                  index={index}
                   scrollRootRef={null}
+                  altText={"Loading data"}
                 />
               ))
           : selectedDayData.map((hourData, index) => {
+              const weatherCode = hourData.weather_code;
               return (
                 <HourlyWeatherCard
                   key={hourData.time}
                   index={index}
                   scrollRootRef={listRef}
                   icon={hourData ? getWeatherIcon(hourData.weather_code) : null}
+                  altText={getWeatherDescription(weatherCode)}
                   time={
                     hourData
                       ? new Date(hourData.time).toLocaleTimeString([], {
@@ -133,7 +141,6 @@ const HourlyForecast = () => {
                   min_temp={
                     hourData ? `${Math.round(hourData.temperature_2m)}°` : ""
                   }
-                  isFetching={false}
                 />
               );
             })}
