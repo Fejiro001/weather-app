@@ -107,7 +107,7 @@ const AddLocationModal = ({ setShowModal }) => {
             <IconLoader2 className="animate-spin" />
           </div>
         ) : (
-          locations.length > 0 && (
+          locations?.length > 0 && (
             <ul
               className="mt-6 max-h-72 overflow-y-auto scrollable_container z-30 flex flex-col gap-2 p-1"
               tabIndex={0}
@@ -133,6 +133,14 @@ const AddLocationModal = ({ setShowModal }) => {
               ))}
             </ul>
           )
+        )}
+
+        {!fetchingLocations && locations === undefined && (
+          <p className="p-2 mt-4 text-center not-dark:text-(--neutral-900)">
+            <span className="text-preset-7">
+              No results found for &quot;{inputValue}&quot;
+            </span>
+          </p>
         )}
       </motion.div>
     </motion.div>

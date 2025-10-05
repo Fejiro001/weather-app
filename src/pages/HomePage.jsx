@@ -23,30 +23,43 @@ const HomePage = () => {
   const storeLocation = useWeatherStore((state) => state.location);
   const setLocation = useWeatherStore((state) => state.setLocation);
   const isError = useWeatherStore((state) => state.isError);
+  const fetchGeolocationWeather = useWeatherStore(
+    (state) => state.fetchGeolocationWeather
+  );
+  const { getCurrentPositionPromise } = useGeolocation();
 
-  const { getCurrentLocation } = useGeolocation();
-
-  // Fetching weather data for current location on initial load
   useEffect(() => {
     if (!storeLocation) {
-      getCurrentLocation();
+      const fetchGeo = async () => {
+        try {
+          const position = await getCurrentPositionPromise();
+          await fetchGeolocationWeather(position);
+        } catch (error) {
+          console.error("Initial Geolocation failed:", error.message);
+        }
+      };
+      fetchGeo();
+      return;
     }
-  }, [getCurrentLocation, storeLocation]);
 
-  // Fetching weather data for searched location
-  useEffect(() => {
     if (selectedLocation) {
       setLocation(selectedLocation);
-      fetchWeather();
+      setSelectedLocation(null);
+      return;
     }
-  }, [fetchWeather, selectedLocation, setLocation]);
 
-  // Fetching weather for stored location
-  useEffect(() => {
     if (storeLocation) {
       fetchWeather();
     }
-  }, [fetchWeather, storeLocation, units]);
+  }, [
+    getCurrentPositionPromise,
+    fetchGeolocationWeather,
+    storeLocation,
+    selectedLocation,
+    setLocation,
+    fetchWeather,
+    units,
+  ]);
 
   if (isError) {
     return <ErrorPage />;

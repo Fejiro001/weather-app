@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AnimatePresence } from "motion/react";
 import useWeatherStore from "../store/weatherStore";
+import { useGeolocation } from "../hooks";
 import {
   AddLocationModal,
   ComparisonGrid,
@@ -8,7 +9,7 @@ import {
   EmptyState,
   LoadingOverlay,
 } from "../components/comparison";
-import { notifyError } from "../components/basic/toast";
+import { notifyError, notifyInfo } from "../components/basic/toast";
 
 const ComparisonPage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -23,47 +24,33 @@ const ComparisonPage = () => {
   const isAddingLocation = useWeatherStore((state) => state.isAddingLocation);
   const currentLocation = useWeatherStore((state) => state.currentLocation);
 
+  const { getCurrentPositionPromise } = useGeolocation();
+
   // Handle adding current location
   const handleAddCurrentLocation = async () => {
     try {
-      if (!currentLocation) {
-        await new Promise((resolve, reject) => {
-          if (!navigator.geolocation) {
-            notifyError("Geolocation is not supported by your browser");
-            reject(new Error("Geolocation not supported"));
-            return;
-          }
+      let locationToAdd = currentLocation;
 
-          navigator.geolocation.getCurrentPosition(
-            async (position) => {
-              try {
-                await fetchGeolocationWeather(position);
-                resolve();
-              } catch (error) {
-                notifyError(
-                  error.message ||
-                    "Failed to fetch weather data for current location."
-                );
-                reject(error);
-              }
-            },
-            (error) => {
-              notifyError(
-                error.message ||
-                  "Geolocation permission denied. Please search for a location."
-              );
-              reject(error);
-            },
-            { enableHighAccuracy: true, maximumAge: 0 }
-          );
-        });
+      if (!locationToAdd) {
+        const position = await getCurrentPositionPromise();
+        notifyInfo("Fetching weather for current location...");
+        locationToAdd = await fetchGeolocationWeather(position);
+      }
 
-        const updatedLocation = useWeatherStore.getState().currentLocation;
-        if (updatedLocation) {
-          await addCompareLocation(updatedLocation);
+      if (locationToAdd) {
+        const isAlreadyAdded = compareLocations.some(
+          (loc) =>
+            loc.originalLatitude === locationToAdd.latitude &&
+            loc.originalLongitude === locationToAdd.longitude
+        );
+
+        if (isAlreadyAdded) {
+          notifyError("Current location is already in the comparison list.");
+        } else {
+          await addCompareLocation(locationToAdd);
         }
       } else {
-        await addCompareLocation(currentLocation);
+        notifyError("Could not retrieve current location data.");
       }
     } catch (error) {
       notifyError(
@@ -86,16 +73,16 @@ const ComparisonPage = () => {
       />
 
       <div className="max-w-7xl mx-auto relative">
+        {isAddingLocation && <LoadingOverlay />}
         <AnimatePresence mode="wait">
-          {isAddingLocation && <LoadingOverlay />}
-
           {compareLocations.length > 0 ? (
             <ComparisonGrid
+              key="comparison-grid"
               locations={compareLocations}
               onAddLocation={() => setShowModal(true)}
             />
           ) : (
-            <EmptyState onAddLocation={() => setShowModal(true)} />
+            <EmptyState key="empty" onAddLocation={() => setShowModal(true)} />
           )}
         </AnimatePresence>
       </div>

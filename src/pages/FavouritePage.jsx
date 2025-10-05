@@ -12,6 +12,14 @@ const FavouritePage = () => {
   const currentLocation = useWeatherStore((state) => state.location);
   const setLocation = useWeatherStore((state) => state.setLocation);
 
+  const isLocationCurrent = (location) => {
+    return (
+      currentLocation &&
+      currentLocation.latitude === location.latitude &&
+      currentLocation.longitude === location.longitude
+    );
+  };
+
   return (
     <section className="space-y-8 xl:space-y-12">
       <BackButton>Manage Favorites</BackButton>
@@ -24,13 +32,11 @@ const FavouritePage = () => {
         ) : (
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {favoriteLocations.map((location) => {
-              const isCurrent =
-                currentLocation &&
-                currentLocation.latitude === location.latitude &&
-                currentLocation.longitude === location.longitude;
+              const isCurrent = isLocationCurrent(location);
+              const key = `${location.latitude}-${location.longitude}`;
 
               return (
-                <li key={`${location.latitude}-${location.longitude}`}>
+                <li key={key}>
                   <Link
                     to="/"
                     onClick={() => setLocation(location)}
@@ -63,7 +69,11 @@ const FavouritePage = () => {
 
                     {/* Remove Button */}
                     <button
-                      onClick={() => removeFavoriteLocation(location)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        removeFavoriteLocation(location);
+                      }}
                       className={`
                         p-2 rounded-full transition-colors duration-200 
                         ${
@@ -74,7 +84,7 @@ const FavouritePage = () => {
                       `}
                       aria-label={`Remove ${location.name} from favorites`}
                     >
-                      <IconTrash size={20} />
+                      <IconTrash size={20} aria-hidden="true" />
                     </button>
                   </Link>
                 </li>

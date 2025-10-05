@@ -58,7 +58,8 @@ const useWeatherStore = create()(
         } catch (error) {
           set({ isFetching: false, isError: true });
           notifyError(
-            error?.response?.data?.message ||
+            error.response?.data?.message ||
+              error.message ||
               "Failed to fetch weather data. Please try again."
           );
         }
@@ -107,17 +108,22 @@ const useWeatherStore = create()(
             admin1: state,
           };
 
-          get().setLocation(geoData);
-          get().setCurrentLocation(geoData);
+          set({
+            location: geoData,
+            currentLocation: geoData,
+          });
 
           // Get the data for the new location
           await get().fetchWeather();
+          return geoData;
         } catch (error) {
           set({ isFetching: false, isError: true });
           notifyError(
-            error?.response?.data?.message ||
+            error.response?.data?.message ||
+              error.message ||
               "Failed to get location from geolocation."
           );
+          throw error;
         }
       },
 
@@ -196,7 +202,8 @@ const useWeatherStore = create()(
             notifySuccess(`${location.name} added for comparison.`, "Success");
           } catch (error) {
             notifyError(
-              error?.response?.data?.message ||
+              error.response?.data?.message ||
+                error.message ||
                 "Failed to fetch weather data for comparison. Please try again."
             );
           } finally {
@@ -216,8 +223,10 @@ const useWeatherStore = create()(
           const updatedCompared = currentCompared.filter(
             (location) =>
               !(
-                location.latitude === locationToRemove.latitude &&
-                location.longitude === locationToRemove.longitude
+                location.originalLatitude ===
+                  locationToRemove.originalLatitude &&
+                location.originalLongitude ===
+                  locationToRemove.originalLongitude
               )
           );
           return {
