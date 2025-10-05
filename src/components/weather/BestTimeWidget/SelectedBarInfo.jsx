@@ -24,7 +24,7 @@ const SelectedBarInfo = ({ selectedBar, hourlyScores, tempUnit }) => {
             <span className="font-semibold text-(--neutral-200) not-dark:text-(--neutral-800)">
               {formatHour(hour)}
             </span>
-            <span className="text-(--neutral-400) not-dark:text-(--neutral-600) ml-2">
+            <span className="text-(--neutral-300) not-dark:text-(--neutral-600) ml-2">
               {Math.round(temp)}
               {tempUnit}
             </span>
@@ -37,7 +37,7 @@ const SelectedBarInfo = ({ selectedBar, hourlyScores, tempUnit }) => {
         </div>
 
         {/* Rain Expectations */}
-        <div className="text-xs text-(--neutral-400) not-dark:text-(--neutral-600) mt-1">
+        <div className="text-xs text-(--neutral-200) not-dark:text-(--neutral-600) mt-1">
           {precipitation > 0
             ? `Rain: ${precipitation.toFixed(1)}mm`
             : "Dry conditions expected."}

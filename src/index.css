@@ -1,20 +1,43 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
-
 @font-face {
   font-family: "Bricolage Grotesque";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("./assets/fonts/Bricolage_Grotesque/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf")
+  src: url("./assets/fonts/Bricolage_Grotesque/static/BricolageGrotesque-Bold.ttf")
     format("truetype");
 }
 @font-face {
   font-family: "DM Sans";
   font-style: normal;
-  font-weight: 300 700;
+  font-weight: 700;
   font-display: swap;
-  src: url("./assets/fonts/DM_Sans/DMSans-VariableFont_opsz,wght.ttf")
+  src: url("./assets/fonts/DM_Sans/static/DMSans-Bold.ttf")
+    format("truetype");
+}
+@font-face {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("./assets/fonts/DM_Sans/static/DMSans-SemiBold.ttf")
+    format("truetype");
+}
+@font-face {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("./assets/fonts/DM_Sans/static/DMSans-Medium.ttf")
+    format("truetype");
+}
+@font-face {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("./assets/fonts/DM_Sans/static/DMSans-Light.ttf")
     format("truetype");
 }
 @font-face {
@@ -22,10 +45,9 @@
   font-style: italic;
   font-weight: 600;
   font-display: swap;
-  src: url("./assets/fonts/DM_Sans/DMSans-Italic-VariableFont_opsz,wght.ttf")
+  src: url("./assets/fonts/DM_Sans/static/DMSans-SemiBoldItalic.ttf")
     format("truetype");
 }
-
 @theme {
   --font-sans: "DM Sans", sans-serif;
   --font-serif: "Bricolage Grotesque", serif;
@@ -373,6 +395,9 @@ input:-webkit-autofill:active {
   }
 
   /* HOURLY FORECAST */
+  .widget_bg {
+    @apply bg-(--neutral-800)/80 p-6 rounded-[1.25rem] max-h-[48rem] flex flex-col gap-4 not-dark:bg-white/80 drop-shadow-2xl h-fit backdrop-blur-sm w-full;
+  }
   .days_dropdown {
     @apply capitalize flex items-center text-preset-7 bg-(--neutral-600) hover:bg-(--neutral-700) rounded-lg py-2 px-4 gap-3 focus-visible:focus-white not-dark:focus-visible:dark-focus-white not-dark:bg-gray-100 not-dark:outline-gray-200 not-dark:text-(--neutral-900) not-dark:hover:bg-gray-200 drop-shadow-lg not-dark:drop-shadow-gray-400;
   }
@@ -436,9 +461,6 @@ input:-webkit-autofill:active {
   }
 
   /* BEST TIME WIDGET */
-  .widget_bg {
-    @apply bg-(--neutral-800)/50 not-dark:bg-white/50 backdrop-blur-sm rounded-xl p-6 border border-(--neutral-700) not-dark:border-(--neutral-300) w-full;
-  }
   .time_range_indicator {
     @apply flex justify-between text-sm text-(--neutral-200) not-dark:text-(--neutral-700) mt-8 pt-2 border-t border-(--neutral-300) not-dark:border-(--neutral-700);
   }

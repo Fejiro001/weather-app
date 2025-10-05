@@ -112,9 +112,9 @@ const SmartRecommendations = () => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="w-full bg-(--neutral-800)/50 not-dark:bg-white/50 backdrop-blur-sm rounded-xl p-6 drop-shadow-2xl border border-(--neutral-700) not-dark:border-(--neutral-300)"
+      className="widget_bg"
     >
-      <div className="text-preset-5 text-(--neutral-000) not-dark:text-(--neutral-900) mb-4 flex items-center gap-2">
+      <div className="text-preset-5 text-(--neutral-000) not-dark:text-(--neutral-900) flex items-center gap-2">
         <IconBulb size={24} className="inline mb-1" />
         <h3>Smart Recommendations</h3>
       </div>
@@ -125,7 +125,7 @@ const SmartRecommendations = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: idx * 0.1 }}
-            className="flex items-center gap-3 bg-(--neutral-800) not-dark:bg-white drop-shadow-lg rounded-lg p-3"
+            className="flex items-center gap-3 bg-(--neutral-700) drop-shadow-lg rounded-lg p-3 outline-(--neutral-600) outline-1 not-dark:bg-gray-100 not-dark:outline-gray-200"
           >
             <div className={rec.color}>{rec.icon}</div>
             <p className="text-(--neutral-200) not-dark:text-(--neutral-800) text-sm font-medium">

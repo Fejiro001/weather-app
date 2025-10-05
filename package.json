@@ -19,6 +19,7 @@
     "motion": "^12.23.22",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-error-boundary": "^6.0.0",
     "react-router-dom": "^7.9.1",
     "sonner": "^2.0.7",
     "tailwindcss": "^4.1.13",

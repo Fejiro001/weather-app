@@ -4,7 +4,13 @@ import { useClickOutside } from "../../hooks";
 import { Link } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
 import SoundToggle from "./SoundToggle";
-import { IconArrowsUpDown, IconMenu2, IconStar, IconX } from "@tabler/icons-react";
+import {
+  IconArrowsUpDown,
+  IconBulb,
+  IconMenu2,
+  IconStar,
+  IconX,
+} from "@tabler/icons-react";
 
 const menuVariants = {
   hidden: { opacity: 0, y: -20, transition: { when: "afterChildren" } },
@@ -124,6 +130,25 @@ const NavBar = () => {
                   className="group-hover:rotate-12 duration-500 ease-in-out"
                 />
                 <span>Compare Locations</span>
+              </Link>
+            </motion.li>
+
+            {/* INSIGHTS LINK */}
+            <motion.li
+              variants={itemVariants}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Link
+                onClick={() => setIsOpen(false)}
+                className="day_button flex gap-2 w-full group"
+                to="/insights"
+              >
+                <IconBulb
+                  size={18}
+                  className="fill-(--neutral-900) not-dark:fill-white group-hover:fill-white not-dark:group-hover:fill-(--neutral-900) transition-all duration-500"
+                />
+                <span>Insights</span>
               </Link>
             </motion.li>
           </motion.ul>

@@ -82,7 +82,7 @@ const HourlyForecast = () => {
   }, [current, hourlyForecasts, selectedDay, today]);
 
   return (
-    <section className="bg-(--neutral-800) px-4 py-5 rounded-[1.25rem] max-h-[48rem] flex flex-col gap-4 not-dark:bg-white drop-shadow-2xl h-fit">
+    <section className="widget_bg">
       <div className="flex justify-between items-center">
         <h3 className="text-preset-5 text-(--neutral-000) not-dark:text-(--neutral-900)">
           Hourly forecast

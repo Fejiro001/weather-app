@@ -3,8 +3,13 @@ import { motion } from "motion/react";
 import { formatHour } from "../../../utils/formatDateTime";
 import { getScoreColor } from "../../../utils/scoreUtils";
 import { SelectedBarInfo } from ".";
+import { useWeatherAnalysis } from "../../../hooks";
 
-const HourlyTimeline = ({ analysis, tempUnit, selectedBar, setSelectedBar }) => {
+const HourlyTimeline = ({ selectedBar, setSelectedBar }) => {
+  const { analysis, tempUnit } = useWeatherAnalysis();
+  if (!analysis) return null;
+  const { hourlyScores, firstHour, lastHour } = analysis;
+
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
@@ -19,7 +24,7 @@ const HourlyTimeline = ({ analysis, tempUnit, selectedBar, setSelectedBar }) => 
 
       {/* Bars */}
       <div className="flex gap-1 h-20">
-        {analysis.hourlyScores.slice(0, 12).map((h, i) => {
+        {hourlyScores.slice(0, 12).map((h, i) => {
           const heightPercent = (h.score / 100) * 100;
 
           return (
@@ -44,14 +49,14 @@ const HourlyTimeline = ({ analysis, tempUnit, selectedBar, setSelectedBar }) => 
       <SelectedBarInfo
         tempUnit={tempUnit}
         selectedBar={selectedBar}
-        hourlyScores={analysis.hourlyScores}
+        hourlyScores={hourlyScores}
       />
 
       {/* Time Range Indicator */}
       <div className="time_range_indicator">
-        <span>{formatHour(analysis.firstHour)}</span>
+        <span>{formatHour(firstHour)}</span>
         <span className="opacity-60">→</span>
-        <span>{formatHour(analysis.lastHour)}</span>
+        <span>{formatHour(lastHour)}</span>
       </div>
     </div>
   );

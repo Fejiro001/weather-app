@@ -2,13 +2,9 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { IconSun } from "@tabler/icons-react";
 import { HourlyTimeline, OptimalWindow, ScoreLegend } from ".";
-import useWeatherAnalysis from "../../../hooks/useWeatherAnalysis";
 
 const BestTimeWidget = () => {
   const [selectedBar, setSelectedBar] = useState(null);
-  const { analysis, tempUnit } = useWeatherAnalysis();
-
-  if (!analysis) return null;
 
   return (
     <motion.div
@@ -28,11 +24,9 @@ const BestTimeWidget = () => {
         <ScoreLegend />
       </div>
 
-      <OptimalWindow analysis={analysis} units={tempUnit} />
+      <OptimalWindow />
 
       <HourlyTimeline
-        analysis={analysis}
-        units={tempUnit}
         selectedBar={selectedBar}
         setSelectedBar={setSelectedBar}
       />

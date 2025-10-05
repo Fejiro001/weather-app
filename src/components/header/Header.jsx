@@ -9,7 +9,7 @@ import {
   ThemeToggle,
 } from ".";
 import { Logo } from "../basic";
-import { IconArrowsUpDown } from "@tabler/icons-react";
+import { IconArrowsUpDown, IconBulb } from "@tabler/icons-react";
 
 const headerVariants = {
   initial: { y: -50, opacity: 0 },
@@ -42,6 +42,18 @@ const Header = () => {
               >
                 <IconArrowsUpDown className="rotate-12 w-auto h-4 sm:h-5" />
                 <span className="hidden min-[1024px]:block">Compare</span>
+              </motion.div>
+            </Tippy>
+          </Link>
+
+          <Link to="/insights" aria-label="View Insights" className="h-full">
+            <Tippy content="View Insights">
+              <motion.div
+                className="settings_dropdown flex gap-1 text-preset-8 sm:text-preset-7"
+                whileTap={{ scale: 0.95 }}
+              >
+                <IconBulb className="w-auto h-4 sm:h-5" />
+                <span className="hidden min-[1024px]:block">Insights</span>
               </motion.div>
             </Tippy>
           </Link>
