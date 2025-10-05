@@ -71,6 +71,7 @@ const FavoriteDropdown = () => {
           className="settings_dropdown flex gap-1 text-preset-8 sm:text-preset-7"
           whileTap={{ scale: 0.95 }}
           aria-label="Favourite Locations Dropdown"
+          title="Favourite Locations Dropdown"
         >
           <IconStar className="w-auto h-4 sm:h-5 text-amber-500 fill-amber-500" />
           <span className="hidden min-[1024px]:block">Favourites</span>

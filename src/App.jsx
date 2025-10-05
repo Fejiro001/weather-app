@@ -4,6 +4,8 @@ import AppLayout from "./layout/AppLayout";
 import { Toaster } from "sonner";
 import "tippy.js/dist/tippy.css";
 import { PreLoader } from "./components/basic";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const FavouritePage = lazy(() => import("./pages/FavouritePage"));
@@ -28,6 +30,8 @@ function App() {
           </Routes>
         </Router>
       </Suspense>
+      <Analytics />
+      <SpeedInsights />
     </>
   );
 }
