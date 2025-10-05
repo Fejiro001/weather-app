@@ -3,10 +3,26 @@ import { motion } from "motion/react";
 import { useSettings } from "../../hooks";
 import { useState } from "react";
 import { IconVolume, IconVolume3 } from "@tabler/icons-react";
+import soundToggle from "/sounds/sound-toggle.mp3";
+import useSound from "use-sound";
 
 const SoundToggle = () => {
   const { isSoundEnabled, toggleSound } = useSettings();
   const [isWiggling, setIsWiggling] = useState(false);
+
+  const [playSoundOn] = useSound(soundToggle, {
+    volume: 0.5,
+    playbackRate: 1.2,
+    interrupt: true,
+    soundEnabled: true,
+  });
+
+  const [playSoundOff] = useSound(soundToggle, {
+    volume: 0.5,
+    playbackRate: 0.8,
+    interrupt: true,
+    soundEnabled: true,
+  });
 
   const tippyContent = isSoundEnabled ? "Mute Sounds" : "Unmute Sounds";
 
@@ -23,6 +39,12 @@ const SoundToggle = () => {
   };
 
   const handleClick = () => {
+    if (isSoundEnabled) {
+      playSoundOff();
+    } else {
+      playSoundOn();
+    }
+
     setIsWiggling(true);
     toggleSound();
   };

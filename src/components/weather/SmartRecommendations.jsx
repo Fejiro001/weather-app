@@ -112,9 +112,9 @@ const SmartRecommendations = () => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-(--neutral-800)/50 not-dark:bg-white/50 backdrop-blur-sm rounded-xl p-6 drop-shadow-2xl border border-(--neutral-700) not-dark:border-(--neutral-300)"
+      className="w-full bg-(--neutral-800)/50 not-dark:bg-white/50 backdrop-blur-sm rounded-xl p-6 drop-shadow-2xl border border-(--neutral-700) not-dark:border-(--neutral-300)"
     >
-      <div className="text-white not-dark:text-(--neutral-900) font-bold mb-4 text-preset-5 flex items-center gap-2">
+      <div className="text-preset-5 text-(--neutral-000) not-dark:text-(--neutral-900) mb-4 flex items-center gap-2">
         <IconBulb size={24} className="inline mb-1" />
         <h3>Smart Recommendations</h3>
       </div>

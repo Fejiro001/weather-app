@@ -3,7 +3,7 @@ import { Loader } from "./Icons";
 import { useClickOutside, useGeolocation, useVoiceSearch } from "../../hooks";
 import woosh from "/sounds/woosh.mp3";
 import useSound from "use-sound";
-import { IconCurrentLocation } from "@tabler/icons-react";
+import { IconCurrentLocation, IconSearch } from "@tabler/icons-react";
 import Tippy from "@tippyjs/react";
 import useWeatherStore from "../../store/weatherStore";
 import { VoiceSearchButton } from ".";
@@ -82,7 +82,11 @@ const SearchBar = ({
         onSubmit={(e) => handleLocationSearch(e)}
         className="flex flex-col md:flex-row gap-y-3 gap-x-4 max-w-3xl w-full justify-center"
       >
-        <div ref={searchBarRef} className="relative w-full max-w-3xl">
+        <div
+          ref={searchBarRef}
+          className="relative w-full max-w-3xl flex items-center"
+        >
+          <IconSearch className="absolute left-5 z-10 text-(--neutral-200) not-dark:text-(--neutral-700)" />
           <input
             id="search"
             name="search"
