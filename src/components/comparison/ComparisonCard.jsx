@@ -1,21 +1,12 @@
 import { motion } from "motion/react";
+import { IconX } from "@tabler/icons-react";
 import {
-  IconDropletHalf2Filled,
-  IconEye,
-  IconGauge,
-  IconSun,
-  IconTemperature,
-  IconWind,
-  IconX,
-} from "@tabler/icons-react";
-import { roundUp } from "../../utils/helperUtils";
-import {
-  getUvLevel,
   getWeatherDescription,
   getWeatherIcon,
 } from "../../constants/weatherConstants";
 import useWeatherStore from "../../store/weatherStore";
 import { MetricCard } from ".";
+import { useMetrics } from "../../hooks";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -39,6 +30,8 @@ const ComparisonCard = ({ location }) => {
   const removeCompareLocation = useWeatherStore(
     (state) => state.removeCompareLocation
   );
+  const { metricsData, currentTemp, apparentTemp, tempUnit, weatherCode } =
+    useMetrics(location);
 
   return (
     <motion.div
@@ -69,14 +62,14 @@ const ComparisonCard = ({ location }) => {
                 <img
                   className="h-auto w-20"
                   src={`/assets/images/weather/icon-${getWeatherIcon(
-                    location.current.weather_code
+                    weatherCode
                   )}.webp`}
                   alt="Weather icon"
                 />
               </motion.div>
 
               <p className="text-(--neutral-300) not-dark:text-(--neutral-600) text-sm">
-                {getWeatherDescription(location.current.weather_code)}
+                {getWeatherDescription(weatherCode)}
               </p>
             </div>
           </div>
@@ -95,46 +88,24 @@ const ComparisonCard = ({ location }) => {
         <div className="mb-6">
           <div className="flex items-baseline gap-2">
             <span className="text-6xl font-bold text-white not-dark:text-(--neutral-900)">
-              {Math.round(location.current.temperature_2m)}°
+              {currentTemp}°{tempUnit}
             </span>
             <span className="text-(--neutral-300) not-dark:text-(--neutral-600) text-lg">
-              Feels like {Math.round(location.current.apparent_temperature)}°
+              Feels like {apparentTemp}°{tempUnit}
             </span>
           </div>
         </div>
 
         {/* Weather Metrics Grid */}
         <div className="grid grid-cols-2 gap-3">
-          <MetricCard
-            icon={<IconDropletHalf2Filled size={18} />}
-            label="Humidity"
-            value={`${roundUp(location.current.relative_humidity_2m)}%`}
-          />
-          <MetricCard
-            icon={<IconWind size={18} />}
-            label="Wind"
-            value={`${roundUp(location.current.wind_speed_10m)} km/h`}
-          />
-          <MetricCard
-            icon={<IconEye size={18} />}
-            label="Visibility"
-            value={`${(location.current.visibility / 1000).toFixed(1)} km`}
-          />
-          <MetricCard
-            icon={<IconGauge size={18} />}
-            label="Pressure"
-            value={`${roundUp(location.current.surface_pressure)} hPa`}
-          />
-          <MetricCard
-            icon={<IconSun size={18} />}
-            label="UV Index"
-            value={getUvLevel(location.current.uv_index)}
-          />
-          <MetricCard
-            icon={<IconTemperature size={18} />}
-            label="Precipitation"
-            value={`${location.current.precipitation.toFixed(1)} mm`}
-          />
+          {metricsData.map((metric) => (
+            <MetricCard
+              key={metric.key}
+              icon={metric.icon}
+              label={metric.label}
+              value={metric.value}
+            />
+          ))}
         </div>
       </div>
     </motion.div>

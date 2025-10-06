@@ -2,6 +2,7 @@ import useClickOutside from "./useClickOutside";
 import useDebounce from "./useDebounce";
 import useGeolocation from "./useGeolocation";
 import useLocations from "./useLocations";
+import useMetrics from "./useMetrics";
 import useSettings from "./useSettings";
 import useSmartRecommendations from "./useSmartRecommendations";
 import useTheme from "./useTheme";
@@ -15,6 +16,7 @@ export {
   useDebounce,
   useGeolocation,
   useLocations,
+  useMetrics,
   useSettings,
   useSmartRecommendations,
   useTheme,
