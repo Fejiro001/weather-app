@@ -1,7 +1,8 @@
+import { Link } from "react-router-dom";
+import { motion } from "motion/react";
 import useWeatherStore from "../store/weatherStore";
 import { BackButton } from "../components/basic";
-import { IconTrash } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
+import { IconStar, IconTrash } from "@tabler/icons-react";
 
 const FavouritePage = () => {
   const favoriteLocations =
@@ -21,14 +22,39 @@ const FavouritePage = () => {
   };
 
   return (
-    <section className="space-y-8 xl:space-y-12">
-      <BackButton>Manage Favorites</BackButton>
+    <motion.section
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="space-y-8 xl:space-y-12"
+    >
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <BackButton>Manage Favorites</BackButton>
+      </motion.div>
 
       <div className="space-y-4 text-white not-dark:text-(--neutral-900)">
         {favoriteLocations.length === 0 ? (
-          <div className="no_locations">
-            <p>You haven&apos;t saved any locations yet.</p>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="no_locations"
+          >
+            <div className="flex flex-col items-center gap-4">
+              <div className="bg-(--neutral-700) not-dark:bg-(--neutral-200) p-4 rounded-full">
+                <IconStar size={48} aria-hidden="true" />
+              </div>
+              <p className="text-lg">
+                You haven&apos;t saved any locations yet.
+              </p>
+              <p className="text-sm">
+                Save locations by clicking the star icon on the main page
+              </p>
+            </div>
+          </motion.div>
         ) : (
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {favoriteLocations.map((location) => {
@@ -93,7 +119,7 @@ const FavouritePage = () => {
           </ul>
         )}
       </div>
-    </section>
+    </motion.section>
   );
 };
 
