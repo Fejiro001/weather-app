@@ -15,6 +15,16 @@ import useWeatherStore from "../store/weatherStore";
 import { formatTime, roundUp } from "../utils/helperUtils";
 import { getUvLevel } from "../constants/weatherConstants";
 
+/**
+ * Builds a memoized list of display-ready weather details from the weather store.
+ * Combines current metrics, daily times, and units into items with label, value, unit, and icon,
+ * then splits them into essentials (first four) and extras (remaining).
+ *
+ * @returns {Object} The computed weather details.
+ * @returns {Array} detailsData: All computed detail items
+ * @returns {Array} essentials: first four core items
+ * @returns {Array} extras: remaining items.
+ */
 const useWeatherDetails = () => {
   const { current } = useWeatherStore((state) => state.weatherData) || {};
   const { daily } = useWeatherStore((state) => state.weatherData) || {};

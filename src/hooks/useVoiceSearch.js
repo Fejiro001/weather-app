@@ -7,9 +7,20 @@ const SpeechRecognition =
 const recognitionSupported = !!SpeechRecognition;
 
 /**
+ * Provides one-shot voice input using the Web Speech API.
  *
+ * It initializes SpeechRecognition (if supported), listens in the user's locale,
+ * emits only final results (no interim) with a single best alternative, and keeps
+ * isListening and speechText in sync with recognition lifecycle events. On errors,
+ * it logs, notifies via notifyError, and clears the captured text. The recognition
+ * instance is stopped on unmount.
  *
- * @return {*} 
+ * @returns {Boolean} isListening: boolean indicating if recognition is active
+ * @returns {String} speechText: the captured speech text
+ * @returns {Function} startListening: function to start recognition
+ * @returns {Function} stopListening: function to stop recognition
+ * @returns {Function} clearSpeechText: function to clear the captured text
+ * @returns {Boolean} supported: boolean indicating if SpeechRecognition is supported
  */
 const useVoiceSearch = () => {
   const [isListening, setIsListening] = useState(false);

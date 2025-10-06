@@ -8,6 +8,16 @@ import {
 import useWeatherStore from "../store/weatherStore";
 import { useMemo } from "react";
 
+/**
+ * Generates UI-ready weather recommendations from the app's weather store.
+ * Applies metric/imperial thresholds and uses memoization to compute clothing, umbrella,
+ * sunscreen, hydration, and activity suggestions from apparent temperature, precipitation,
+ * UV index, humidity, and wind.
+ *
+ * Returns an empty array when current weather or apparent temperature is unavailable.
+ *
+ * @returns {Array<{icon: JSX.Element, text: string, color: string}>} Memoized list of recommendation objects to render.
+ */
 const useSmartRecommendations = () => {
   const weatherData = useWeatherStore((state) => state.weatherData);
   const units = useWeatherStore((state) => state.units);
@@ -29,7 +39,7 @@ const useSmartRecommendations = () => {
       relative_humidity_2m,
       wind_speed_10m,
     } = weatherData.current;
-    
+
     const recommendations = [];
 
     // Thresholds

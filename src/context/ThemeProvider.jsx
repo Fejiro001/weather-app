@@ -4,6 +4,25 @@ import useWeatherStore from "../store/weatherStore";
 
 const THEME_KEY = "theme";
 
+/**
+ * Provides theme state and controls to descendants using ThemeContext.
+ *
+ * Persists the user’s theme preference in localStorage (THEME_KEY), observes system
+ * color-scheme via matchMedia, and optionally derives night mode from useWeatherStore.
+ * Applies/removes the "dark" class on the document root based on the resolved theme.
+ *
+ * Resolution order for dark mode:
+ * 1) userPreference: "dark" => true, "light" => false, "auto" => continue
+ * 2) If weather data exists, use isNightTime
+ * 3) Fallback to systemPreference
+ *
+ * Exposes: isDark, toggleTheme (cycles light -> auto -> dark), isNightTime,
+ * userPreference, setUserPreference.
+ *
+ * @param {Object} props
+ * @param {React.ReactNode} props.children - Elements to render within the provider.
+ * @returns {JSX.Element}
+ */
 const ThemeProvider = ({ children }) => {
   const [userPreference, setUserPreference] = useState(() => {
     return localStorage.getItem(THEME_KEY) || "auto";

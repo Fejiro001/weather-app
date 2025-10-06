@@ -3,6 +3,25 @@ import useWeatherStore from "../store/weatherStore";
 import { getWeatherDescription } from "../constants/weatherConstants";
 import { formatHour } from "../utils/formatDateTime";
 
+/**
+ * Analyzes hourly weather data to recommend today's best 2-hour window.
+ * Pulls units and weatherData from the store, adjusts for UTC offset, filters remaining hours today,
+ * scores each hour (0–100) with temperature penalties (±3 per degree from ideal midpoint),
+ * precipitation penalties (−20 per unit), and clear-sky bonus (+10), then selects the highest average
+ * consecutive 2-hour block. Formats the time range and maps the leading hour's weather code to a description.
+ *
+ * Recomputes when units or weatherData change.
+ *
+ * @returns {Object} analysis - Object containing:
+ *   - bestTime: Recommended 2-hour window (e.g., "2 PM - 4 PM")
+ *   - score: Average score of the recommended window
+ *   - avgTemp: Average temperature during the window
+ *   - condition: Weather description for the starting hour
+ *   - hourlyScores: Array of all today's hours with their scores
+ *   - firstHour: First hour in today's data
+ *   - lastHour: Last hour in today's data
+ *   @returns {string} tempUnit: Temperature unit string (°C or °F)
+ */
 const useWeatherAnalysis = () => {
   const units = useWeatherStore((state) => state.units);
   const weatherData = useWeatherStore((state) => state.weatherData);
@@ -14,7 +33,7 @@ const useWeatherAnalysis = () => {
 
     const offsetSeconds = weatherData.utc_offset_seconds;
     const nowInLocation = new Date(Date.now() + offsetSeconds * 1000);
-    
+
     const todayHours = weatherData.hourly.time
       .map((time, i) => {
         const date = new Date(time);
@@ -92,7 +111,7 @@ const useWeatherAnalysis = () => {
     };
   }, [isMetric, weatherData]);
 
-  return {analysis, tempUnit};
+  return { analysis, tempUnit };
 };
 
 export default useWeatherAnalysis;

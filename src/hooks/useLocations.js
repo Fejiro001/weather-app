@@ -2,6 +2,16 @@ import { useState } from "react";
 import axios from "axios";
 import { notifyError } from "../components/basic/toast";
 
+/**
+ * Fetches geocoded locations by name.
+ *
+ * Performs a GET request to the Open‑Meteo geocoding API, manages loading state,
+ * stores results, and surfaces errors via notifyError. Calls with a falsy value are ignored.
+ *
+ * @returns {Boolean} fetchingLocations: boolean indicating an ongoing fetch request.
+ * @returns {Array} locations: array of result objects from the API.
+ * @returns {Function} getLocations: async function to search by non‑empty name.
+ */
 const useLocations = () => {
   const [fetchingLocations, setFetchingLocations] = useState(false);
   const [locations, setLocations] = useState([]);

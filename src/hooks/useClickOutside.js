@@ -1,5 +1,14 @@
 import { useCallback, useEffect } from "react";
 
+/**
+ * Closes an open UI when clicking outside a referenced element.
+ *
+ * Adds a 'mousedown' listener to detect outside clicks and cleans it up on unmount.
+ *
+ * @param ref - Ref of the element to monitor for outside clicks.
+ * @param setIsOpen - Setter controlling the open/closed state.
+ * @returns {Function} toggleDropdown - handler to toggle the open state.
+ */
 const useClickOutside = (ref, setIsOpen) => {
   const hideDropdown = useCallback(() => {
     setIsOpen(false);

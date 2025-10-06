@@ -1,6 +1,14 @@
 import { useCallback, useMemo, useState } from "react";
 import useWeatherStore from "../store/weatherStore";
 
+/**
+ * Derives user-facing weather alerts from current conditions and unit preferences in useWeatherStore.
+ * Produces unit-aware warnings for extreme heat, freezing, heavy rain, strong wind, high UV, and poor visibility,
+ * and omits any alerts the user has dismissed. Recomputes when weather data or temperature unit changes.
+ *
+ * @returns {Array} activeAlerts: array of active alert objects; 
+ * @returns {Function} dismissAlert: function to mark an alert id as dismissed.
+ */
 const useWeatherAlerts = () => {
   const weatherData = useWeatherStore((state) => state.weatherData);
   const units = useWeatherStore((state) => state.units);
