@@ -1,6 +1,6 @@
 # Frontend Mentor - Weather app solution
 
-This is a solution to the [Weather app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/weather-app-K1FhddVm49). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
+This is a solution to the [Weather app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/weather-app-K1FhddVm49). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
 ## Table of contents
 
@@ -28,86 +28,234 @@ Users should be able to:
 - Browse a 7-day weather forecast with daily high/low temperatures and weather icons
 - View an hourly forecast showing temperature changes throughout the day
 - Switch between different days of the week using the day selector in the hourly forecast section
-- Toggle between Imperial and Metric measurement units via the units dropdown 
+- Toggle between Imperial and Metric measurement units via the units dropdown
 - Switch between specific temperature units (Celsius and Fahrenheit) and measurement units for wind speed (km/h and mph) and precipitation (millimeters) via the units dropdown
 - View the optimal layout for the interface depending on their device's screen size
 - See hover and focus states for all interactive elements on the page
+- Search for weather information by entering a location or using voice input
+- Receive real-time weather alerts for extreme conditions
+- Get smart recommendations for clothing and outdoor activities
+- View optimal outdoor time windows with weather scoring
+- Compare weather across up to 3 locations simultaneously
+- Save favorite locations with audio feedback
+- Search for weather information by entering a location in the search bar
+- View current weather conditions including temperature, weather icon, and location details
 
 ### Screenshot
 
-![](./screenshot.jpg)
+![Weather Now Homepage](./application-screenshot.png)
 
 ### Links
 
-- Solution URL: [Frontend Mentor](https://www.frontendmentor.io/solutions/weather-app-using-react-and-tailwind-css-3-0-8f8e1c5e1e)
+- Solution URL: [Frontend Mentor]()
 - Live Site URL: [Weather Now](https://weather-app-pearl-seven-35.vercel.app/)
 
 ## My process
 
 ### Built with
 
+**Core Technologies**
+
 - Semantic HTML5 markup
-- Tailwind CSS - Utility-first CSS framework (for styling)
+- Tailwind CSS 4.0 - Utility-first CSS framework
 - Mobile-first workflow
-- React - JavaScript library
-- Zustand - Minimal state management library (for weather data, favorites, and unit toggling)
-- Framer Motion - Animation library (for smooth transitions and animations)
-- use-sound - For audio feedback on interactions (for button clicks and other interactions)
-- Sonner - For aesthetically pleasing toast notifications
-- Lucide React and Tabler Icons - for weather and UI icons
-- Vite - For bundling and development server
-- PWA - To enable offline capabilities and improve performance
+- React 18 - JavaScript library
+- Vite - Fast build tool and development server
+
+**State & Data Management**
+
+- Zustand - Minimal state management library
+- Open-Meteo API - Weather data source
+- Geolocation API - Location detection
+- Web Speech API - Voice search capability
+
+**UX Enhancement**
+
+- Framer Motion - Animation library for smooth transitions
+- use-sound - Audio feedback on interactions
+- Sonner - Toast notifications
+- @tabler/icons-react - Comprehensive icon library
+
+**Progressive Web App**
+
+- Service Workers - Offline capability
+- Web App Manifest - Installability
+- Cache API - Performance optimization
 
 ### Advanced Features and State Management
-This solution focuses heavily on providing a seamless, feature-rich user experience, utilizing a single source of truth for all weather data and application settings.
 
-- **Global State Management (Zustand)**: All weather data, location information, and user favorites are managed globally. This prevents prop-drilling and ensures components like the main weather info and the favorites list are always synchronized.
+This solution goes beyond basic weather display to provide actionable insights and a premium user experience.
 
-- **Favorites Functionality**: Users can save and remove favorite locations. State logic handles checking if the current location is already saved (isSaved) and triggers a sound and a toast notification upon success/removal.
+**Smart Weather Intelligence**
 
-- **Compare Locations Functionality**: Users can seamlessly compare up tot 3 locations, viewing key metrics of compare locations. With the ability to compare their current location.
+- **Real-time Alerts System**: Automatic warnings for extreme heat (>35°C/95°F), freezing temperatures, heavy rain (>5mm), strong winds (>40km/h), high UV index (>7), and poor visibility (<1km). All thresholds adapt to your selected unit system.
 
-- **Skeleton Loading States**: Sophisticated conditional rendering logic ensures that skeleton loaders are displayed not just when data is fetching (isFetching), but also on initial app load when no location has been selected (!isDataAvailable), providing a continuous and professional user experience.
+- **Intelligent Recommendations Engine**: Context-aware suggestions including clothing advice based on temperature ranges, umbrella reminders when precipitation probability exceeds 30%, sunscreen alerts for UV index above 5, hydration reminders in hot/humid conditions, and activity suitability scoring.
 
-- **In-View List Animations**: Hourly forecast cards utilize a combination of Framer Motion's list variants and useInView to animate individual list items only as they scroll into the viewport, improving perceived performance and user delight.
+- **Best Time Outside Widget**: A dedicated insights page featuring a custom weather scoring algorithm that analyzes temperature deviation from ideal range (18-24°C/64-75°F), precipitation impact, wind conditions, and sky clarity. Presents an interactive 12-hour timeline with color-coded quality indicators and keyboard-accessible bar chart showing optimal outdoor windows.
 
-- **PWA**: The app is configured as a Progressive Web App, allowing for offline access and improved performance on repeat visits.
+- **Location Comparison**: Compare up to 3 locations side-by-side with individual weather scores, sortable by temperature or overall weather quality, exportable data as JSON, and shareable via native Web Share API or clipboard fallback.
 
-- **Audio Feedback**: The use-sound library is integrated to provide audio feedback for user interactions, enhancing the overall user experience.
+**Technical Architecture**
 
-- **Voice Search**: Users can search for locations using voice input, enhancing accessibility and user convenience.
+- **Global State Management (Zustand)**: Single source of truth for weather data, location information, user preferences, and favorites. Prevents prop-drilling and ensures synchronization across all components. State persists to localStorage with automatic unit conversion handling.
+
+- **Favorites System**: Save frequently checked locations with isSaved logic, audio feedback via use-sound on save/remove actions, and toast notifications confirming actions.
+
+- **Voice Search Integration**: Hands-free location search using Web Speech API with visual feedback during listening and automatic form submission on voice input completion.
+
+- **Professional Loading States**: Skeleton loaders displayed during data fetching and on initial load when no location selected, providing continuous professional experience throughout the app lifecycle.
+
+- **Scroll-triggered Animations**: Hourly forecast cards use Framer Motion's useInView hook to animate only when entering viewport, improving perceived performance and reducing unnecessary renders.
+
+- **Progressive Web App**: Installable on mobile and desktop with offline access, optimized caching strategy, and fast repeat visits.
+
+- **Accessibility First**: Full keyboard navigation (Tab, Enter, Space, Arrow keys), comprehensive ARIA labels announcing weather conditions and scores, focus management with visible indicators, and semantic HTML structure throughout.
 
 ### What I learned
 
-This project was a great opportunity to practice and enhance my skills in several areas:
+This project significantly expanded my technical capabilities across multiple domains:
 
-- **State Management with Zustand**: I learned how to effectively use Zustand for global state management in a React application. This included setting up stores, managing state updates, and ensuring components re-render correctly based on state changes.
+**State Management Mastery**
+I implemented complex state logic with Zustand including automatic unit conversion across the entire application, localStorage persistence with state rehydration, optimistic UI updates for immediate feedback, and state synchronization across multiple components without prop drilling. The challenge of managing favorites, comparison locations, and weather data in a single store taught me effective state normalization strategies.
 
-- **Animations with Framer Motion**: I gained experience in implementing animations using Framer Motion. I explored various animation techniques to create a more engaging user experience.
+**Custom Algorithm Development**
+Creating the weather scoring system required translating subjective weather quality into objective metrics. The algorithm considers temperature deviation from ideal range (18-24°C) with 3-point penalties per degree, precipitation impact with 20-point penalties per mm, wind speed thresholds, and weather condition bonuses for clear skies. This taught me how to balance multiple factors to create meaningful scores that genuinely help users plan their day.
 
-- **Responsive Design**: I improved my skills in creating responsive layouts that adapt seamlessly to different screen sizes, ensuring a consistent user experience across devices.
+**Advanced Accessibility Implementation**
+Building truly accessible components from scratch taught me practical WCAG compliance. I implemented keyboard navigation patterns (Arrow keys for timeline bar navigation), ARIA labels that announce complete context ("10 AM, 22 degrees, score 85 out of 100, Excellent conditions"), focus management strategies to guide user attention, and semantic HTML with proper button elements instead of clickable divs. Testing with screen readers revealed the importance of aria-pressed states and descriptive labels.
 
-- **API Integration**: I enhanced my ability to work with third-party APIs to fetch and display dynamic weather data, handling asynchronous operations, managing loading states effectively, and integrating geolocation and web speech capabilities.
+**Framer Motion Animation Orchestration**
+I learned to create sophisticated animation sequences including staggered list animations with useInView for performance, exit animations that slide elements out smoothly rather than collapsing height, layout animations for smooth reordering during sorting, and gesture animations with whileHover and whileTap for tactile feedback. The key insight was balancing visual appeal with performance by animating transforms instead of layout properties.
 
-- **Audio Feedback**: I integrated sound effects into the application using the use-sound library, adding an extra layer of interactivity and feedback for users.
+**API Integration Patterns**
+Working with Open-Meteo API taught me robust data fetching strategies including error boundary implementation for graceful failures, loading state management with skeleton loaders, retry logic for failed requests, and timezone handling for accurate local time display. Integrating Geolocation and Web Speech APIs expanded my understanding of browser permission handling and user privacy considerations.
 
-Here's a sample of a code snippet I am proud of:
+**Responsive Design Patterns**
+Implementing mobile-first design revealed the importance of touch targets (minimum 44px), preventing hover tooltips on touch devices (using click/tap instead), breakpoint strategies for 3-column comparison grid collapsing to 1 column, and font size scaling for readability across devices.
+
+I am really proud of the Zustand store I built for this project. Here is an excerpt of the store implementation:
 
 ```js
+const useWeatherStore = create()(
+  persist(
+    (set, get) => ({
+      weatherData: null,
+      isFetching: false,
+      isAddingLocation: false,
+      isError: false,
+      location: null,
+      currentLocation: null,
+      favoriteLocations: [],
+      compareLocations: [],
+      units: {
+        temperature_unit: "celsius",
+        wind_speed_unit: "kmh",
+        precipitation_unit: "mm",
+      },
+      setUnits: (newUnits) => set({ units: newUnits, weatherData: null }),
 
+      fetchWeather: async () => {
+        const state = get();
+        if (!state.location) {
+          return;
+        }
+
+        set({ isFetching: true, isError: false });
+        try {
+          const params = {
+            latitude: state.location.latitude,
+            longitude: state.location.longitude,
+            daily:
+              "weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_probability_max",
+            hourly:
+              "weather_code,temperature_2m,precipitation,apparent_temperature",
+            current:
+              "temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,precipitation,wind_speed_10m,uv_index,visibility,surface_pressure,cloud_cover,is_day",
+            timezone: state.location.timezone,
+            ...state.units,
+          };
+
+          const response = await axios.get(
+            `https://api.open-meteo.com/v1/forecast`,
+            { params }
+          );
+          set({
+            weatherData: response.data,
+            isFetching: false,
+            isError: false,
+          });
+        } catch (error) {
+          set({ isFetching: false, isError: true });
+          notifyError(
+            error.response?.data?.message ||
+              error.message ||
+              "Failed to fetch weather data. Please try again."
+          );
+        }
+      },
+      // ... rest of implementation
+    }
+  ),
+  {
+    name: "weather-storage",
+    storage: createJSONStorage(() => localStorage),
+  }
+);
+
+export default useWeatherStore;
+```
+
+Also the scoring algorithm I built for the "Best Time Outside" feature was quite challenging but rewarding to implement. Here is an excerpt of that logic:
+
+```js
+const scoredHours = todayHours.map((h) => {
+  let score = 100;
+  // Temps in ideal range (18-24°C or 64.4-75.2°F)
+  const IDEAL_TEMP_1 = isMetric ? 18 : 64.4;
+  const IDEAL_TEMP_2 = isMetric ? 24 : 75.2;
+  const IDEAL_TEMP_MID = isMetric ? 21 : 70;
+
+  // Ideal Temperature (18-24°C), 3 points penalty for every degree outside the  ideal midpoint
+  if (h.temp < IDEAL_TEMP_1 || h.temp > IDEAL_TEMP_2) {
+    score -= Math.abs(h.temp - IDEAL_TEMP_MID) * 3;
+  }
+
+  // Precipitation(rainfall), 20 points penalty for every unit
+  score -= h.precipitation * 20;
+
+  // Clear sky bonus, 10 points bonus
+  if (h.weatherCode === 0 || h.weatherCode === 1) {
+    score += 10;
+  }
+
+  return { ...h, score: Math.max(0, score) };
+});
 ```
 
 ### Continued development
 
-There are several areas I want to continue developing my skills in:
+**Immediate Next Steps**
 
-- **State Management**: While I successfully implemented global state management using Zustand, I want to explore more complex state management patterns and libraries like Redux or MobX to see how they compare in larger applications.
+- Weather history tracking showing 7-day temperature trends and pattern recognition
+- Activity-specific recommendations (running, hiking, photography) based on weather suitability
+- Customizable alert thresholds allowing users to set personal comfort ranges
+- Weather radar visualization with precipitation overlay
 
-- **Performance Optimization**: I want to delve deeper into more performance optimization techniques, especially for React applications, apart from lazy loading, and memoization strategies, which are already being implemented.
+**Technical Improvements**
 
-- **Testing**: I plan to enhance my skills in writing unit and integration tests for React components using libraries like Jest (Vitest) and React Testing Library to ensure robustness and reliability of my applications.
+- Unit testing with Vitest covering critical business logic (scoring algorithm, unit conversions)
+- E2E testing with Playwright simulating complete user journeys
+- Performance monitoring with Web Vitals tracking Core Web Vitals metrics
+- Enhanced error boundaries with error reporting and recovery suggestions
+- Service Worker optimization for smarter caching strategies
 
-- **Accessibility**: I aim to improve my understanding of web accessibility standards and best practices to ensure that my applications are usable by all users, including those with disabilities.
+**Learning Goals**
+While I successfully implemented global state management using Zustand, I want to explore more complex state management patterns in larger applications to understand tradeoffs between different approaches.
+
+I plan to enhance my skills in writing comprehensive test suites to ensure robustness and reliability. I aim to deepen my understanding of web accessibility standards beyond WCAG 2.1 AA compliance, exploring ARIA patterns for complex widgets.
+
+Additionally, I want to study advanced performance optimization techniques including code splitting strategies, bundle size analysis, and rendering optimization beyond memoization.
 
 ### Useful resources
 
@@ -117,13 +265,18 @@ There are several areas I want to continue developing my skills in:
 
 - [use-sound](https://www.npmjs.com/package/use-sound) - Node package to integrate sounds into React applications, enhancing user interaction feedback.
 
+- [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/) - Essential reference for accessibility compliance. The keyboard navigation and ARIA patterns sections guided the implementation of accessible components.
+
+- [Web.dev PWA Guide](https://web.dev/progressive-web-apps/) - Comprehensive Progressive Web App implementation guide. The caching strategies and service worker patterns were particularly helpful.
 
 ## Author
 
-- Website - [Abere Oghenefejiro](https://www.your-site.com)
 - Frontend Mentor - [@Fejiro001](https://www.frontendmentor.io/profile/Fejiro001)
 - Twitter - [@aberefejiro](https://www.twitter.com/aberefejiro)
+- GitHub - [@Fejiro001](https://www.github.com/Fejiro001)
 
 ## Acknowledgments
 
-- [Josh Comeau](https://www.joshwcomeau.com/) - for the inspiration to integrate sound effects into this project after checking out his website and reading his [use-sound](https://www.joshwcomeau.com/react/announcing-use-sound-react-hook/) blog post.
+- [Josh Comeau](https://www.joshwcomeau.com/) - For inspiring the integration of sound effects into this project through his website's delightful audio feedback and his insightful [use-sound](https://www.joshwcomeau.com/react/announcing-use-sound-react-hook/) demonstrating how sound enhances user experience.
+- [Frontend Mentor](https://www.frontendmentor.io/) - For providing professionally designed challenges that push beyond basic tutorials into real-world application development.
+- [Open-Meteo](https://open-meteo.com/) - For offering a free, high-quality weather API without requiring authentication, making weather data accessible to developers worldwide.

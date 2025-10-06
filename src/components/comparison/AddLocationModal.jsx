@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { useLocations, useVoiceSearch } from "../../hooks";
 import useWeatherStore from "../../store/weatherStore";
-import { IconLoader2, IconX } from "@tabler/icons-react";
+import { IconLoader2, IconSearch, IconX } from "@tabler/icons-react";
 import { VoiceSearchButton } from "../basic";
 import { useCallback, useEffect, useState } from "react";
 
@@ -78,9 +78,14 @@ const AddLocationModal = ({ setShowModal }) => {
           onSubmit={(e) => handleSearch(e)}
           className="flex flex-col md:flex-row gap-y-3 gap-x-4 max-w-3xl w-full justify-center"
         >
-          <div className="relative w-full">
+          <div className="relative w-full flex items-center">
+            <IconSearch className="absolute left-5 z-10 text-(--neutral-200) not-dark:text-(--neutral-700)" />
             <input
+              id="search"
+              name="search"
+              type="text"
               className="searchBar"
+              autoCorrect="off"
               placeholder="Enter any location..."
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}

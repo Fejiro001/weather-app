@@ -7,6 +7,27 @@ import {
   notifySuccess,
 } from "../components/basic/toast";
 
+/**
+ * A persisted Zustand store hook for managing weather data and user-selected locations.
+ * State:
+ * - weatherData, isFetching, isAddingLocation, isError
+ * - location, currentLocation, favoriteLocations, compareLocations
+ * - units: { temperature_unit, wind_speed_unit, precipitation_unit }
+ * 
+ * Actions:
+ * - setUnits(newUnits)
+ * - fetchWeather()
+ * - fetchGeolocationWeather(position)
+ * - addFavoriteLocation(location), removeFavoriteLocation(locationToRemove)
+ * - clearWeatherData(), setLocation(location), setCurrentLocation(currentLocation)
+ * - addCompareLocation(location), removeCompareLocation(locationToRemove)
+ *
+ * Persistence: localStorage ("weather-locations") via persist/createJSONStorage; selected fields are saved.
+ * External services: Open‑Meteo forecast API and OSM Nominatim reverse geocoding (via axios).
+ * Notifications: uses notifySuccess/notifyInfo/notifyError for user feedback.
+
+@returns {Function} Zustand hook to read and mutate the weather store (useWeatherStore).
+*/
 const useWeatherStore = create()(
   persist(
     (set, get) => ({

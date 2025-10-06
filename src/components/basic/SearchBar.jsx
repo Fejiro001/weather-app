@@ -90,6 +90,8 @@ const SearchBar = ({
           <input
             id="search"
             name="search"
+            type="text"
+            autoCorrect="off"
             value={inputValue}
             onChange={(e) => {
               setInputValue(e.target.value);
