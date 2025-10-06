@@ -20,7 +20,7 @@ const PreLoader = () => {
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            className="w-full h-full text-(--orange-500)"
+            className="w-full h-full text-(--orange-500) dark:text-white"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
