@@ -194,13 +194,19 @@ const useWeatherStore = create()(
         if (!exists) {
           set({ isAddingLocation: true });
           try {
+            const metricUnits = {
+              temperature_unit: "celsius",
+              wind_speed_unit: "kmh",
+              precipitation_unit: "mm",
+            };
+
             const params = {
               latitude: location.latitude,
               longitude: location.longitude,
               current:
                 "temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,precipitation,wind_speed_10m,uv_index,visibility,surface_pressure,is_day",
               timezone: location.timezone,
-              ...get().units,
+              ...metricUnits,
             };
 
             const response = await axios.get(
