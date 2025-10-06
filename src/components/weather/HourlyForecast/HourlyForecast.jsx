@@ -135,6 +135,7 @@ const HourlyForecast = () => {
                     hourData
                       ? new Date(hourData.time).toLocaleTimeString([], {
                           hour: "numeric",
+                          hour12: true,
                         })
                       : ""
                   }

@@ -22,8 +22,8 @@ const DailyForecastCard = ({ day, icon, min_temp, max_temp, isFetching }) => {
             />
           )}
           <div className="temp_range">
-            <span>{min_temp}</span>
-            <span>{max_temp}</span>
+            <span aria-label={`Minimum temperature for ${day}`}>{min_temp}</span>
+            <span aria-label={`Maximum temperature for ${day}`}>{max_temp}</span>
           </div>
         </>
       )}
