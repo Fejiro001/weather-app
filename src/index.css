@@ -292,7 +292,7 @@ input:-webkit-autofill:active {
 
 @layer components {
   .layout {
-    @apply flex flex-col items-center gap-12 xl:gap-16 p-4 md:p-6 xl:px-28 theme-day dark:theme-night min-h-screen text-white bg-(--neutral-900) not-dark:bg-(--blue-200);
+    @apply flex flex-col items-center gap-6 md:gap-12 xl:gap-16 p-4 md:p-6 xl:px-28 theme-day dark:theme-night min-h-screen text-white bg-(--neutral-900) not-dark:bg-(--blue-200);
   }
   .main {
     @apply w-full max-w-7xl pt-5 lg:pt-0;
@@ -427,10 +427,10 @@ input:-webkit-autofill:active {
 
   /* COMPARE LOCATION PAGE */
   .comparison_btn {
-    @apply bg-(--blue-500) hover:bg-(--blue-700) text-white px-4 py-2.5 rounded-lg flex items-center gap-2 transition-colors font-medium shadow-lg shadow-blue-600/20 text-preset-6 md:text-preset-5;
+    @apply bg-(--blue-500) hover:bg-(--blue-700) text-white px-3 py-2.5 rounded-lg flex items-center gap-2 transition-colors font-medium shadow-lg shadow-blue-600/20 text-preset-7 md:text-preset-6;
   }
   .current_location_btn {
-    @apply bg-(--neutral-600) hover:bg-(--neutral-800) text-white px-4 py-2.5 rounded-lg flex items-center gap-2 transition-colors font-medium;
+    @apply text-preset-7 md:text-preset-6 bg-(--neutral-600) hover:bg-(--neutral-800) text-white px-3 py-2.5 rounded-lg flex items-center gap-2 transition-colors font-medium;
   }
   .compare_card {
     @apply bg-gradient-to-br from-(--neutral-800) to-(--neutral-900) not-dark:from-(--neutral-000) not-dark:to-(--neutral-000) rounded-lg p-6 border border-(--neutral-700) not-dark:border-(--neutral-200) shadow-2xl relative overflow-hidden;
