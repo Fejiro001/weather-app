@@ -43,7 +43,7 @@ Users should be able to:
 
 ### Screenshot
 
-![Weather Now Homepage](./application-screenshot.png)
+![Weather Now Homepage](./application-screenshot-min.png)
 
 ### Links
 
