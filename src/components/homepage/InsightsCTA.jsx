@@ -29,7 +29,7 @@ const InsightsCTA = () => {
           </div>
         </div>
         <IconChevronRight
-          className="text-(--neutral-400) group-hover:text-blue-400 group-hover:translate-x-1 transition-all flex-shrink-0"
+          className="text-(--neutral-300) group-hover:text-blue-400 group-hover:translate-x-1 transition-all flex-shrink-0"
           aria-hidden="true"
           size={24}
         />
