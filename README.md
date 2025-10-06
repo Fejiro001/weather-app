@@ -47,7 +47,7 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Frontend Mentor]()
+- Solution URL: [Frontend Mentor](https://www.frontendmentor.io/solutions/weather-now-application-react-tailwind-zustand-framer-motion-pwa-_S6_2vs-Lw)
 - Live Site URL: [Weather Now](https://weather-app-pearl-seven-35.vercel.app/)
 
 ## My process

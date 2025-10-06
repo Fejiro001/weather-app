@@ -40,7 +40,7 @@ const useSmartRecommendations = () => {
       wind_speed_10m,
     } = weatherData.current;
 
-    const recommendations = [];
+    const recommendationsList = [];
 
     // Thresholds
     const COLD_THRESHOLD_1 = isMetric ? 10 : 50;
@@ -52,19 +52,19 @@ const useSmartRecommendations = () => {
 
     // Clothing
     if (tempForComfort < COLD_THRESHOLD_1) {
-      recommendations.push({
+      recommendationsList.push({
         icon: <IconShirt size={24} />,
         text: "Heavy jacket recommended",
         color: "text-blue-400",
       });
     } else if (tempForComfort < COLD_THRESHOLD_2) {
-      recommendations.push({
+      recommendationsList.push({
         icon: <IconShirt size={24} />,
         text: "Light jacket or sweater",
         color: "text-cyan-400",
       });
     } else if (tempForComfort > HOT_THRESHOLD) {
-      recommendations.push({
+      recommendationsList.push({
         icon: <IconShirt size={24} />,
         text: "Light, breathable clothing",
         color: "text-orange-400",
@@ -76,7 +76,7 @@ const useSmartRecommendations = () => {
       precipitation > PRECIP_UMBRELLA_THRESHOLD ||
       weatherData.daily?.precipitation_probability?.[0] > 30
     ) {
-      recommendations.push({
+      recommendationsList.push({
         icon: <IconUmbrella size={24} />,
         text: "Bring an umbrella",
         color: "text-blue-400",
@@ -85,7 +85,7 @@ const useSmartRecommendations = () => {
 
     // Sunglasses/Sunscreen
     if (uv_index > 5) {
-      recommendations.push({
+      recommendationsList.push({
         icon: <IconSunglasses size={24} />,
         text: `Apply sunscreen (UV: ${uv_index})`,
         color: "text-yellow-400",
@@ -94,7 +94,7 @@ const useSmartRecommendations = () => {
 
     // Hydration
     if (tempForComfort > HOT_THRESHOLD || relative_humidity_2m > 70) {
-      recommendations.push({
+      recommendationsList.push({
         icon: <IconBottle size={24} />,
         text: "Stay hydrated",
         color: "text-cyan-400",
@@ -108,14 +108,14 @@ const useSmartRecommendations = () => {
       precipitation < PRECIP_ACTIVITY_THRESHOLD &&
       wind_speed_10m < WIND_ACTIVITY_THRESHOLD
     ) {
-      recommendations.push({
+      recommendationsList.push({
         icon: <IconWalk size={24} />,
         text: "Great weather for outdoor activities!",
         color: "text-green-400",
       });
     }
 
-    return recommendations;
+    return recommendationsList;
   }, [isMetric, weatherData]);
 
   return recommendations;
