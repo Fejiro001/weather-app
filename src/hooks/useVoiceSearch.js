@@ -55,7 +55,6 @@ const useVoiceSearch = () => {
     };
 
     recognition.onerror = (event) => {
-      console.error("Speech Error", event.error);
       setIsListening(false);
       notifyError(event.error, "Error");
       setSpeechText("");

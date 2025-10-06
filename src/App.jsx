@@ -1,6 +1,8 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Toaster } from "sonner";
+const LazyToaster = lazy(() =>
+  import("sonner").then((module) => ({ default: module.Toaster }))
+);
 import "tippy.js/dist/tippy.css";
 
 import AppLayout from "./layout/AppLayout";
@@ -14,13 +16,13 @@ const InsightsPage = lazy(() => import("./pages/InsightsPage"));
 function App() {
   return (
     <>
-      <Suspense fallback={<PreLoader />}>
-        <Router>
-          <Toaster
-            richColors
-            expand
-            toastOptions={{ style: { fontSize: "1rem" } }}
-          />
+      <Router>
+        <LazyToaster
+          richColors
+          expand
+          toastOptions={{ style: { fontSize: "1rem" } }}
+        />
+        <Suspense fallback={<PreLoader />}>
           <Routes>
             <Route element={<AppLayout />}>
               <Route path="/" element={<HomePage />} />
@@ -30,8 +32,8 @@ function App() {
               <Route path="*" element={<HomePage />} />
             </Route>
           </Routes>
-        </Router>
-      </Suspense>
+        </Suspense>
+      </Router>
     </>
   );
 }

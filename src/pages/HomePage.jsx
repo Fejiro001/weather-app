@@ -12,6 +12,7 @@ import {
 } from "../components/weather";
 import { HourlyForecast } from "../components/weather/HourlyForecast";
 import { AnimatedHeadline, InsightsCTA } from "../components/homepage";
+import { notifyError } from "../components/basic/toast";
 const ErrorPage = lazy(() => import("./ErrorPage"));
 
 const HomePage = () => {
@@ -35,7 +36,7 @@ const HomePage = () => {
           const position = await getCurrentPositionPromise();
           await fetchGeolocationWeather(position);
         } catch (error) {
-          console.error("Initial Geolocation failed:", error.message);
+          notifyError("Initial Geolocation failed:", error.message);
         }
       };
       fetchGeo();
