@@ -21,7 +21,7 @@ const WeatherDetailCard = ({
 
   return (
     <div className={`detail h-full ${className}`}>
-      <p className="text-preset-6 text-(--neutral-200) not-dark:text-(--neutral-600)">
+      <p className="text-preset-6 text-(--neutral-200) not-dark:text-(--neutral-600) break-all">
         {label}
       </p>
 
