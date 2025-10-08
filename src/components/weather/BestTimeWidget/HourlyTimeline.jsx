@@ -4,6 +4,7 @@ import { formatHour } from "../../../utils/formatDateTime";
 import { getScoreColor, getScoreLabel } from "../../../utils/scoreUtils";
 import { SelectedBarInfo } from ".";
 import { useWeatherAnalysis } from "../../../hooks";
+import Tippy from "@tippyjs/react";
 
 const HourlyTimeline = ({ selectedBar, setSelectedBar }) => {
   const { analysis, tempUnit } = useWeatherAnalysis();
@@ -37,7 +38,7 @@ const HourlyTimeline = ({ selectedBar, setSelectedBar }) => {
           id="hourly-timeline-label"
           className="text-(--neutral-200) not-dark:text-(--neutral-600) text-sm font-medium"
         >
-          Next 12 hours
+          Next {hourlyScores.length} hour{hourlyScores.length === 1 ? "" : "s"}
         </h4>
         <div
           className="flex items-center gap-1 text-xs text-(--neutral-200) not-dark:text-(--neutral-600)"
@@ -54,38 +55,39 @@ const HourlyTimeline = ({ selectedBar, setSelectedBar }) => {
         role="group"
         aria-labelledby="hourly-timeline-label"
       >
-        {hourlyScores.slice(0, 12).map((h, i) => {
+        {hourlyScores.map((h, i) => {
           const heightPercent = (h.score / 100) * 100;
           const isSelected = selectedBar === i;
           const scoreLabel = getScoreLabel(h.score);
 
           return (
-            <motion.button
-              key={i}
-              id={`weather-bar-${i}`}
-              type="button"
-              aria-label={`${formatHour(h.hour)}, ${Math.round(
-                h.temp
-              )} degrees ${tempUnit}, weather score ${Math.round(
-                h.score
-              )} out of 100, ${scoreLabel} conditions${
-                h.precipitation > 0
-                  ? `, ${h.precipitation.toFixed(1)} millimeters of rain`
-                  : ""
-              }${isSelected ? ", selected" : ""}`}
-              initial={{ height: 0 }}
-              animate={{ height: `${heightPercent}%` }}
-              transition={{ delay: i * 0.05, duration: 0.5, ease: "easeOut" }}
-              onClick={() => handleBarInteraction(i)}
-              onKeyDown={(e) => handleKeyDown(e, i)}
-              className={`flex-1 ${getScoreColor(
-                h.score
-              )} rounded-t cursor-pointer hover:opacity-80 transition-opacity ${
-                isSelected
-                  ? "ring-2 ring-white ring-offset-2 ring-offset-(--neutral-800)"
-                  : ""
-              }`}
-            />
+            <Tippy key={i} content={`${formatHour(h.hour)}`}>
+              <motion.button
+                id={`weather-bar-${i}`}
+                type="button"
+                aria-label={`${formatHour(h.hour)}, ${Math.round(
+                  h.temp
+                )} degrees ${tempUnit}, weather score ${Math.round(
+                  h.score
+                )} out of 100, ${scoreLabel} conditions${
+                  h.precipitation > 0
+                    ? `, ${h.precipitation.toFixed(1)} millimeters of rain`
+                    : ""
+                }${isSelected ? ", selected" : ""}`}
+                initial={{ height: 0 }}
+                animate={{ height: `${heightPercent}%` }}
+                transition={{ delay: i * 0.05, duration: 0.5, ease: "easeOut" }}
+                onClick={() => handleBarInteraction(i)}
+                onKeyDown={(e) => handleKeyDown(e, i)}
+                className={`flex-1 ${getScoreColor(
+                  h.score
+                )} rounded-t cursor-pointer hover:opacity-80 transition-opacity ${
+                  isSelected
+                    ? "ring-2 ring-white ring-offset-2 ring-offset-(--neutral-800)"
+                    : ""
+                }`}
+              />
+            </Tippy>
           );
         })}
       </div>

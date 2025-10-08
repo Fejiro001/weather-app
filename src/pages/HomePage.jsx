@@ -21,7 +21,7 @@ const HomePage = () => {
 
   const fetchWeather = useWeatherStore((state) => state.fetchWeather);
   const units = useWeatherStore((state) => state.units);
-  const storeLocation = useWeatherStore((state) => state.location);
+  const storedLocation = useWeatherStore((state) => state.location);
   const setLocation = useWeatherStore((state) => state.setLocation);
   const isError = useWeatherStore((state) => state.isError);
   const fetchGeolocationWeather = useWeatherStore(
@@ -30,7 +30,7 @@ const HomePage = () => {
   const { getCurrentPositionPromise } = useGeolocation();
 
   useEffect(() => {
-    if (!storeLocation) {
+    if (!storedLocation) {
       const fetchGeo = async () => {
         try {
           const position = await getCurrentPositionPromise();
@@ -49,13 +49,13 @@ const HomePage = () => {
       return;
     }
 
-    if (storeLocation) {
+    if (storedLocation) {
       fetchWeather();
     }
   }, [
     getCurrentPositionPromise,
     fetchGeolocationWeather,
-    storeLocation,
+    storedLocation,
     selectedLocation,
     setLocation,
     fetchWeather,
