@@ -60,7 +60,7 @@ const useWeatherStore = create()(
             daily:
               "weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_probability_max",
             hourly:
-              "weather_code,temperature_2m,precipitation,apparent_temperature",
+              "weather_code,temperature_2m,precipitation,apparent_temperature,wind_speed_10m,relative_humidity_2m",
             current:
               "temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,precipitation,wind_speed_10m,uv_index,visibility,surface_pressure,cloud_cover,is_day",
             timezone: state.location.timezone,

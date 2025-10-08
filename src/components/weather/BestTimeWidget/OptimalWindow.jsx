@@ -21,7 +21,7 @@ const OptimalWindow = () => {
             id="optimal-window-heading"
             className="text-(--neutral-200) not-dark:text-(--neutral-600) text-sm mb-1"
           >
-            Optimal Window
+            Optimal 2 hour Window
           </p>
           <p className="text-white not-dark:text-(--neutral-900) text-2xl font-bold">
             {analysis.bestTime}
