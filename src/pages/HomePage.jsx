@@ -29,6 +29,7 @@ const HomePage = () => {
   );
   const { getCurrentPositionPromise } = useGeolocation();
 
+  // Initial fetch on app first mount
   useEffect(() => {
     if (storedLocation && !isFetching) {
       fetchWeather();
@@ -36,6 +37,24 @@ const HomePage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Refetch when a user returns to the weather tab/app (web or PWA)
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (
+        document.visibilityState === "visible" &&
+        storedLocation &&
+        !isFetching
+      ) {
+        fetchWeather();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, [fetchWeather, isFetching, storedLocation]);
+
+  // Users current location fetch in no stored location
   useEffect(() => {
     if (!storedLocation) {
       const fetchGeo = async () => {
@@ -50,6 +69,7 @@ const HomePage = () => {
     }
   }, [fetchGeolocationWeather, getCurrentPositionPromise, storedLocation]);
 
+  // Handles weather fetch and a location has been selected
   useEffect(() => {
     if (selectedLocation) {
       setLocation(selectedLocation);
