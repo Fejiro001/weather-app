@@ -44,6 +44,7 @@ const useWeatherStore = create()(
         wind_speed_unit: "kmh",
         precipitation_unit: "mm",
       },
+      
       setUnits: (newUnits) => set({ units: newUnits, weatherData: null }),
 
       fetchWeather: async () => {
@@ -183,6 +184,7 @@ const useWeatherStore = create()(
       setCurrentLocation: (currentLocation) =>
         set({ currentLocation: currentLocation }),
 
+      
       addCompareLocation: async (location) => {
         const currentCompared = get().compareLocations || [];
         const exists = currentCompared.some(

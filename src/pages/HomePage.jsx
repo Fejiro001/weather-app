@@ -20,14 +20,21 @@ const HomePage = () => {
   const { fetchingLocations, locations, getLocations } = useLocations();
 
   const fetchWeather = useWeatherStore((state) => state.fetchWeather);
-  const units = useWeatherStore((state) => state.units);
   const storedLocation = useWeatherStore((state) => state.location);
   const setLocation = useWeatherStore((state) => state.setLocation);
   const isError = useWeatherStore((state) => state.isError);
+  const isFetching = useWeatherStore((state) => state.isFetching);
   const fetchGeolocationWeather = useWeatherStore(
     (state) => state.fetchGeolocationWeather
   );
   const { getCurrentPositionPromise } = useGeolocation();
+
+  useEffect(() => {
+    if (storedLocation && !isFetching) {
+      fetchWeather();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (!storedLocation) {
@@ -40,27 +47,16 @@ const HomePage = () => {
         }
       };
       fetchGeo();
-      return;
     }
+  }, [fetchGeolocationWeather, getCurrentPositionPromise, storedLocation]);
 
+  useEffect(() => {
     if (selectedLocation) {
       setLocation(selectedLocation);
-      setSelectedLocation(null);
-      return;
-    }
-
-    if (storedLocation) {
       fetchWeather();
+      setSelectedLocation(null);
     }
-  }, [
-    getCurrentPositionPromise,
-    fetchGeolocationWeather,
-    storedLocation,
-    selectedLocation,
-    setLocation,
-    fetchWeather,
-    units,
-  ]);
+  }, [fetchWeather, selectedLocation, setLocation]);
 
   if (isError) {
     return <ErrorPage />;
