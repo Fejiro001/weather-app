@@ -20,15 +20,41 @@ const HomePage = () => {
   const { fetchingLocations, locations, getLocations } = useLocations();
 
   const fetchWeather = useWeatherStore((state) => state.fetchWeather);
-  const units = useWeatherStore((state) => state.units);
   const storedLocation = useWeatherStore((state) => state.location);
   const setLocation = useWeatherStore((state) => state.setLocation);
   const isError = useWeatherStore((state) => state.isError);
+  const isFetching = useWeatherStore((state) => state.isFetching);
   const fetchGeolocationWeather = useWeatherStore(
     (state) => state.fetchGeolocationWeather
   );
   const { getCurrentPositionPromise } = useGeolocation();
 
+  // Initial fetch on app first mount
+  useEffect(() => {
+    if (storedLocation && !isFetching) {
+      fetchWeather();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Refetch when a user returns to the weather tab/app (web or PWA)
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (
+        document.visibilityState === "visible" &&
+        storedLocation &&
+        !isFetching
+      ) {
+        fetchWeather();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, [fetchWeather, isFetching, storedLocation]);
+
+  // Users current location fetch in no stored location
   useEffect(() => {
     if (!storedLocation) {
       const fetchGeo = async () => {
@@ -40,27 +66,17 @@ const HomePage = () => {
         }
       };
       fetchGeo();
-      return;
     }
+  }, [fetchGeolocationWeather, getCurrentPositionPromise, storedLocation]);
 
+  // Handles weather fetch and a location has been selected
+  useEffect(() => {
     if (selectedLocation) {
       setLocation(selectedLocation);
-      setSelectedLocation(null);
-      return;
-    }
-
-    if (storedLocation) {
       fetchWeather();
+      setSelectedLocation(null);
     }
-  }, [
-    getCurrentPositionPromise,
-    fetchGeolocationWeather,
-    storedLocation,
-    selectedLocation,
-    setLocation,
-    fetchWeather,
-    units,
-  ]);
+  }, [fetchWeather, selectedLocation, setLocation]);
 
   if (isError) {
     return <ErrorPage />;
